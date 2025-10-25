@@ -69,7 +69,7 @@
 									},
 									"status": "Created",
 									"code": 201,
-									"_postman_previewlanguage": null,
+									"_postman_previewlanguage": "json",
 									"header": [
 										{
 											"key": "X-Powered-By",
@@ -93,7 +93,9 @@
 										},
 										{
 											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
+											"value": "application/json",
+											"description": "",
+											"type": "text"
 										},
 										{
 											"key": "Content-Length",
