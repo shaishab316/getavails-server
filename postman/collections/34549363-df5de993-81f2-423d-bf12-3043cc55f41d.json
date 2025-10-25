@@ -43,7 +43,7 @@
 							"response": [
 								{
 									"id": "34549363-5d0e78e5-4961-4b40-babc-28148509ebf1",
-									"name": "register",
+									"name": "success",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
