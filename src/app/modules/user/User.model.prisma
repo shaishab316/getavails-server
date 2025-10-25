@@ -1,0 +1,33 @@
+model User {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  //! auth
+  role        EUserRole @default(USER)
+  email       String?
+  phone       String?
+  password    String
+  is_verified Boolean   @default(false)
+  is_active   Boolean   @default(false)
+  is_admin    Boolean   @default(false)
+
+  //! profile
+  avatar        String   @default("/images/placeholder.png")
+  name          String   @default("Pathao User")
+  date_of_birth DateTime @default(now())
+  gender        EGender  @default(OTHER)
+  //! end
+
+  @@map("users")
+}
+
+enum EUserRole {
+  USER
+}
+
+enum EGender {
+  MALE
+  FEMALE
+  OTHER
+}

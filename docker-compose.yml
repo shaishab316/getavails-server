@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgis/postgis:15-3.4
+    container_name: postgres-getavails-new
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: getavails
+    ports:
+      - "5433:5432"
+    volumes:
+      - getavails_postgres_new:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  getavails_postgres_new:
