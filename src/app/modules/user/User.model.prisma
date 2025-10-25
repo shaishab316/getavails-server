@@ -5,18 +5,18 @@ model User {
 
   //! auth
   role        EUserRole @default(USER)
-  email       String?
-  phone       String?
+  email       String    @unique
   password    String
   is_verified Boolean   @default(false)
   is_active   Boolean   @default(false)
   is_admin    Boolean   @default(false)
 
   //! profile
-  avatar        String   @default("/images/placeholder.png")
-  name          String   @default("Pathao User")
-  date_of_birth DateTime @default(now())
-  gender        EGender  @default(OTHER)
+  avatar     String  @default("/images/placeholder.png")
+  name       String  @default("Pathao User")
+  gender     EGender @default(OTHER)
+  country    String?
+  experience String?
   //! end
 
   @@map("users")
@@ -24,6 +24,10 @@ model User {
 
 enum EUserRole {
   USER
+  ORGANIZER
+  VENUE
+  ARTIST
+  AGENT
 }
 
 enum EGender {

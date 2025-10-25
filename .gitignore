@@ -10,3 +10,5 @@ uploads/*
 .vscode/*
 api*.json
 postman/*
+
+**/migrations
