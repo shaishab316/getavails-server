@@ -22,7 +22,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"shaishab316@gmail.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
