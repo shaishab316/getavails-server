@@ -4,10 +4,10 @@ import {
   userOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
-import { Prisma, User as TUser } from '../../../../prisma';
+import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TUserEdit, TUserRegister } from './User.interface';
+import { TAgentRegister, TUserEdit, TUserRegister } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { errorLogger } from '../../../utils/logger';
@@ -144,5 +144,27 @@ export const UserServices = {
     if (user?.avatar) await deleteFile(user.avatar);
 
     return prisma.user.delete({ where: { id: userId } });
+  },
+
+  async agentRegister({ password, email, ...payload }: TAgentRegister) {
+    const existingAgent = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingAgent)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `Agent already exists with this ${email} email`.trim(),
+      );
+
+    return prisma.user.create({
+      data: {
+        ...payload,
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.AGENT,
+      },
+      omit: userOmit,
+    });
   },
 };

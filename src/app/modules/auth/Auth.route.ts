@@ -15,6 +15,12 @@ router.post(
 );
 
 router.post(
+  '/agent-register',
+  purifyRequest(UserValidations.agentRegister),
+  UserControllers.agentRegister,
+);
+
+router.post(
   '/account-verify',
   purifyRequest(AuthValidations.accountVerify),
   AuthControllers.accountVerify,

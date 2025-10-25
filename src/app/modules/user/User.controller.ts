@@ -102,4 +102,13 @@ export const UserControllers = {
       message: `Goodbye ${user?.name ?? enum_decode(user.role)}! Your account has been deleted successfully!`,
     };
   }),
+
+  agentRegister: catchAsync(async ({ body }) => {
+    const agent = await UserServices.agentRegister(body);
+
+    return {
+      message: 'Agent registered successfully!',
+      data: agent,
+    };
+  }),
 };
