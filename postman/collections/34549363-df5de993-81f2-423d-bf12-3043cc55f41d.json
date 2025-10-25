@@ -126,8 +126,21 @@
 					"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
 				},
 				{
-					"name": "New Folder",
-					"item": [],
+					"name": "Profile",
+					"item": [
+						{
+							"name": "New Request",
+							"id": "34549363-8e85ad71-5e28-42e1-b6e8-ec6284ca8fdc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "34549363-5058103a-3e5f-43a1-994b-54902d19234e"
 				}
 			],
