@@ -7,7 +7,12 @@ import { prisma } from '../../../utils/db';
 import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TAgentRegister, TUserEdit, TUserRegister } from './User.interface';
+import {
+  TAgentRegister,
+  TUserEdit,
+  TUserRegister,
+  TVenueRegister,
+} from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { errorLogger } from '../../../utils/logger';
@@ -146,7 +151,13 @@ export const UserServices = {
     return prisma.user.delete({ where: { id: userId } });
   },
 
-  async agentRegister({ password, email, ...payload }: TAgentRegister) {
+  async agentRegister({
+    password,
+    email,
+    country,
+    experience,
+    name,
+  }: TAgentRegister) {
     const existingAgent = await prisma.user.findUnique({
       where: { email },
     });
@@ -159,10 +170,37 @@ export const UserServices = {
 
     return prisma.user.create({
       data: {
-        ...payload,
         email,
         password: await hashPassword(password),
         role: EUserRole.AGENT,
+        name,
+        country,
+        experience,
+      },
+      omit: userOmit,
+    });
+  },
+
+  async venueRegister({ password, email, country, name }: TVenueRegister) {
+    const existingAgent = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingAgent)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `Agent already exists with this ${email} email`.trim(),
+      );
+
+    // TODO: implement venue model
+
+    return prisma.user.create({
+      data: {
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.VENUE,
+        name,
+        country,
       },
       omit: userOmit,
     });

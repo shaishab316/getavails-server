@@ -111,4 +111,13 @@ export const UserControllers = {
       data: agent,
     };
   }),
+
+  venueRegister: catchAsync(async ({ body }) => {
+    const venue = await UserServices.venueRegister(body);
+
+    return {
+      message: 'Venue registered successfully!',
+      data: venue,
+    };
+  }),
 };

@@ -21,6 +21,12 @@ router.post(
 );
 
 router.post(
+  '/venue-register',
+  purifyRequest(UserValidations.venueRegister),
+  UserControllers.venueRegister,
+);
+
+router.post(
   '/account-verify',
   purifyRequest(AuthValidations.accountVerify),
   AuthControllers.accountVerify,
