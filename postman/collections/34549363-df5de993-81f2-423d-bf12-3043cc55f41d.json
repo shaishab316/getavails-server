@@ -21,9 +21,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}",
+									"raw": "{{base_url}}/auth/register",
 									"host": [
 										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
 									]
 								}
 							},
