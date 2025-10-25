@@ -8,10 +8,5 @@ build({
   outfile: 'dist/server.js',
   sourcemap: false,
   minify: true,
-  external: [
-    'mongodb',
-    'stripe',
-    'winston',
-    'nodemailer', // keep native Node deps external if needed
-  ],
+  external: ['stripe', 'winston', 'nodemailer', 'swagger-ui-express'],
 }).catch(() => process.exit(1));

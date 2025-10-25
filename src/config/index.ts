@@ -67,6 +67,9 @@ const config = {
     db_name: env('db name', db_name, {
       regex: '^\\w[\\w\\s-]{1,50}$',
     }),
+    postman_docs_id: env('postman docs id', '', {
+      regex: '',
+    }),
     mock_mail: env('mock mail', true, {
       regex: '^(true|false)$',
       down: 'Server info - end',
@@ -76,7 +79,7 @@ const config = {
   url: {
     database: env('database url', ``, {
       up: 'Database info - start',
-      regex: '^.+$',
+      regex: '',
     }),
     ui: env('ui url', `http://localhost:${port}`, {
       regex: '^https?:\\/\\/.*$|^$',
