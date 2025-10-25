@@ -6,12 +6,8 @@ import { UserRoutes } from '../app/modules/user/User.route';
 import { StatusCodes } from 'http-status-codes';
 import { fileTypes } from '../app/middlewares/capture';
 import { injectRoutes } from '../utils/router/injectRouter';
-import swaggerUi from 'swagger-ui-express';
-import apiDocs from '../../public/api-v1.json';
 
 const appRouter = Router();
-
-appRouter.use('/docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
 
 /** Forward uploaded files requests */
 fileTypes.map((filetype: string) =>

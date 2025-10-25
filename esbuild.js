@@ -8,5 +8,5 @@ build({
   outfile: 'dist/server.js',
   sourcemap: false,
   minify: true,
-  external: ['stripe', 'winston', 'nodemailer', 'swagger-ui-express'],
+  external: ['stripe', 'winston', 'nodemailer'],
 }).catch(() => process.exit(1));

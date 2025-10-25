@@ -67,9 +67,6 @@ const config = {
     db_name: env('db name', db_name, {
       regex: '^\\w[\\w\\s-]{1,50}$',
     }),
-    postman_docs_id: env('postman docs id', '', {
-      regex: '',
-    }),
     mock_mail: env('mock mail', true, {
       regex: '^(true|false)$',
       down: 'Server info - end',
