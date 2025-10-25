@@ -7,10 +7,9 @@ import { prisma } from '../../../utils/db';
 import { Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TSetupUserProfile, TUserEdit, TUserRegister } from './User.interface';
+import { TUserEdit, TUserRegister } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
-import { AuthServices } from '../auth/Auth.service';
 import { errorLogger } from '../../../utils/logger';
 import config from '../../../config';
 import { otp_send_template } from '../../../templates';
@@ -19,25 +18,22 @@ import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
 
 export const UserServices = {
-  async userRegister({ password, email, phone, role }: TUserRegister) {
-    AuthServices.validEmailORPhone({ email, phone });
-
+  async userRegister({ password, email, role }: TUserRegister) {
     //! check if user already exists
-    const existingUser = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (existingUser)
       throw new ServerError(
         StatusCodes.CONFLICT,
-        `User already exists with this ${email ? 'email' : ''} ${phone ? 'phone' : ''}`.trim(),
+        `User already exists with this ${email} email`.trim(),
       );
 
     //! finally create user and in return omit auth fields
     const user = await prisma.user.create({
       data: {
         email,
-        phone,
         password: await hashPassword(password),
         role,
       },
@@ -68,21 +64,6 @@ export const UserServices = {
   },
 
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
-    if (body.phone || body.email) {
-      const existingUser = await prisma.user.findFirst({
-        where: { OR: [{ email: body.email }, { phone: body.phone }] },
-        select: { id: true, email: true, phone: true },
-      });
-
-      if (existingUser && existingUser.id !== user.id) {
-        throw new ServerError(
-          StatusCodes.CONFLICT,
-          `User already exists with this ${existingUser.email ? 'email' : ''} ${existingUser.phone ? 'phone' : ''}`.trim(),
-        );
-      }
-    }
-
-    body.avatar ||= undefined;
     if (body.avatar && user?.avatar) await deleteFile(user.avatar);
 
     return prisma.user.update({
@@ -163,31 +144,5 @@ export const UserServices = {
     if (user?.avatar) await deleteFile(user.avatar);
 
     return prisma.user.delete({ where: { id: userId } });
-  },
-
-  async setupUserProfile({
-    avatar,
-    date_of_birth,
-    gender,
-    name,
-    user_id,
-  }: TSetupUserProfile) {
-    const user = await prisma.user.findUnique({
-      where: { id: user_id },
-    });
-
-    // Clean up old files
-    if (user?.avatar) await deleteFile(user.avatar);
-
-    return prisma.user.update({
-      where: { id: user_id },
-      data: {
-        avatar,
-        date_of_birth,
-        gender,
-        name,
-      },
-      omit: userOmit,
-    });
   },
 };

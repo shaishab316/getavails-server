@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { $ZodIssue } from 'zod/v4/core/errors.cjs';
 import { User as TUser } from '../../../../prisma';
 import {
   TAccountVerify,
@@ -12,7 +11,6 @@ import {
   TToken,
   verifyPassword,
 } from './Auth.utils';
-import { ZodError } from 'zod';
 import { prisma } from '../../../utils/db';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
@@ -26,11 +24,9 @@ import { generateOTP, validateOTP } from '../../../utils/crypto/otp';
 import { userOmit } from '../user/User.constant';
 
 export const AuthServices = {
-  async login({ password, email, phone }: TUserLogin): Promise<Partial<TUser>> {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async login({ password, email }: TUserLogin): Promise<Partial<TUser>> {
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -68,28 +64,6 @@ export const AuthServices = {
     };
   },
 
-  validEmailORPhone({ email, phone }: { email?: string; phone?: string }) {
-    if (!email || !phone) {
-      const issues: $ZodIssue[] = [];
-
-      if (!email && !phone)
-        issues.push({
-          code: 'custom',
-          path: ['email'],
-          message: 'Email or phone is missing',
-        });
-
-      if (!phone && !email)
-        issues.push({
-          code: 'custom',
-          path: ['phone'],
-          message: 'Email or phone is missing',
-        });
-
-      if (issues.length) throw new ZodError(issues);
-    }
-  },
-
   setTokens(res: Response, tokens: { [key in TToken]?: string }) {
     Object.entries(tokens).forEach(([key, value]) =>
       res.cookie(key, value, {
@@ -122,11 +96,9 @@ export const AuthServices = {
     ) as Record<T[number], string>;
   },
 
-  async accountVerifyOtpSend({ email, phone }: TAccountVerifyOtpSend) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async accountVerifyOtpSend({ email }: TAccountVerifyOtpSend) {
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -159,11 +131,9 @@ export const AuthServices = {
     }
   },
 
-  async forgotPassword({ email, phone }: TAccountVerifyOtpSend) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async forgotPassword({ email }: TAccountVerifyOtpSend) {
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -192,14 +162,11 @@ export const AuthServices = {
 
   async userOtpVerify({
     email,
-    phone,
     otp,
     token_type = 'access_token',
   }: TAccountVerify & { token_type: TToken }) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)

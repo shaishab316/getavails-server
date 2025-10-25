@@ -57,24 +57,6 @@ const user = Router();
     purifyRequest(UserValidations.changePassword),
     AuthControllers.changePassword,
   );
-
-  user.post(
-    '/setup-user-profile',
-    capture({
-      nid_photos: {
-        size: 5 * 1024 * 1024,
-        maxCount: 10,
-        fileType: 'images',
-      },
-      avatar: {
-        size: 5 * 1024 * 1024,
-        maxCount: 1,
-        fileType: 'images',
-      },
-    }),
-    purifyRequest(UserValidations.setupUserProfile),
-    UserControllers.setupUserProfile,
-  );
 }
 
 export const UserRoutes = {

@@ -102,16 +102,4 @@ export const UserControllers = {
       message: `Goodbye ${user?.name ?? enum_decode(user.role)}! Your account has been deleted successfully!`,
     };
   }),
-
-  setupUserProfile: catchAsync(async ({ body, user }) => {
-    const data = await UserServices.setupUserProfile({
-      ...body,
-      user_id: user.id,
-    });
-
-    return {
-      message: 'Profile setup successfully!',
-      data,
-    };
-  }),
 };

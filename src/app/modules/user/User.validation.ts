@@ -1,30 +1,29 @@
 import { z } from 'zod';
-import { EGender, EUserRole } from '../../../../prisma';
+import { EGender, EUserRole, User } from '../../../../prisma';
 import { enum_encode } from '../../../utils/transform/enum';
-import { date } from '../../../utils/transform/date';
 
 export const UserValidations = {
   register: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
-      phone: z.string().optional(),
+      email: z.email({ error: 'Email is invalid' }),
       role: z.enum(EUserRole).optional(),
       password: z
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long'),
-    }),
+    } satisfies Partial<Record<keyof User, z.ZodTypeAny>>),
   }),
 
   edit: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
-      phone: z.string().optional(),
       role: z.enum(EUserRole).optional(),
       name: z.string().optional(),
-      avatar: z.string().optional(),
-      nid_number: z.string().optional(),
-      payment_method: z.string().optional(),
-    }),
+      avatar: z
+        .string()
+        .nullable()
+        .transform(val => val ?? undefined),
+      country: z.string().optional(),
+      gender: z.enum(EGender).optional(),
+    } satisfies Partial<Record<keyof User, z.ZodTypeAny>>),
   }),
 
   changePassword: z.object({
@@ -52,40 +51,6 @@ export const UserValidations = {
         .optional()
         .transform(enum_encode)
         .pipe(z.enum(EUserRole).optional()),
-    }),
-  }),
-
-  setupUserProfile: z.object({
-    body: z.object({
-      avatar: z
-        .string({
-          error: 'Avatar is required',
-        })
-        .nonempty('Avatar is required'),
-      name: z
-        .string({
-          error: 'Name is required',
-        })
-        .nonempty('Name is required'),
-      date_of_birth: z.union([
-        z.string().transform(date).pipe(z.date()),
-        z.date(),
-      ]),
-      gender: z
-        .string({
-          error: 'Gender is required',
-        })
-        .transform(enum_encode)
-        .pipe(z.enum(EGender)),
-      nid_photos: z
-        .array(
-          z
-            .string({
-              error: 'NID or Passport is required',
-            })
-            .nonempty('NID or Passport is required'),
-        )
-        .nonempty('NID or Passport is required'),
     }),
   }),
 };
