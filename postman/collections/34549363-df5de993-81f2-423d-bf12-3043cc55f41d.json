@@ -156,8 +156,7 @@
 											"key": "avatar",
 											"type": "file",
 											"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
-											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24",
-											"disabled": true
+											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
 										},
 										{
 											"key": "name",
@@ -170,6 +169,12 @@
 											"value": "Bangladesh",
 											"type": "text",
 											"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
+										},
+										{
+											"key": "gender",
+											"value": "MALE",
+											"type": "text",
+											"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
 										}
 									]
 								},
