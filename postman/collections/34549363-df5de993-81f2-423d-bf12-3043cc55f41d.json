@@ -129,7 +129,7 @@
 					"name": "Profile",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "profile-edit",
 							"id": "34549363-8e85ad71-5e28-42e1-b6e8-ec6284ca8fdc",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
