@@ -4,5 +4,30 @@
 		"name": "getavails",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register",
+							"id": "34549363-a00675b1-4754-4adb-8061-2b6fc878a397",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
+				}
+			],
+			"id": "34549363-f17e0b3e-90fa-4b04-a43e-e40e29d6d192"
+		}
+	]
 }
