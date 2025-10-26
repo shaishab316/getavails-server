@@ -126,6 +126,119 @@
 											"body": "{\n    \"success\": true,\n    \"statusCode\": 201,\n    \"message\": \"USER registered successfully!\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzYxMzg1NjI1LCJleHAiOjE3NjE0NzIwMjV9.Y0avp8GPnRmXhELrUzjI_fM9gR8ttf9KhJM2dLMiMns\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoicmVmcmVzaF90b2tlbiIsImlhdCI6MTc2MTM4NTYyNSwiZXhwIjoxNzYzOTc3NjI1fQ._A9u9cW1zPATmDZ2qH4-Idpn4NNYjUTAHLdYdMoMyZw\",\n        \"user\": {\n            \"id\": \"2e6851db-44d4-4cd1-a974-ee9201d32dd2\",\n            \"created_at\": \"2025-10-25T09:47:05.758Z\",\n            \"updated_at\": \"2025-10-25T09:47:05.758Z\",\n            \"role\": \"USER\",\n            \"email\": \"shaishab3164@gmail.com\",\n            \"phone\": null,\n            \"is_verified\": false,\n            \"is_active\": false,\n            \"is_admin\": false,\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Pathao User\",\n            \"date_of_birth\": \"2025-10-25T09:47:05.758Z\",\n            \"gender\": \"OTHER\"\n        }\n    }\n}"
 										}
 									]
+								},
+								{
+									"name": "agent-register",
+									"id": "34549363-6d007368-fa55-4791-9ecb-80a994209821",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"shaishab316@gmail.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/auth/register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"auth",
+												"register"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "34549363-82a1d8e3-cedc-4798-bbcf-1403be268a89",
+											"name": "success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"shaishab3164@gmail.com\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{base_url}}/auth/register",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"auth",
+														"register"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Vary",
+													"value": "Origin"
+												},
+												{
+													"key": "Access-Control-Allow-Credentials",
+													"value": "true"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzYxMzg1NjI1LCJleHAiOjE3NjE0NzIwMjV9.Y0avp8GPnRmXhELrUzjI_fM9gR8ttf9KhJM2dLMiMns; Max-Age=86400; Path=/; Expires=Sun, 26 Oct 2025 09:47:05 GMT; HttpOnly"
+												},
+												{
+													"key": "Set-Cookie",
+													"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoicmVmcmVzaF90b2tlbiIsImlhdCI6MTc2MTM4NTYyNSwiZXhwIjoxNzYzOTc3NjI1fQ._A9u9cW1zPATmDZ2qH4-Idpn4NNYjUTAHLdYdMoMyZw; Max-Age=2592000; Path=/; Expires=Mon, 24 Nov 2025 09:47:05 GMT; HttpOnly"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"description": "",
+													"type": "text"
+												},
+												{
+													"key": "Content-Length",
+													"value": "937"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"3a9-xsElt4jlJr98VEMzNgeIasRPGis\""
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 25 Oct 2025 09:47:05 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"success\": true,\n    \"statusCode\": 201,\n    \"message\": \"USER registered successfully!\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzYxMzg1NjI1LCJleHAiOjE3NjE0NzIwMjV9.Y0avp8GPnRmXhELrUzjI_fM9gR8ttf9KhJM2dLMiMns\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyZTY4NTFkYi00NGQ0LTRjZDEtYTk3NC1lZTkyMDFkMzJkZDIiLCJ0b2tlbl90eXBlIjoicmVmcmVzaF90b2tlbiIsImlhdCI6MTc2MTM4NTYyNSwiZXhwIjoxNzYzOTc3NjI1fQ._A9u9cW1zPATmDZ2qH4-Idpn4NNYjUTAHLdYdMoMyZw\",\n        \"user\": {\n            \"id\": \"2e6851db-44d4-4cd1-a974-ee9201d32dd2\",\n            \"created_at\": \"2025-10-25T09:47:05.758Z\",\n            \"updated_at\": \"2025-10-25T09:47:05.758Z\",\n            \"role\": \"USER\",\n            \"email\": \"shaishab3164@gmail.com\",\n            \"phone\": null,\n            \"is_verified\": false,\n            \"is_active\": false,\n            \"is_admin\": false,\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Pathao User\",\n            \"date_of_birth\": \"2025-10-25T09:47:05.758Z\",\n            \"gender\": \"OTHER\"\n        }\n    }\n}"
+										}
+									]
 								}
 							],
 							"id": "34549363-2578f5f5-6c24-4f73-9fd4-d9f03099fa70"
