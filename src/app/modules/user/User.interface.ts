@@ -12,3 +12,7 @@ export type TAgentRegister = z.infer<
 export type TVenueRegister = z.infer<
   typeof UserValidations.venueRegister
 >['body'];
+
+export type TArtistRegister = z.infer<
+  typeof UserValidations.artistRegister
+>['body'];

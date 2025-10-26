@@ -120,4 +120,13 @@ export const UserControllers = {
       data: venue,
     };
   }),
+
+  artistRegister: catchAsync(async ({ body }) => {
+    const artist = await UserServices.artistRegister(body);
+
+    return {
+      message: 'Artist registered successfully!',
+      data: artist,
+    };
+  }),
 };

@@ -7,24 +7,31 @@ import purifyRequest from '../../middlewares/purifyRequest';
 import auth from '../../middlewares/auth';
 
 const router = Router();
+{
+  router.post(
+    '/register',
+    purifyRequest(UserValidations.register),
+    UserControllers.register,
+  );
 
-router.post(
-  '/register',
-  purifyRequest(UserValidations.register),
-  UserControllers.register,
-);
+  router.post(
+    '/agent-register',
+    purifyRequest(UserValidations.agentRegister),
+    UserControllers.agentRegister,
+  );
 
-router.post(
-  '/agent-register',
-  purifyRequest(UserValidations.agentRegister),
-  UserControllers.agentRegister,
-);
+  router.post(
+    '/venue-register',
+    purifyRequest(UserValidations.venueRegister),
+    UserControllers.venueRegister,
+  );
 
-router.post(
-  '/venue-register',
-  purifyRequest(UserValidations.venueRegister),
-  UserControllers.venueRegister,
-);
+  router.post(
+    '/artist-register',
+    purifyRequest(UserValidations.artistRegister),
+    UserControllers.artistRegister,
+  );
+}
 
 router.post(
   '/account-verify',

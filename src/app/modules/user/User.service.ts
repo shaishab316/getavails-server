@@ -9,6 +9,7 @@ import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
 import {
   TAgentRegister,
+  TArtistRegister,
   TUserEdit,
   TUserRegister,
   TVenueRegister,
@@ -200,6 +201,36 @@ export const UserServices = {
         password: await hashPassword(password),
         role: EUserRole.VENUE,
         name,
+        country,
+      },
+      omit: userOmit,
+    });
+  },
+
+  async artistRegister({
+    password,
+    email,
+    country,
+    category,
+  }: TArtistRegister) {
+    const existingAgent = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingAgent)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `Agent already exists with this ${email} email`.trim(),
+      );
+
+    // TODO: implement artist model
+
+    return prisma.user.create({
+      data: {
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.ARTIST,
+        name: category,
         country,
       },
       omit: userOmit,

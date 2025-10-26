@@ -95,4 +95,26 @@ export const UserValidations = {
         .nonempty('Venue type is required'),
     } satisfies TModelZod<TUser, 'venue_capacity' | 'venue_type'>),
   }),
+
+  artistRegister: z.object({
+    body: z.object({
+      name: z
+        .string({ error: 'Name is required' })
+        .nonempty('Name is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      country: z
+        .string({ error: 'Country is required' })
+        .nonempty('Country is required'),
+      category: z
+        .string({ error: 'Category is required' })
+        .nonempty('Category is required'),
+      price: z.coerce
+        .number({ error: 'Price is required' })
+        .min(1, 'Price is required'),
+    } satisfies TModelZod<TUser, 'category' | 'price'>),
+  }),
 };
