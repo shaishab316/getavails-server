@@ -13,10 +13,13 @@ export const otp_send_template = ({
   template: 'account_verify' | 'reset_password';
 }) =>
   fs
-    .readFileSync(path.resolve(__dirname, `${template}_otp_send.html`), 'utf-8')
+    .readFileSync(
+      path.resolve(process.cwd(), `public/pages/${template}_otp_send.html`),
+      'utf-8',
+    )
     .replace(
       /\/\* {{CSS}} \*\//g,
-      `${fs.readFileSync(path.resolve(__dirname, 'otp_verification_send.css'), 'utf-8')}`,
+      `${fs.readFileSync(path.resolve(process.cwd(), 'public/pages/otp_verification_send.css'), 'utf-8')}`,
     )
     .replace(/{{SERVER_NAME}}/g, config.server.name)
     .replace(/{{USER_NAME}}/g, userName)
