@@ -4,7 +4,7 @@ import { createServer } from 'http';
 import app from '../../app';
 import config from '../../config';
 import { errorLogger, logger } from '../logger';
-import shutdownServer from './shutdownServer';
+import { connectDB } from '../db';
 
 const server = createServer(app);
 
@@ -20,7 +20,9 @@ const {
  */
 export default async function startServer() {
   try {
-    await new Promise<void>(resolve => server.listen(port, resolve));
+    const disconnectDB = await connectDB();
+
+    await new Promise<void>(done => server.listen(port, '0.0.0.0', done));
 
     process.stdout.write('\x1Bc');
     console.log(chalk.gray('[console cleared]'));
@@ -28,16 +30,22 @@ export default async function startServer() {
       chalk.yellow(`🚀 ${name} is running on http://localhost:${port}`),
     );
 
-    ['SIGTERM', 'SIGINT', 'unhandledRejection', 'uncaughtException'].forEach(
-      signal =>
-        process.on(signal, async (err?: Error) => {
-          await shutdownServer(server, signal, err);
-        }),
+    ['SIGINT', 'SIGTERM', 'unhandledRejection', 'uncaughtException'].forEach(
+      signal => process.on(signal, closeServer),
     );
+
+    server.once('close', disconnectDB);
 
     return server;
   } catch (error) {
     errorLogger.error(chalk.red('❌ Server startup failed!'), error);
+    server?.close();
     process.exit(1);
   }
+}
+
+function closeServer(error: Error) {
+  errorLogger.error(chalk.red('❌ Server closed!'), error);
+  server.close();
+  process.exit(0);
 }
