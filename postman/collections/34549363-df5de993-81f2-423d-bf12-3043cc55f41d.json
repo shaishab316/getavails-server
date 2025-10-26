@@ -549,10 +549,101 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
 							},
-							"response": []
+							"response": [
+								{
+									"id": "34549363-76bcc45f-d226-472c-9d8d-91133f037124",
+									"name": "success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/auth/login",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "931"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3a3-+m+0x163qQMKASCk0TQhf2y/4tk\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 26 Oct 2025 06:30:25 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Login successfully!\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJlYjYyYzc4MC02ZjZjLTQwZTItYWJiMC01NzU4YzI2ZmJhZjEiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzYxNDYwMjI1LCJleHAiOjE3NjE1NDY2MjV9.-_qJAPpoOIZKoCuzvd_C7h-5tazK5_MejaKJDX7PiBk\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJlYjYyYzc4MC02ZjZjLTQwZTItYWJiMC01NzU4YzI2ZmJhZjEiLCJ0b2tlbl90eXBlIjoicmVmcmVzaF90b2tlbiIsImlhdCI6MTc2MTQ2MDIyNSwiZXhwIjoxNzY0MDUyMjI1fQ.jA7Tqr9os_yiZYf9u9cOc1Vdqt20F2Wq5YDVqeKH-2k\",\n        \"user\": {\n            \"id\": \"eb62c780-6f6c-40e2-abb0-5758c26fbaf1\",\n            \"created_at\": \"2025-10-25T10:59:23.975Z\",\n            \"updated_at\": \"2025-10-25T11:55:54.077Z\",\n            \"role\": \"USER\",\n            \"email\": \"shaishab316@gmail.com\",\n            \"is_verified\": false,\n            \"is_active\": false,\n            \"is_admin\": false,\n            \"avatar\": \"/images/shaishab-1761393354070.png\",\n            \"name\": \"Shaishab Chandra Shil\",\n            \"gender\": \"MALE\",\n            \"country\": \"Bangladesh\",\n            \"experience\": null\n        }\n    }\n}"
+								}
+							]
 						}
 					],
 					"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
