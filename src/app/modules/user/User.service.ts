@@ -153,13 +153,7 @@ export const UserServices = {
     return prisma.user.delete({ where: { id: userId } });
   },
 
-  async agentRegister({
-    password,
-    email,
-    country,
-    experience,
-    name,
-  }: TAgentRegister) {
+  async agentRegister({ password, email, ...payload }: TAgentRegister) {
     const existingAgent = await prisma.user.findUnique({
       where: { email },
     });
@@ -175,15 +169,13 @@ export const UserServices = {
         email,
         password: await hashPassword(password),
         role: EUserRole.AGENT,
-        name,
-        country,
-        experience,
+        ...payload,
       },
       omit: userOmit,
     });
   },
 
-  async venueRegister({ password, email, country, name }: TVenueRegister) {
+  async venueRegister({ password, email, ...payload }: TVenueRegister) {
     const existingVenue = await prisma.user.findUnique({
       where: { email },
     });
@@ -201,19 +193,13 @@ export const UserServices = {
         email,
         password: await hashPassword(password),
         role: EUserRole.VENUE,
-        name,
-        country,
+        ...payload,
       },
       omit: userOmit,
     });
   },
 
-  async artistRegister({
-    password,
-    email,
-    country,
-    category,
-  }: TArtistRegister) {
+  async artistRegister({ password, email, ...payload }: TArtistRegister) {
     const existingArtist = await prisma.user.findUnique({
       where: { email },
     });
@@ -224,26 +210,18 @@ export const UserServices = {
         `Artist already exists with this ${email} email`.trim(),
       );
 
-    // TODO: implement artist model
-
     return prisma.user.create({
       data: {
         email,
         password: await hashPassword(password),
         role: EUserRole.ARTIST,
-        name: category,
-        country,
+        ...payload,
       },
       omit: userOmit,
     });
   },
 
-  async organizerRegister({
-    country,
-    email,
-    password,
-    name,
-  }: TOrganizerRegister) {
+  async organizerRegister({ email, password, ...payload }: TOrganizerRegister) {
     const existingOrganizer = await prisma.user.findUnique({
       where: { email },
     });
@@ -261,8 +239,7 @@ export const UserServices = {
         email,
         password: await hashPassword(password),
         role: EUserRole.ORGANIZER,
-        name,
-        country,
+        ...payload,
       },
       omit: userOmit,
     });

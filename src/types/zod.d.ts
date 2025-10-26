@@ -5,6 +5,6 @@ import type { ZodType } from 'zod';
  * @template Model The model to validate
  * @template Extra Extra fields to validate
  */
-export type TModelZod<Model, Extra = unknown> = Partial<
+export type TModelZod<Model, Extra = never> = Partial<
   Record<keyof Model | Extra, ZodType>
 >;

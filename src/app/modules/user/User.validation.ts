@@ -21,7 +21,6 @@ export const UserValidations = {
         .string()
         .nullable()
         .transform(val => val ?? undefined),
-      country: z.string().optional(),
       gender: z.enum(EGender).optional(),
     } satisfies TModelZod<TUser>),
   }),
@@ -54,6 +53,7 @@ export const UserValidations = {
     }),
   }),
 
+  // Done
   agentRegister: z.object({
     body: z.object({
       name: z
@@ -64,12 +64,15 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      country: z
-        .string({ error: 'Country is required' })
-        .nonempty('Country is required'),
       experience: z
         .string({ error: 'Experience is required' })
         .nonempty('Experience is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
+      price: z.coerce
+        .string({ error: 'Price is required' })
+        .nonempty('Price is required'),
     } satisfies TModelZod<TUser>),
   }),
 
@@ -83,9 +86,6 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      country: z
-        .string({ error: 'Country is required' })
-        .nonempty('Country is required'),
       venue_capacity: z.coerce
         .number({ error: 'Venue capacity is required' })
         .min(1, 'Venue capacity is required'),
@@ -95,6 +95,7 @@ export const UserValidations = {
     } satisfies TModelZod<TUser, 'venue_capacity' | 'venue_type'>),
   }),
 
+  // Done
   artistRegister: z.object({
     body: z.object({
       name: z
@@ -105,16 +106,13 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      country: z
-        .string({ error: 'Country is required' })
-        .nonempty('Country is required'),
-      category: z
-        .string({ error: 'Category is required' })
-        .nonempty('Category is required'),
+      genre: z
+        .string({ error: 'Genre is required' })
+        .nonempty('Genre is required'),
       price: z.coerce
-        .number({ error: 'Price is required' })
-        .min(1, 'Price is required'),
-    } satisfies TModelZod<TUser, 'category' | 'price'>),
+        .string({ error: 'Price is required' })
+        .nonempty('Price is required'),
+    } satisfies TModelZod<TUser>),
   }),
 
   organizerRegister: z.object({
@@ -127,12 +125,12 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      country: z
-        .string({ error: 'Country is required' })
-        .nonempty('Country is required'),
       looking_for: z
         .string({ error: 'Looking for category is required' })
         .nonempty('Looking for category is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
     } satisfies TModelZod<TUser, 'looking_for'>),
   }),
 };

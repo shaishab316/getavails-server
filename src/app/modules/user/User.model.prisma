@@ -12,12 +12,16 @@ model User {
   is_admin    Boolean   @default(false)
 
   //! profile
-  avatar     String  @default("/images/placeholder.png")
-  name       String  @default("Pathao User")
-  gender     EGender @default(OTHER)
-  country    String?
-  experience String?
+  avatar   String  @default("/images/placeholder.png")
+  name     String  @default("Getavails User")
+  gender   EGender @default(OTHER)
+  location String?
   //! end
+
+  experience   String?
+  genre        String?
+  availability String[] @default([])
+  price        String?
 
   @@map("users")
 }
