@@ -334,7 +334,7 @@
 									]
 								},
 								{
-									"name": "New Request",
+									"name": "artist-register",
 									"id": "34549363-29864a42-d307-4da7-8954-603331dfdf64",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
