@@ -541,6 +541,18 @@
 								}
 							],
 							"id": "34549363-2578f5f5-6c24-4f73-9fd4-d9f03099fa70"
+						},
+						{
+							"name": "login",
+							"id": "34549363-cc28fc50-4689-49f9-9c91-2465a504e2a2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
 						}
 					],
 					"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
