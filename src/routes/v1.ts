@@ -24,7 +24,7 @@ export default injectRoutes(appRouter, {
   '/auth': [AuthRoutes],
 
   // Free auth
-  '/profile': [auth.all, UserRoutes.user],
+  '/profile': [auth.user, UserRoutes.user],
 
   // Admin auth
   '/admin': [auth.admin, AdminRoutes],

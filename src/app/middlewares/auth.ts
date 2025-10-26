@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../errors/ServerError';
-import { decodeToken, TToken } from '../modules/auth/Auth.utils';
+import { decodeToken } from '../modules/auth/Auth.utils';
 import catchAsync from './catchAsync';
 import { prisma } from '../../utils/db';
 import { EUserRole, User as TUser } from '../../../prisma';
+import config from '../../config';
+import { TToken } from '../../types/auth.types';
 
 /**
  * Middleware to authenticate and authorize requests based on user roles
  *
- * @param roles - The roles that are allowed to access the resource
+ * @param token_type - The type of token to validate
+ * @param validators - Array of validator functions to run on the user
  */
 const auth = ({
   token_type = 'access_token',
@@ -46,8 +49,24 @@ const auth = ({
     next();
   });
 
+// Common validator function
+function commonValidator({ is_admin, is_verified, is_active }: TUser) {
+  if (is_admin) return;
+
+  if (!is_verified) {
+    throw new ServerError(
+      StatusCodes.FORBIDDEN,
+      'Your account is not verified',
+    );
+  } else if (!is_active) {
+    throw new ServerError(StatusCodes.FORBIDDEN, 'Your account is not active');
+  }
+}
+
+// Base auth without role restrictions
 auth.all = auth();
 
+// Admin auth
 auth.admin = auth({
   validators: [
     commonValidator,
@@ -58,31 +77,39 @@ auth.admin = auth({
   ],
 });
 
-auth.user = auth({
-  validators: [
-    commonValidator,
-    ({ role }) => {
-      if (role !== EUserRole.USER)
-        throw new ServerError(StatusCodes.FORBIDDEN, 'You are not a user');
-    },
-  ],
+// Role based auth
+Object.values(EUserRole).forEach(role => {
+  Object.defineProperty(auth, role.toLowerCase(), {
+    value: auth({
+      validators: [
+        commonValidator,
+        user => {
+          if (user.role !== role)
+            throw new ServerError(
+              StatusCodes.FORBIDDEN,
+              `You do not have ${role} permissions`,
+            );
+        },
+      ],
+    }),
+    enumerable: true,
+    configurable: true,
+  });
 });
 
-//! Token Verification
-auth.refresh_token = auth({ token_type: 'refresh_token' });
-auth.reset_token = auth({ token_type: 'reset_token' });
+// Token based auth
+Object.keys(config.jwt).forEach(token_type => {
+  Object.defineProperty(auth, token_type, {
+    value: auth({ token_type: token_type as TToken }),
+    enumerable: true,
+    configurable: true,
+  });
+});
 
-export default auth;
+export type TAuth = typeof auth & {
+  [K in Lowercase<keyof typeof EUserRole>]: ReturnType<typeof auth>;
+} & {
+  [K in TToken]: ReturnType<typeof auth>;
+};
 
-function commonValidator({ is_admin, is_verified, is_active }: TUser) {
-  if (is_admin) return;
-
-  if (!is_verified) {
-    throw new ServerError(
-      StatusCodes.FORBIDDEN,
-      'Your account are not verified',
-    );
-  } else if (!is_active) {
-    throw new ServerError(StatusCodes.FORBIDDEN, 'Your account are not active');
-  }
-}
+export default auth as TAuth;

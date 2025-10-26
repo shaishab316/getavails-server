@@ -5,12 +5,7 @@ import {
   TAccountVerifyOtpSend,
   TUserLogin,
 } from './Auth.interface';
-import {
-  encodeToken,
-  hashPassword,
-  TToken,
-  verifyPassword,
-} from './Auth.utils';
+import { encodeToken, hashPassword, verifyPassword } from './Auth.utils';
 import { prisma } from '../../../utils/db';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
@@ -22,6 +17,7 @@ import ms from 'ms';
 import { Response } from 'express';
 import { generateOTP, validateOTP } from '../../../utils/crypto/otp';
 import { userOmit } from '../user/User.constant';
+import { TToken } from '../../../types/auth.types';
 
 export const AuthServices = {
   async login({ password, email }: TUserLogin): Promise<Partial<TUser>> {

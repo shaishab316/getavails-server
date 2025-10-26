@@ -1,6 +1,6 @@
 import { totp } from 'otplib';
 import config from '../../config';
-import { TToken } from '../../app/modules/auth/Auth.utils';
+import { TToken } from '../../types/auth.types';
 import ms from 'ms';
 
 totp.options = {

@@ -1,8 +1,9 @@
 import { AuthServices } from './Auth.service';
 import catchAsync from '../../middlewares/catchAsync';
-import { TToken, verifyPassword } from './Auth.utils';
+import { verifyPassword } from './Auth.utils';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
+import { TToken } from '../../../types/auth.types';
 
 export const AuthControllers = {
   login: catchAsync(async ({ body }, res) => {
