@@ -138,7 +138,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"agent@gmail.com\",\r\n    \"name\": \"Agent\",\r\n    \"country\": \"Bangladesh\",\r\n    \"experience\": \"ssfad\"\r\n}",
+											"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"agent@gmail.com\",\r\n    \"name\": \"Agent\",\r\n    \"country\": \"Bangladesh\",\r\n    \"experience\": \"1 years\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
