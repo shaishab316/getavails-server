@@ -332,6 +332,18 @@
 											"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue registered successfully!\",\n    \"data\": {\n        \"id\": \"48af69e1-1dd9-4f43-8999-1f9c42961167\",\n        \"created_at\": \"2025-10-26T05:44:56.830Z\",\n        \"updated_at\": \"2025-10-26T05:44:56.830Z\",\n        \"role\": \"VENUE\",\n        \"email\": \"venue@gmail.com\",\n        \"is_verified\": false,\n        \"is_active\": false,\n        \"is_admin\": false,\n        \"avatar\": \"/images/placeholder.png\",\n        \"name\": \"Agent\",\n        \"gender\": \"OTHER\",\n        \"country\": \"Bangladesh\",\n        \"experience\": null\n    }\n}"
 										}
 									]
+								},
+								{
+									"name": "New Request",
+									"id": "34549363-29864a42-d307-4da7-8954-603331dfdf64",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
 								}
 							],
 							"id": "34549363-2578f5f5-6c24-4f73-9fd4-d9f03099fa70"
