@@ -15,7 +15,7 @@
 							"name": "Register",
 							"item": [
 								{
-									"name": "register",
+									"name": "user-register",
 									"id": "34549363-a00675b1-4754-4adb-8061-2b6fc878a397",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
