@@ -13,13 +13,13 @@ export const AuthValidations = {
 
   otpSend: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
+      email: z.email({ error: 'Email is invalid' }),
     }),
   }),
 
   accountVerify: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
+      email: z.email({ error: 'Email is invalid' }),
       otp: z.coerce
         .string({ error: 'Otp is missing' })
         .length(config.otp.length, `Otp must be ${config.otp.length} digits`),

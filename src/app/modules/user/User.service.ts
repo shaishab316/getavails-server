@@ -25,7 +25,7 @@ import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
 
 export const UserServices = {
-  async userRegister({ password, email, role }: TUserRegister) {
+  async userRegister({ password, email }: TUserRegister) {
     //! check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -42,7 +42,7 @@ export const UserServices = {
       data: {
         email,
         password: await hashPassword(password),
-        role,
+        role: EUserRole.USER,
       },
       omit: userOmit,
     });
