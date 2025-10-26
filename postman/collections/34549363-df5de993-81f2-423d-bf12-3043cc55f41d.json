@@ -262,7 +262,7 @@
 									"response": [
 										{
 											"id": "34549363-598c6501-3e4a-41ed-9446-19a7585679bc",
-											"name": "New Request",
+											"name": "success",
 											"originalRequest": {
 												"method": "POST",
 												"header": [],
