@@ -343,7 +343,79 @@
 										"method": "GET",
 										"header": []
 									},
-									"response": []
+									"response": [
+										{
+											"id": "34549363-ab66a03a-3438-4887-a07c-9302124773a2",
+											"name": "success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"name\": \"Artist\",\r\n    \"email\": \"artist@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"category\": \"Pop\",\r\n    \"country\": \"Bangladesh\",\r\n    \"price\": 50\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{base_url}}/auth/artist-register",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"auth",
+														"artist-register"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": null,
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Vary",
+													"value": "Origin"
+												},
+												{
+													"key": "Access-Control-Allow-Credentials",
+													"value": "true"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Content-Length",
+													"value": "414"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"19e-Fi5yKKIt3oPb6J+JZ6oO9YRmI7I\""
+												},
+												{
+													"key": "Date",
+													"value": "Sun, 26 Oct 2025 05:53:26 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artist registered successfully!\",\n    \"data\": {\n        \"id\": \"09c6766c-5bc2-4873-a5c7-53fa3d065bf3\",\n        \"created_at\": \"2025-10-26T05:53:26.658Z\",\n        \"updated_at\": \"2025-10-26T05:53:26.658Z\",\n        \"role\": \"ARTIST\",\n        \"email\": \"artist@gmail.com\",\n        \"is_verified\": false,\n        \"is_active\": false,\n        \"is_admin\": false,\n        \"avatar\": \"/images/placeholder.png\",\n        \"name\": \"Pop\",\n        \"gender\": \"OTHER\",\n        \"country\": \"Bangladesh\",\n        \"experience\": null\n    }\n}"
+										}
+									]
 								}
 							],
 							"id": "34549363-2578f5f5-6c24-4f73-9fd4-d9f03099fa70"
