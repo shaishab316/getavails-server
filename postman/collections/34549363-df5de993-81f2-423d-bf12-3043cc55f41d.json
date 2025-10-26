@@ -443,8 +443,27 @@
 										"disableBodyPruning": true
 									},
 									"request": {
-										"method": "GET",
-										"header": []
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/auth/organizer-register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"auth",
+												"organizer-register"
+											]
+										}
 									},
 									"response": []
 								}
