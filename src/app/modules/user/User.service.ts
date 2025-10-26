@@ -10,6 +10,7 @@ import { deleteFile } from '../../middlewares/capture';
 import {
   TAgentRegister,
   TArtistRegister,
+  TOrganizerRegister,
   TUserEdit,
   TUserRegister,
   TVenueRegister,
@@ -183,14 +184,14 @@ export const UserServices = {
   },
 
   async venueRegister({ password, email, country, name }: TVenueRegister) {
-    const existingAgent = await prisma.user.findUnique({
+    const existingVenue = await prisma.user.findUnique({
       where: { email },
     });
 
-    if (existingAgent)
+    if (existingVenue)
       throw new ServerError(
         StatusCodes.CONFLICT,
-        `Agent already exists with this ${email} email`.trim(),
+        `Venue already exists with this ${email} email`.trim(),
       );
 
     // TODO: implement venue model
@@ -213,14 +214,14 @@ export const UserServices = {
     country,
     category,
   }: TArtistRegister) {
-    const existingAgent = await prisma.user.findUnique({
+    const existingArtist = await prisma.user.findUnique({
       where: { email },
     });
 
-    if (existingAgent)
+    if (existingArtist)
       throw new ServerError(
         StatusCodes.CONFLICT,
-        `Agent already exists with this ${email} email`.trim(),
+        `Artist already exists with this ${email} email`.trim(),
       );
 
     // TODO: implement artist model
@@ -231,6 +232,36 @@ export const UserServices = {
         password: await hashPassword(password),
         role: EUserRole.ARTIST,
         name: category,
+        country,
+      },
+      omit: userOmit,
+    });
+  },
+
+  async organizerRegister({
+    country,
+    email,
+    password,
+    name,
+  }: TOrganizerRegister) {
+    const existingOrganizer = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingOrganizer)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `Organizer already exists with this ${email} email`.trim(),
+      );
+
+    // TODO: implement organizer model
+
+    return prisma.user.create({
+      data: {
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.ORGANIZER,
+        name,
         country,
       },
       omit: userOmit,

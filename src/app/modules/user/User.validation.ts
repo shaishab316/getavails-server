@@ -117,4 +117,23 @@ export const UserValidations = {
         .min(1, 'Price is required'),
     } satisfies TModelZod<TUser, 'category' | 'price'>),
   }),
+
+  organizerRegister: z.object({
+    body: z.object({
+      name: z
+        .string({ error: 'Name is required' })
+        .nonempty('Name is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      country: z
+        .string({ error: 'Country is required' })
+        .nonempty('Country is required'),
+      looking_for: z
+        .string({ error: 'Looking for category is required' })
+        .nonempty('Looking for category is required'),
+    } satisfies TModelZod<TUser, 'looking_for'>),
+  }),
 };

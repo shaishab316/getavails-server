@@ -16,3 +16,7 @@ export type TVenueRegister = z.infer<
 export type TArtistRegister = z.infer<
   typeof UserValidations.artistRegister
 >['body'];
+
+export type TOrganizerRegister = z.infer<
+  typeof UserValidations.organizerRegister
+>['body'];

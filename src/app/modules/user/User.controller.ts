@@ -129,4 +129,13 @@ export const UserControllers = {
       data: artist,
     };
   }),
+
+  organizerRegister: catchAsync(async ({ body }) => {
+    const organizer = await UserServices.organizerRegister(body);
+
+    return {
+      message: 'Organizer registered successfully!',
+      data: organizer,
+    };
+  }),
 };

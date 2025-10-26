@@ -31,6 +31,12 @@ const router = Router();
     purifyRequest(UserValidations.artistRegister),
     UserControllers.artistRegister,
   );
+
+  router.post(
+    '/organizer-register',
+    purifyRequest(UserValidations.organizerRegister),
+    UserControllers.organizerRegister,
+  );
 }
 
 router.post(
