@@ -340,8 +340,27 @@
 										"disableBodyPruning": true
 									},
 									"request": {
-										"method": "GET",
-										"header": []
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Artist\",\r\n    \"email\": \"artist@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"category\": \"Pop\",\r\n    \"country\": \"Bangladesh\",\r\n    \"price\": 50\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/auth/artist-register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"auth",
+												"artist-register"
+											]
+										}
 									},
 									"response": [
 										{
