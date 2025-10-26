@@ -12,6 +12,11 @@
 					"name": "auth",
 					"item": [
 						{
+							"name": "New Folder",
+							"item": [],
+							"id": "34549363-2578f5f5-6c24-4f73-9fd4-d9f03099fa70"
+						},
+						{
 							"name": "register",
 							"id": "34549363-a00675b1-4754-4adb-8061-2b6fc878a397",
 							"protocolProfileBehavior": {
