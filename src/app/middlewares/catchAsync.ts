@@ -19,19 +19,16 @@ type AsyncHandler<T = any> = (
  * @param fn - The Express request handler function to wrap
  * @returns A wrapped request handler that catches async errors
  */
-const catchAsync = <T = any>(
-  fn: AsyncHandler<T>,
-  errFn: ErrorRequestHandler | null = null,
-) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+const catchAsync =
+  <T = any>(fn: AsyncHandler<T>, errFn: ErrorRequestHandler | null = null) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await fn(req, res, next);
       if (result) serveResponse(res, result);
     } catch (error) {
-      if (errFn) await (errFn(error, req, res, next) as any);
-      else next(error);
+      if (errFn) return errFn(error, req, res, next);
+      next(error);
     }
   };
-};
 
 export default catchAsync;
