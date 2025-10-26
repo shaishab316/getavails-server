@@ -231,7 +231,7 @@
 									]
 								},
 								{
-									"name": "New Request",
+									"name": "venue-register",
 									"id": "34549363-584b3699-9879-44b6-b37e-f9fc8e235d87",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
