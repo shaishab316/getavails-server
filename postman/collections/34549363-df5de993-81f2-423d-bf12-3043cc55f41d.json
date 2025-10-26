@@ -237,8 +237,27 @@
 										"disableBodyPruning": true
 									},
 									"request": {
-										"method": "GET",
-										"header": []
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\": \"venue@gmail.com\",\r\n    \"name\": \"Agent\",\r\n    \"country\": \"Bangladesh\",\r\n    \"venue_capacity\": 30,\r\n    \"venue_type\": \"New\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/auth/venue-register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"auth",
+												"venue-register"
+											]
+										}
 									},
 									"response": []
 								}
