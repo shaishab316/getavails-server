@@ -553,7 +553,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "// user login\r\n{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
 									"options": {
 										"raw": {
 											"language": "json"
