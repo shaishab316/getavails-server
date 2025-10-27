@@ -20,8 +20,10 @@ model User {
 
   experience   String?
   genre        String?
-  availability String[] @default([])
+  availability DateTime[] @default([])
   price        String?
+
+  venue Venue?
 
   @@map("users")
 }

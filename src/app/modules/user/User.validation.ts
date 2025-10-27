@@ -92,6 +92,9 @@ export const UserValidations = {
       venue_type: z
         .string({ error: 'Venue type is required' })
         .nonempty('Venue type is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
     } satisfies TModelZod<TUser, 'venue_capacity' | 'venue_type'>),
   }),
 
@@ -112,6 +115,9 @@ export const UserValidations = {
       price: z.coerce
         .string({ error: 'Price is required' })
         .nonempty('Price is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
     } satisfies TModelZod<TUser>),
   }),
 

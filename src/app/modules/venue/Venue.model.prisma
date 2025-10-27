@@ -1,0 +1,17 @@
+model Venue {
+  id         String   @id
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  name         String
+  location     String
+  email        String
+  venue_type   String
+  capacity     Int
+  price        String     @default("0.0")
+  availability DateTime[] @default([])
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("venues")
+}
