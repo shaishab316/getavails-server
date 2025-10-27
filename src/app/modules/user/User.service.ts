@@ -1,47 +1,43 @@
 import { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
+  userDefaultOmit,
   userOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
 import { Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TSetupUserProfile, TUserEdit, TUserRegister } from './User.interface';
+import { TUpdateAvailability, TUpdateVenue, TUserEdit } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
-import { AuthServices } from '../auth/Auth.service';
-import { errorLogger } from '../../../utils/logger';
-import config from '../../../config';
-import { otp_send_template } from '../../../templates';
-import { sendEmail } from '../../../utils/sendMail';
 import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
+import { sendEmail } from '../../../utils/sendMail';
+import { errorLogger } from '../../../utils/logger';
+import { otp_send_template } from '../../../templates';
+import config from '../../../config';
 
 export const UserServices = {
-  async userRegister({ password, email, phone, role }: TUserRegister) {
-    AuthServices.validEmailORPhone({ email, phone });
-
-    //! check if user already exists
-    const existingUser = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async register({ email, role, password, ...payload }: TUser) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (existingUser)
       throw new ServerError(
         StatusCodes.CONFLICT,
-        `User already exists with this ${email ? 'email' : ''} ${phone ? 'phone' : ''}`.trim(),
+        `${existingUser.role} already exists with this ${email} email.`,
       );
 
-    //! finally create user and in return omit auth fields
     const user = await prisma.user.create({
       data: {
         email,
-        phone,
-        password: await hashPassword(password),
         role,
+        password: await hashPassword(password),
+        ...payload,
       },
-      omit: userOmit,
+      omit: userOmit[role],
     });
 
     try {
@@ -50,44 +46,28 @@ export const UserServices = {
         userId: user.id,
       });
 
-      if (email)
-        await sendEmail({
-          to: email,
-          subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
-          html: otp_send_template({
-            userName: user.name,
-            otp,
-            template: 'account_verify',
-          }),
-        });
-    } catch (error: any) {
-      errorLogger.error(error.message);
+      await sendEmail({
+        to: user.email,
+        subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
+        html: otp_send_template({
+          userName: user.name,
+          otp,
+          template: 'account_verify',
+        }),
+      });
+    } catch (error) {
+      if (error instanceof Error) errorLogger.error(error.message);
     }
 
     return user;
   },
 
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
-    if (body.phone || body.email) {
-      const existingUser = await prisma.user.findFirst({
-        where: { OR: [{ email: body.email }, { phone: body.phone }] },
-        select: { id: true, email: true, phone: true },
-      });
-
-      if (existingUser && existingUser.id !== user.id) {
-        throw new ServerError(
-          StatusCodes.CONFLICT,
-          `User already exists with this ${existingUser.email ? 'email' : ''} ${existingUser.phone ? 'phone' : ''}`.trim(),
-        );
-      }
-    }
-
-    body.avatar ||= undefined;
-    if (body.avatar && user?.avatar) await deleteFile(user.avatar);
+    if (body.avatar && user.avatar) await deleteFile(user.avatar);
 
     return prisma.user.update({
       where: { id: user.id },
-      omit: userOmit,
+      omit: userDefaultOmit,
       data: body,
     });
   },
@@ -165,29 +145,21 @@ export const UserServices = {
     return prisma.user.delete({ where: { id: userId } });
   },
 
-  async setupUserProfile({
-    avatar,
-    date_of_birth,
-    gender,
-    name,
-    user_id,
-  }: TSetupUserProfile) {
-    const user = await prisma.user.findUnique({
-      where: { id: user_id },
-    });
-
-    // Clean up old files
-    if (user?.avatar) await deleteFile(user.avatar);
-
+  async updateAvailability({ availability, user_id }: TUpdateAvailability) {
     return prisma.user.update({
       where: { id: user_id },
       data: {
-        avatar,
-        date_of_birth,
-        gender,
-        name,
+        availability,
       },
-      omit: userOmit,
+      select: { id: true },
+    });
+  },
+
+  async updateVenue({ user_id, ...payload }: TUpdateVenue) {
+    return prisma.user.update({
+      where: { id: user_id },
+      data: payload,
+      select: { id: true },
     });
   },
 };

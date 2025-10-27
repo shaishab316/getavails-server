@@ -5,25 +5,41 @@ model User {
 
   //! auth
   role        EUserRole @default(USER)
-  email       String?
-  phone       String?
+  email       String    @unique
   password    String
   is_verified Boolean   @default(false)
   is_active   Boolean   @default(false)
   is_admin    Boolean   @default(false)
 
   //! profile
-  avatar        String   @default("/images/placeholder.png")
-  name          String   @default("Pathao User")
-  date_of_birth DateTime @default(now())
-  gender        EGender  @default(OTHER)
+  avatar   String  @default("/images/placeholder.png")
+  name     String  @default("Getavails User")
+  gender   EGender @default(OTHER)
+  location String?
   //! end
+
+  experience   String?
+  genre        String?
+  availability DateTime[] @default([])
+  price        String?
+
+  venue_type            String?
+  capacity              Int?
+  agent_artists         String[] @default([])
+  agent_pending_artists String[] @default([])
+  artist_agents         String[] @default([])
+  artist_pending_agents String[] @default([])
+  organizer_venues      String[] @default([])
 
   @@map("users")
 }
 
 enum EUserRole {
   USER
+  ORGANIZER
+  VENUE
+  ARTIST
+  AGENT
 }
 
 enum EGender {

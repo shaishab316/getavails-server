@@ -1,30 +1,29 @@
 import { z } from 'zod';
-import { EGender, EUserRole } from '../../../../prisma';
+import { EGender, EUserRole, User as TUser } from '../../../../prisma';
 import { enum_encode } from '../../../utils/transform/enum';
-import { date } from '../../../utils/transform/date';
+import { TModelZod } from '../../../types/zod';
 
 export const UserValidations = {
-  register: z.object({
+  userRegister: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
-      phone: z.string().optional(),
-      role: z.enum(EUserRole).optional(),
+      role: z.literal(EUserRole.USER).default(EUserRole.USER),
+      email: z.email({ error: 'Email is invalid' }),
       password: z
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long'),
-    }),
+    } satisfies TModelZod<TUser>),
   }),
 
-  edit: z.object({
+  editProfile: z.object({
     body: z.object({
-      email: z.email({ error: 'Email is invalid' }).optional(),
-      phone: z.string().optional(),
       role: z.enum(EUserRole).optional(),
       name: z.string().optional(),
-      avatar: z.string().optional(),
-      nid_number: z.string().optional(),
-      payment_method: z.string().optional(),
-    }),
+      avatar: z
+        .string()
+        .nullable()
+        .transform(val => val ?? undefined),
+      gender: z.enum(EGender).optional(),
+    } satisfies TModelZod<TUser>),
   }),
 
   changePassword: z.object({
@@ -55,37 +54,114 @@ export const UserValidations = {
     }),
   }),
 
-  setupUserProfile: z.object({
+  // Done
+  agentRegister: z.object({
     body: z.object({
-      avatar: z
-        .string({
-          error: 'Avatar is required',
-        })
-        .nonempty('Avatar is required'),
+      role: z.literal(EUserRole.AGENT).default(EUserRole.AGENT),
       name: z
-        .string({
-          error: 'Name is required',
-        })
+        .string({ error: 'Name is required' })
         .nonempty('Name is required'),
-      date_of_birth: z.union([
-        z.string().transform(date).pipe(z.date()),
-        z.date(),
-      ]),
-      gender: z
-        .string({
-          error: 'Gender is required',
-        })
-        .transform(enum_encode)
-        .pipe(z.enum(EGender)),
-      nid_photos: z
-        .array(
-          z
-            .string({
-              error: 'NID or Passport is required',
-            })
-            .nonempty('NID or Passport is required'),
-        )
-        .nonempty('NID or Passport is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      experience: z
+        .string({ error: 'Experience is required' })
+        .nonempty('Experience is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
+      price: z.coerce
+        .string({ error: 'Price is required' })
+        .nonempty('Price is required'),
+    } satisfies TModelZod<TUser>),
+  }),
+
+  venueRegister: z.object({
+    body: z.object({
+      role: z.literal(EUserRole.VENUE).default(EUserRole.VENUE),
+      name: z
+        .string({ error: 'Name is required' })
+        .nonempty('Name is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      capacity: z.coerce
+        .number({ error: 'Venue capacity is required' })
+        .min(1, 'Venue capacity is required'),
+      venue_type: z
+        .string({ error: 'Venue type is required' })
+        .nonempty('Venue type is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
+    } satisfies TModelZod<TUser>),
+  }),
+
+  // Done
+  artistRegister: z.object({
+    body: z.object({
+      role: z.literal(EUserRole.ARTIST).default(EUserRole.ARTIST),
+      name: z
+        .string({ error: 'Name is required' })
+        .nonempty('Name is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      genre: z
+        .string({ error: 'Genre is required' })
+        .nonempty('Genre is required'),
+      price: z.coerce
+        .string({ error: 'Price is required' })
+        .nonempty('Price is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
+    } satisfies TModelZod<TUser>),
+  }),
+
+  // Issue
+  organizerRegister: z.object({
+    body: z.object({
+      role: z.literal(EUserRole.ORGANIZER).default(EUserRole.ORGANIZER),
+      name: z
+        .string({ error: 'Name is required' })
+        .nonempty('Name is required'),
+      email: z.email({ error: 'Email is invalid' }),
+      password: z
+        .string({ error: 'Password is missing' })
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password must be at most 30 characters long'),
+      genre: z
+        .string({ error: 'Looking for genre is required' })
+        .nonempty('Looking for genre is required'),
+      location: z
+        .string({ error: 'Location is required' })
+        .nonempty('Location is required'),
+    } satisfies TModelZod<TUser>),
+  }),
+
+  updateAvailability: z.object({
+    body: z.object({
+      availability: z.array(z.iso.datetime(), {
+        error: 'Availability is required',
+      }),
     }),
+  }),
+
+  updateVenue: z.object({
+    body: z.object({
+      name: z.string().optional(),
+      email: z.email().optional(),
+      location: z.string().optional(),
+      capacity: z.coerce.number().optional(),
+      venue_type: z.string().optional(),
+      price: z.coerce.string().optional(),
+    } satisfies TModelZod<TUser>),
   }),
 };

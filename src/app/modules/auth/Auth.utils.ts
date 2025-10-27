@@ -6,14 +6,7 @@ import { errorLogger } from '../../../utils/logger';
 import chalk from 'chalk';
 import bcrypt from 'bcryptjs';
 import { enum_decode } from '../../../utils/transform/enum';
-
-export type TToken = keyof typeof config.jwt;
-
-export type TTokenPayload = {
-  uid: string;
-  exp?: number;
-  iat?: number;
-};
+import { TToken, TTokenPayload } from '../../../types/auth.types';
 
 /**
  * Create a token

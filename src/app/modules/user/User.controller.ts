@@ -9,7 +9,7 @@ import { capitalize } from '../../../utils/transform/capitalize';
 
 export const UserControllers = {
   register: catchAsync(async ({ body }, res) => {
-    const user = await UserServices.userRegister(body);
+    const user = await UserServices.register(body);
 
     const { access_token, refresh_token } = AuthServices.retrieveToken(
       user.id,
@@ -103,15 +103,27 @@ export const UserControllers = {
     };
   }),
 
-  setupUserProfile: catchAsync(async ({ body, user }) => {
-    const data = await UserServices.setupUserProfile({
+  updateAvailability: catchAsync(async ({ body, user }) => {
+    await UserServices.updateAvailability({
       ...body,
       user_id: user.id,
     });
 
     return {
-      message: 'Profile setup successfully!',
-      data,
+      message: 'Availability updated successfully!',
+      data: body,
+    };
+  }),
+
+  updateVenue: catchAsync(async ({ body, user }) => {
+    await UserServices.updateVenue({
+      ...body,
+      user_id: user.id,
+    });
+
+    return {
+      message: 'Venue updated successfully!',
+      data: body,
     };
   }),
 };

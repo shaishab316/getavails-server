@@ -76,7 +76,7 @@ const config = {
   url: {
     database: env('database url', ``, {
       up: 'Database info - start',
-      regex: '^.+$',
+      regex: '',
     }),
     ui: env('ui url', `http://localhost:${port}`, {
       regex: '^https?:\\/\\/.*$|^$',

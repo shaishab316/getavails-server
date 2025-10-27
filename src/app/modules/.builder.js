@@ -4,24 +4,15 @@ const inquirer = require('inquirer');
 
 const fileTemplates = {
   route: mName => /*javascript*/ `import { Router } from 'express';
-import { ${mName}Controllers } from './${mName}.controller';
-import { ${mName}Validations } from './${mName}.validation';
-import purifyRequest from '../../middlewares/purifyRequest';
 
 const router = Router();
 
-router.post(
-  '/create',
-  purifyRequest(${mName}Validations.create),
-  ${mName}Controllers.create,
-);
-
 export const ${mName}Routes = router;`,
 
-  interface: mName => /*javascript*/ `export type T${mName} = {};`,
+  interface: mName => /*javascript*/ ``,
 
   model: mName => `model ${mName} {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(uuid())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -29,38 +20,11 @@ export const ${mName}Routes = router;`,
 }
 `,
 
-  controller:
-    mName => /*javascript*/ `import { StatusCodes } from 'http-status-codes';
-import catchAsync from '../../middlewares/catchAsync';
-import serveResponse from '../../../util/server/serveResponse';
-import { ${mName}Services } from './${mName}.service';
+  controller: mName => /*javascript*/ `export const ${mName}Controllers = {};`,
 
-export const ${mName}Controllers = {
-  create: catchAsync(async (req, res) => {
-    const data = await ${mName}Services.create(req.body);
+  service: mName => /*javascript*/ `export const ${mName}Services = {};`,
 
-    serveResponse(res, {
-      statusCode: StatusCodes.CREATED,
-      message: '${mName} created successfully!',
-      data,
-    });
-  }),
-};`,
-
-  service: mName => /*javascript*/ `
-export const ${mName}Services = {
-  async create(${mName[0].toLowerCase()}${mName.slice(1)}Data: T${mName}) {
-    return ${mName}.create(${mName[0].toLowerCase()}${mName.slice(1)}Data);
-  },
-};`,
-
-  validation: mName => /*javascript*/ `import { z } from 'zod';
-
-export const ${mName}Validations = {
-  create: z.object({
-    body: z.object({}),
-  }),
-};`,
+  validation: mName => /*javascript*/ `export const ${mName}Validations = {};`,
 
   middleware: mName => /*javascript*/ `export const ${mName}Middlewares = {};`,
 
@@ -86,7 +50,7 @@ inquirer
       message: 'Select files to create (default is all selected):',
       choices: [
         { name: 'Route', value: 'route', checked: true },
-        { name: 'Interface', value: 'interface', checked: false },
+        { name: 'Interface', value: 'interface', checked: true },
         { name: 'Model', value: 'model', checked: true },
         { name: 'Middleware', value: 'middleware', checked: false },
         { name: 'Controller', value: 'controller', checked: true },

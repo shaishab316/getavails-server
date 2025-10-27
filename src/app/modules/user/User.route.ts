@@ -27,7 +27,7 @@ const admin = Router();
     avatarCapture,
     purifyRequest(
       QueryValidations.exists('userId', 'user'),
-      UserValidations.edit,
+      UserValidations.editProfile,
     ),
     UserControllers.superEditProfile,
   );
@@ -39,45 +39,43 @@ const admin = Router();
   );
 }
 
-const user = Router();
+const all = Router();
 {
-  user.get('/', UserControllers.profile);
+  all.get('/', UserControllers.profile);
 
-  user.patch(
+  all.patch(
     '/edit',
     avatarCapture,
-    purifyRequest(UserValidations.edit),
+    purifyRequest(UserValidations.editProfile),
     UserControllers.editProfile,
   );
 
-  user.delete('/delete', UserControllers.deleteAccount);
+  all.post(
+    '/update-availability',
+    purifyRequest(UserValidations.updateAvailability),
+    UserControllers.updateAvailability,
+  );
 
-  user.post(
+  all.delete('/delete', UserControllers.deleteAccount);
+
+  all.post(
     '/change-password',
     purifyRequest(UserValidations.changePassword),
     AuthControllers.changePassword,
   );
+}
 
-  user.post(
-    '/setup-user-profile',
-    capture({
-      nid_photos: {
-        size: 5 * 1024 * 1024,
-        maxCount: 10,
-        fileType: 'images',
-      },
-      avatar: {
-        size: 5 * 1024 * 1024,
-        maxCount: 1,
-        fileType: 'images',
-      },
-    }),
-    purifyRequest(UserValidations.setupUserProfile),
-    UserControllers.setupUserProfile,
+const venue = Router();
+{
+  venue.patch(
+    '/edit',
+    purifyRequest(UserValidations.updateVenue),
+    UserControllers.updateVenue,
   );
 }
 
 export const UserRoutes = {
   admin,
-  user,
+  all,
+  venue,
 };

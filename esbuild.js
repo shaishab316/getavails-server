@@ -1,4 +1,5 @@
 import { build } from 'esbuild';
+import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
 build({
   entryPoints: ['src/server.ts'],
@@ -8,10 +9,12 @@ build({
   outfile: 'dist/server.js',
   sourcemap: false,
   minify: true,
+  plugins: [nodeExternalsPlugin()],
   external: [
-    'mongodb',
     'stripe',
     'winston',
-    'nodemailer', // keep native Node deps external if needed
+    'nodemailer',
+    '@prisma/client',
+    './prisma/client',
   ],
 }).catch(() => process.exit(1));

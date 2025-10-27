@@ -8,3 +8,7 @@ node_modules
 *.log
 uploads/*
 .vscode/*
+api*.json
+postman/*
+
+**/migrations

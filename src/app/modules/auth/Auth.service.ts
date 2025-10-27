@@ -1,18 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { $ZodIssue } from 'zod/v4/core/errors.cjs';
-import { User as TUser } from '../../../../prisma';
 import {
   TAccountVerify,
   TAccountVerifyOtpSend,
+  TResetPassword,
   TUserLogin,
 } from './Auth.interface';
-import {
-  encodeToken,
-  hashPassword,
-  TToken,
-  verifyPassword,
-} from './Auth.utils';
-import { ZodError } from 'zod';
+import { encodeToken, hashPassword, verifyPassword } from './Auth.utils';
 import { prisma } from '../../../utils/db';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
@@ -24,17 +17,25 @@ import ms from 'ms';
 import { Response } from 'express';
 import { generateOTP, validateOTP } from '../../../utils/crypto/otp';
 import { userOmit } from '../user/User.constant';
+import { TToken } from '../../../types/auth.types';
+import { User as TUser } from '../../../../prisma';
 
 export const AuthServices = {
-  async login({ password, email, phone }: TUserLogin): Promise<Partial<TUser>> {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async login({ password, email }: TUserLogin) {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        password: true,
+        name: true,
+        is_verified: true,
+        role: true,
+      },
     });
 
-    if (!user)
+    if (!user) {
       throw new ServerError(StatusCodes.NOT_FOUND, "User doesn't exist");
+    }
 
     if (!(await verifyPassword(password, user.password))) {
       throw new ServerError(StatusCodes.UNAUTHORIZED, 'Incorrect password');
@@ -57,40 +58,22 @@ export const AuthServices = {
               template: 'account_verify',
             }),
           });
-      } catch (error: any) {
-        errorLogger.error(error.message);
+      } catch (error) {
+        if (error instanceof Error) {
+          errorLogger.error(error.message);
+        }
       }
     }
 
-    return {
-      ...user,
-      password: undefined,
-    };
-  },
-
-  validEmailORPhone({ email, phone }: { email?: string; phone?: string }) {
-    if (!email || !phone) {
-      const issues: $ZodIssue[] = [];
-
-      if (!email && !phone)
-        issues.push({
-          code: 'custom',
-          path: ['email'],
-          message: 'Email or phone is missing',
-        });
-
-      if (!phone && !email)
-        issues.push({
-          code: 'custom',
-          path: ['phone'],
-          message: 'Email or phone is missing',
-        });
-
-      if (issues.length) throw new ZodError(issues);
-    }
+    return prisma.user.findUnique({
+      where: { id: user.id },
+      omit: userOmit[user.role],
+    });
   },
 
   setTokens(res: Response, tokens: { [key in TToken]?: string }) {
+    return; // TODO: cookies disabled for testing
+
     Object.entries(tokens).forEach(([key, value]) =>
       res.cookie(key, value, {
         httpOnly: true,
@@ -122,11 +105,9 @@ export const AuthServices = {
     ) as Record<T[number], string>;
   },
 
-  async accountVerifyOtpSend({ email, phone }: TAccountVerifyOtpSend) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async accountVerifyOtpSend({ email }: TAccountVerifyOtpSend) {
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -159,11 +140,9 @@ export const AuthServices = {
     }
   },
 
-  async forgotPassword({ email, phone }: TAccountVerifyOtpSend) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+  async forgotPassword({ email }: TAccountVerifyOtpSend) {
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -192,14 +171,11 @@ export const AuthServices = {
 
   async userOtpVerify({
     email,
-    phone,
     otp,
     token_type = 'access_token',
   }: TAccountVerify & { token_type: TToken }) {
-    this.validEmailORPhone({ email, phone });
-
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { phone }] },
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user)
@@ -220,7 +196,7 @@ export const AuthServices = {
         is_verified: true,
         is_active: true, //TODO: account activation
       },
-      omit: userOmit,
+      omit: userOmit[user.role],
     });
   },
 
@@ -237,6 +213,25 @@ export const AuthServices = {
       select: {
         id: true,
       },
+    });
+  },
+
+  async resetPassword(user: TUser, { password }: TResetPassword) {
+    if (await verifyPassword(password, user.password)) {
+      throw new ServerError(
+        StatusCodes.UNAUTHORIZED,
+        'You cannot use old password',
+      );
+    }
+
+    await this.modifyPassword({
+      userId: user.id,
+      password,
+    });
+
+    return prisma.user.findUnique({
+      where: { id: user.id },
+      omit: userOmit[user.role],
     });
   },
 };

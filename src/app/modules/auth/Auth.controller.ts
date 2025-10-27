@@ -1,15 +1,16 @@
 import { AuthServices } from './Auth.service';
 import catchAsync from '../../middlewares/catchAsync';
-import { TToken, verifyPassword } from './Auth.utils';
+import { verifyPassword } from './Auth.utils';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
+import { TToken } from '../../../types/auth.types';
 
 export const AuthControllers = {
   login: catchAsync(async ({ body }, res) => {
     const user = await AuthServices.login(body);
 
     const { access_token, refresh_token } = AuthServices.retrieveToken(
-      user.id!,
+      user!.id!,
       'access_token',
       'refresh_token',
     );
@@ -23,11 +24,10 @@ export const AuthControllers = {
   }),
 
   accountVerifyOtpSend: catchAsync(async ({ body }) => {
-    const data = await AuthServices.accountVerifyOtpSend(body);
+    await AuthServices.accountVerifyOtpSend(body);
 
     return {
       message: 'OTP sent successfully!',
-      data,
     };
   }),
 
@@ -65,43 +65,30 @@ export const AuthControllers = {
   }),
 
   forgotPassword: catchAsync(async ({ body }) => {
-    const data = await AuthServices.forgotPassword(body);
+    await AuthServices.forgotPassword(body);
 
     return {
       message: 'OTP sent successfully!',
-      data,
     };
   }),
 
-  resetPassword: catchAsync(
-    async ({ user: { password, ...user }, body }, res) => {
-      if (await verifyPassword(body.password, password)) {
-        throw new ServerError(
-          StatusCodes.UNAUTHORIZED,
-          'You cannot use old password',
-        );
-      }
+  resetPassword: catchAsync(async ({ user, body }, res) => {
+    const userData = await AuthServices.resetPassword(user, body);
 
-      await AuthServices.modifyPassword({
-        userId: user.id,
-        password: body.password,
-      });
+    const { access_token, refresh_token } = AuthServices.retrieveToken(
+      user.id,
+      'access_token',
+      'refresh_token',
+    );
 
-      const { access_token, refresh_token } = AuthServices.retrieveToken(
-        user.id,
-        'access_token',
-        'refresh_token',
-      );
+    AuthServices.setTokens(res, { access_token, refresh_token });
+    AuthServices.destroyTokens(res, 'reset_token');
 
-      AuthServices.setTokens(res, { access_token, refresh_token });
-      AuthServices.destroyTokens(res, 'reset_token');
-
-      return {
-        message: 'Password reset successfully!',
-        data: { access_token, refresh_token, user },
-      };
-    },
-  ),
+    return {
+      message: 'Password reset successfully!',
+      data: { access_token, refresh_token, user: userData },
+    };
+  }),
 
   changePassword: catchAsync(async ({ user, body }) => {
     if (!(await verifyPassword(body.oldPassword, user.password))) {
