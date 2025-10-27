@@ -1,7 +1,11 @@
 import { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
-  userOmit,
+  userAgentOmit,
+  userArtistOmit,
+  userDefaultOmit,
+  userOrganizerOmit,
+  userVenueOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
 import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
@@ -23,7 +27,6 @@ import { otp_send_template } from '../../../templates';
 import { sendEmail } from '../../../utils/sendMail';
 import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
-import { userVenueOmit } from '../venue/Venue.constant';
 
 export const UserServices = {
   async userRegister({ password, email }: TUserRegister) {
@@ -45,7 +48,7 @@ export const UserServices = {
         password: await hashPassword(password),
         role: EUserRole.USER,
       },
-      omit: userOmit,
+      omit: userDefaultOmit,
     });
 
     try {
@@ -76,7 +79,7 @@ export const UserServices = {
 
     return prisma.user.update({
       where: { id: user.id },
-      omit: userOmit,
+      omit: userDefaultOmit,
       data: body,
     });
   },
@@ -172,7 +175,7 @@ export const UserServices = {
         role: EUserRole.AGENT,
         ...payload,
       },
-      omit: userOmit,
+      omit: userAgentOmit,
     });
   },
 
@@ -203,10 +206,7 @@ export const UserServices = {
           name,
           location,
         },
-        omit: {
-          ...userOmit,
-          ...userVenueOmit,
-        },
+        omit: userVenueOmit,
       });
 
       await tx.venue.create({
@@ -242,11 +242,16 @@ export const UserServices = {
         role: EUserRole.ARTIST,
         ...payload,
       },
-      omit: userOmit,
+      omit: userArtistOmit,
     });
   },
 
-  async organizerRegister({ email, password, ...payload }: TOrganizerRegister) {
+  async organizerRegister({
+    email,
+    password,
+    name,
+    location,
+  }: TOrganizerRegister) {
     const existingOrganizer = await prisma.user.findUnique({
       where: { email },
     });
@@ -264,9 +269,10 @@ export const UserServices = {
         email,
         password: await hashPassword(password),
         role: EUserRole.ORGANIZER,
-        ...payload,
+        name,
+        location,
       },
-      omit: userOmit,
+      omit: userOrganizerOmit,
     });
   },
 };

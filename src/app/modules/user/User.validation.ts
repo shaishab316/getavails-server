@@ -121,6 +121,7 @@ export const UserValidations = {
     } satisfies TModelZod<TUser>),
   }),
 
+  // Issue
   organizerRegister: z.object({
     body: z.object({
       name: z
