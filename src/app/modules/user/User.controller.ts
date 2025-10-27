@@ -6,6 +6,11 @@ import { EUserRole, User as TUser } from '../../../../prisma';
 import { prisma } from '../../../utils/db';
 import { enum_decode } from '../../../utils/transform/enum';
 import { capitalize } from '../../../utils/transform/capitalize';
+import { generateOTP } from '../../../utils/crypto/otp';
+import { sendEmail } from '../../../utils/sendMail';
+import config from '../../../config';
+import { otp_send_template } from '../../../templates';
+import { errorLogger } from '../../../utils/logger';
 
 export const UserControllers = {
   register: (role: EUserRole) =>
@@ -16,6 +21,25 @@ export const UserControllers = {
         ...body,
         role,
       });
+
+      try {
+        const otp = generateOTP({
+          tokenType: 'access_token',
+          userId: user.id,
+        });
+
+        await sendEmail({
+          to: user.email,
+          subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
+          html: otp_send_template({
+            userName: user.name,
+            otp,
+            template: 'account_verify',
+          }),
+        });
+      } catch (error) {
+        if (error instanceof Error) errorLogger.error(error.message);
+      }
 
       const { access_token, refresh_token } = AuthServices.retrieveToken(
         user.id,

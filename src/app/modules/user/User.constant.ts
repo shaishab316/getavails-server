@@ -6,6 +6,17 @@ export const userDefaultOmit: Prisma.UserOmit = {
   password: true,
 };
 
+export const userUserOmit: Prisma.UserOmit = Object.assign(
+  {
+    experience: true,
+    genre: true,
+    availability: true,
+    price: true,
+    location: true,
+  },
+  userDefaultOmit,
+);
+
 export const userVenueOmit: Prisma.UserOmit = Object.assign(
   {
     experience: true,

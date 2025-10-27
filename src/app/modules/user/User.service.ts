@@ -5,6 +5,7 @@ import {
   userArtistOmit,
   userDefaultOmit,
   userOrganizerOmit,
+  userUserOmit,
   userVenueOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
@@ -21,59 +22,9 @@ import {
 } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
-import { errorLogger } from '../../../utils/logger';
-import config from '../../../config';
-import { otp_send_template } from '../../../templates';
-import { sendEmail } from '../../../utils/sendMail';
 import { hashPassword } from '../auth/Auth.utils';
-import { generateOTP } from '../../../utils/crypto/otp';
 
 export const UserServices = {
-  async userRegister({ password, email }: TUserRegister) {
-    //! check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `User already exists with this ${email} email`.trim(),
-      );
-
-    //! finally create user and in return omit auth fields
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.USER,
-      },
-      omit: userDefaultOmit,
-    });
-
-    try {
-      const otp = generateOTP({
-        tokenType: 'access_token',
-        userId: user.id,
-      });
-
-      if (email)
-        await sendEmail({
-          to: email,
-          subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
-          html: otp_send_template({
-            userName: user.name,
-            otp,
-            template: 'account_verify',
-          }),
-        });
-    } catch (error: any) {
-      errorLogger.error(error.message);
-    }
-
-    return user;
-  },
-
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
     if (body.avatar && user?.avatar) await deleteFile(user.avatar);
 
@@ -155,6 +106,28 @@ export const UserServices = {
     if (user?.avatar) await deleteFile(user.avatar);
 
     return prisma.user.delete({ where: { id: userId } });
+  },
+
+  async userRegister({ password, email }: TUserRegister) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `User already exists with this ${email} email`.trim(),
+      );
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.USER,
+      },
+      omit: userUserOmit,
+    });
+
+    return user;
   },
 
   async agentRegister({ password, email, ...payload }: TAgentRegister) {
