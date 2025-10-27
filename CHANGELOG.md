@@ -1,0 +1,26 @@
+# 1.0.0 (2025-10-27)
+
+
+### Features
+
+* Allow venue users to update venue information ([bb56d8a](https://github.com/Alpha-Bytes-Department/getavails-server/commit/bb56d8ab1369653171735c9faef51989fa966557))
+* Enforce required email and default user role on registration ([0a8d03e](https://github.com/Alpha-Bytes-Department/getavails-server/commit/0a8d03e8b490f6b8c7d7921701015e09fca14da5))
+* Exclude node_modules from esbuild bundle ([cb17fb7](https://github.com/Alpha-Bytes-Department/getavails-server/commit/cb17fb79e2a4e2b9900fef38221152857e9920fb))
+* Implement account verification via OTP email ([01bfe5b](https://github.com/Alpha-Bytes-Department/getavails-server/commit/01bfe5b45ea25cbff1246090b95be62ba4694773))
+* Implement agent registration functionality ([9e86d48](https://github.com/Alpha-Bytes-Department/getavails-server/commit/9e86d481be37f3f75b7de7f8ec4291d9bf530b2a))
+* Implement artist registration functionality ([71f30f6](https://github.com/Alpha-Bytes-Department/getavails-server/commit/71f30f626ef453390f43c5c85784268bb80229c2))
+* Implement organizer registration functionality ([fa83d8a](https://github.com/Alpha-Bytes-Department/getavails-server/commit/fa83d8a272ac975574573a6a97a21d1e343557e3))
+* Implement user availability updates via new API endpoint ([e081440](https://github.com/Alpha-Bytes-Department/getavails-server/commit/e081440005abc43b6f66381a9a8e512083024eb4)), closes [#11](https://github.com/Alpha-Bytes-Department/getavails-server/issues/11)
+* Implement Venue module and refactor module builder ([60be295](https://github.com/Alpha-Bytes-Department/getavails-server/commit/60be2957de71565b4a3ed882e849f39e586e8618))
+* Implement venue registration feature ([d1f5c6d](https://github.com/Alpha-Bytes-Department/getavails-server/commit/d1f5c6d044c0f9d7c216731908420cb7d9a48370))
+* Integrate database connection and server lifecycle management ([412eb40](https://github.com/Alpha-Bytes-Department/getavails-server/commit/412eb40aca140f9dee9c4013cfc1c42c36034627))
+* Refactor registration and add venue info endpoint ([46910b1](https://github.com/Alpha-Bytes-Department/getavails-server/commit/46910b1b3500ce499a0d18395563c1f0389a8723))
+* Refactor registration process to use a single register function ([cfc94e3](https://github.com/Alpha-Bytes-Department/getavails-server/commit/cfc94e3a45f164a1107081b1bee372205ca4714c))
+* Refactor reset password and update user data handling ([822b29f](https://github.com/Alpha-Bytes-Department/getavails-server/commit/822b29fc71bbf38e7ac6496a39f70486db4e9c64))
+* Remove OpenAPI/Swagger documentation generation and UI ([3755109](https://github.com/Alpha-Bytes-Department/getavails-server/commit/3755109676df848a81cb5c84c30d342d401b12db))
+* Remove phone number authentication and user registration ([327fcff](https://github.com/Alpha-Bytes-Department/getavails-server/commit/327fcff4e3096c6cdeac2d348806ae1aa371ba73))
+* Require email and disable cookie setting for testing ([1f40ba0](https://github.com/Alpha-Bytes-Department/getavails-server/commit/1f40ba054118a451fe929e7102af2426f49a69a3))
+* Update Docker Compose and Prisma User Omit constants ([a398f70](https://github.com/Alpha-Bytes-Department/getavails-server/commit/a398f70c48a195b768cbc7fb4709df99e0654642))
+* Update User model and registration with new profile fields ([6be3b90](https://github.com/Alpha-Bytes-Department/getavails-server/commit/6be3b905f3931933709e28052114917afe60917c))
+* Update User model, remove migrations, and add gitignore rule ([82d8749](https://github.com/Alpha-Bytes-Department/getavails-server/commit/82d8749b3716403189912a2865ade8e6a4a6d97c))
+* **venue:** allow venues to update their information via API ([22791c0](https://github.com/Alpha-Bytes-Department/getavails-server/commit/22791c099f22e34b996f813f5da1215f574b47bc)), closes [#10](https://github.com/Alpha-Bytes-Department/getavails-server/issues/10)
