@@ -86,7 +86,7 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      venue_capacity: z.coerce
+      capacity: z.coerce
         .number({ error: 'Venue capacity is required' })
         .min(1, 'Venue capacity is required'),
       venue_type: z
@@ -95,7 +95,7 @@ export const UserValidations = {
       location: z
         .string({ error: 'Location is required' })
         .nonempty('Location is required'),
-    } satisfies TModelZod<TUser, 'venue_capacity' | 'venue_type'>),
+    } satisfies TModelZod<TUser>),
   }),
 
   // Done
@@ -147,5 +147,16 @@ export const UserValidations = {
         error: 'Availability is required',
       }),
     }),
+  }),
+
+  updateVenue: z.object({
+    body: z.object({
+      name: z.string().optional(),
+      email: z.email().optional(),
+      location: z.string().optional(),
+      capacity: z.coerce.number().optional(),
+      venue_type: z.string().optional(),
+      price: z.coerce.string().optional(),
+    } satisfies TModelZod<TUser>),
   }),
 };

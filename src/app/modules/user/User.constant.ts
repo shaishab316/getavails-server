@@ -18,6 +18,8 @@ export const userUserOmit: Prisma.UserOmit = {
   artist_agents: true,
   artist_pending_agents: true,
   organizer_venues: true,
+  venue_type: true,
+  capacity: true,
 };
 
 export const userVenueOmit: Prisma.UserOmit = {
@@ -39,6 +41,8 @@ export const userAgentOmit: Prisma.UserOmit = {
   artist_agents: true,
   artist_pending_agents: true,
   organizer_venues: true,
+  venue_type: true,
+  capacity: true,
 };
 
 export const userArtistOmit: Prisma.UserOmit = {
@@ -47,6 +51,8 @@ export const userArtistOmit: Prisma.UserOmit = {
   agent_artists: true,
   agent_pending_artists: true,
   organizer_venues: true,
+  venue_type: true,
+  capacity: true,
 };
 
 export const userOrganizerOmit: Prisma.UserOmit = {
@@ -59,4 +65,6 @@ export const userOrganizerOmit: Prisma.UserOmit = {
   artist_pending_agents: true,
   agent_artists: true,
   agent_pending_artists: true,
+  venue_type: true,
+  capacity: true,
 };

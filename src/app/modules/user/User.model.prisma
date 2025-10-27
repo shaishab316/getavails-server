@@ -23,7 +23,8 @@ model User {
   availability DateTime[] @default([])
   price        String?
 
-  venue                 Venue?
+  venue_type            String?
+  capacity              Int?
   agent_artists         String[] @default([])
   agent_pending_artists String[] @default([])
   artist_agents         String[] @default([])

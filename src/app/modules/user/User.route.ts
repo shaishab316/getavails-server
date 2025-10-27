@@ -39,33 +39,43 @@ const admin = Router();
   );
 }
 
-const user = Router();
+const all = Router();
 {
-  user.get('/', UserControllers.profile);
+  all.get('/', UserControllers.profile);
 
-  user.patch(
+  all.patch(
     '/edit',
     avatarCapture,
     purifyRequest(UserValidations.edit),
     UserControllers.editProfile,
   );
 
-  user.post(
+  all.post(
     '/update-availability',
     purifyRequest(UserValidations.updateAvailability),
     UserControllers.updateAvailability,
   );
 
-  user.delete('/delete', UserControllers.deleteAccount);
+  all.delete('/delete', UserControllers.deleteAccount);
 
-  user.post(
+  all.post(
     '/change-password',
     purifyRequest(UserValidations.changePassword),
     AuthControllers.changePassword,
   );
 }
 
+const venue = Router();
+{
+  venue.patch(
+    '/edit',
+    purifyRequest(UserValidations.updateVenue),
+    UserControllers.updateVenue,
+  );
+}
+
 export const UserRoutes = {
   admin,
-  user,
+  all,
+  venue,
 };

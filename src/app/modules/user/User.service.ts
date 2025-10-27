@@ -17,6 +17,7 @@ import {
   TArtistRegister,
   TOrganizerRegister,
   TUpdateAvailability,
+  TUpdateVenue,
   TUserEdit,
   TUserRegister,
   TVenueRegister,
@@ -158,8 +159,8 @@ export const UserServices = {
     email,
     location,
     name,
-    venue_capacity,
     venue_type,
+    capacity,
   }: TVenueRegister) {
     const existingVenue = await prisma.user.findUnique({
       where: { email },
@@ -171,30 +172,17 @@ export const UserServices = {
         `Venue already exists with this ${email} email`.trim(),
       );
 
-    return prisma.$transaction(async tx => {
-      const venue = await tx.user.create({
-        data: {
-          email,
-          password: await hashPassword(password),
-          role: EUserRole.VENUE,
-          name,
-          location,
-        },
-        omit: userVenueOmit,
-      });
-
-      await tx.venue.create({
-        data: {
-          id: venue.id,
-          capacity: venue_capacity,
-          venue_type,
-          name,
-          email,
-          location,
-        },
-      });
-
-      return venue;
+    return prisma.user.create({
+      data: {
+        email,
+        password: await hashPassword(password),
+        role: EUserRole.VENUE,
+        name,
+        location,
+        capacity,
+        venue_type,
+      },
+      omit: userVenueOmit,
     });
   },
 
@@ -256,6 +244,14 @@ export const UserServices = {
       data: {
         availability,
       },
+      select: { id: true },
+    });
+  },
+
+  async updateVenue({ user_id, ...payload }: TUpdateVenue) {
+    return prisma.user.update({
+      where: { id: user_id },
+      data: payload,
       select: { id: true },
     });
   },
