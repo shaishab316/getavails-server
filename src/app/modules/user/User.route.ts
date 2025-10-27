@@ -27,7 +27,7 @@ const admin = Router();
     avatarCapture,
     purifyRequest(
       QueryValidations.exists('userId', 'user'),
-      UserValidations.edit,
+      UserValidations.editProfile,
     ),
     UserControllers.superEditProfile,
   );
@@ -46,7 +46,7 @@ const all = Router();
   all.patch(
     '/edit',
     avatarCapture,
-    purifyRequest(UserValidations.edit),
+    purifyRequest(UserValidations.editProfile),
     UserControllers.editProfile,
   );
 

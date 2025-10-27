@@ -1,4 +1,4 @@
-import { Prisma, User as TUser } from '../../../../prisma';
+import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 
 export const userSearchableFields: (keyof TUser)[] = ['name', 'email'];
 
@@ -67,4 +67,12 @@ export const userOrganizerOmit: Prisma.UserOmit = {
   agent_pending_artists: true,
   venue_type: true,
   capacity: true,
+};
+
+export const userOmit = {
+  [EUserRole.USER]: userUserOmit,
+  [EUserRole.ARTIST]: userArtistOmit,
+  [EUserRole.ORGANIZER]: userOrganizerOmit,
+  [EUserRole.VENUE]: userVenueOmit,
+  [EUserRole.AGENT]: userAgentOmit,
 };

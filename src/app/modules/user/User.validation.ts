@@ -4,8 +4,9 @@ import { enum_encode } from '../../../utils/transform/enum';
 import { TModelZod } from '../../../types/zod';
 
 export const UserValidations = {
-  register: z.object({
+  userRegister: z.object({
     body: z.object({
+      role: z.literal(EUserRole.USER).default(EUserRole.USER),
       email: z.email({ error: 'Email is invalid' }),
       password: z
         .string({ error: 'Password is missing' })
@@ -13,7 +14,7 @@ export const UserValidations = {
     } satisfies TModelZod<TUser>),
   }),
 
-  edit: z.object({
+  editProfile: z.object({
     body: z.object({
       role: z.enum(EUserRole).optional(),
       name: z.string().optional(),
@@ -56,6 +57,7 @@ export const UserValidations = {
   // Done
   agentRegister: z.object({
     body: z.object({
+      role: z.literal(EUserRole.AGENT).default(EUserRole.AGENT),
       name: z
         .string({ error: 'Name is required' })
         .nonempty('Name is required'),
@@ -78,6 +80,7 @@ export const UserValidations = {
 
   venueRegister: z.object({
     body: z.object({
+      role: z.literal(EUserRole.VENUE).default(EUserRole.VENUE),
       name: z
         .string({ error: 'Name is required' })
         .nonempty('Name is required'),
@@ -101,6 +104,7 @@ export const UserValidations = {
   // Done
   artistRegister: z.object({
     body: z.object({
+      role: z.literal(EUserRole.ARTIST).default(EUserRole.ARTIST),
       name: z
         .string({ error: 'Name is required' })
         .nonempty('Name is required'),
@@ -124,6 +128,7 @@ export const UserValidations = {
   // Issue
   organizerRegister: z.object({
     body: z.object({
+      role: z.literal(EUserRole.ORGANIZER).default(EUserRole.ORGANIZER),
       name: z
         .string({ error: 'Name is required' })
         .nonempty('Name is required'),

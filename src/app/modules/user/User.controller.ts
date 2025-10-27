@@ -2,63 +2,33 @@ import { UserServices } from './User.service';
 import catchAsync from '../../middlewares/catchAsync';
 import { StatusCodes } from 'http-status-codes';
 import { AuthServices } from '../auth/Auth.service';
-import { EUserRole, User as TUser } from '../../../../prisma';
+import { User as TUser } from '../../../../prisma';
 import { prisma } from '../../../utils/db';
 import { enum_decode } from '../../../utils/transform/enum';
 import { capitalize } from '../../../utils/transform/capitalize';
-import { generateOTP } from '../../../utils/crypto/otp';
-import { sendEmail } from '../../../utils/sendMail';
-import config from '../../../config';
-import { otp_send_template } from '../../../templates';
-import { errorLogger } from '../../../utils/logger';
 
 export const UserControllers = {
-  register: (role: EUserRole) =>
-    catchAsync(async ({ body }, res) => {
-      const user = await UserServices[
-        `${role.toLowerCase()}Register` as `${Lowercase<EUserRole>}Register`
-      ]({
-        ...body,
-        role,
-      });
+  register: catchAsync(async ({ body }, res) => {
+    const user = await UserServices.register(body);
 
-      try {
-        const otp = generateOTP({
-          tokenType: 'access_token',
-          userId: user.id,
-        });
+    const { access_token, refresh_token } = AuthServices.retrieveToken(
+      user.id,
+      'access_token',
+      'refresh_token',
+    );
 
-        await sendEmail({
-          to: user.email,
-          subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
-          html: otp_send_template({
-            userName: user.name,
-            otp,
-            template: 'account_verify',
-          }),
-        });
-      } catch (error) {
-        if (error instanceof Error) errorLogger.error(error.message);
-      }
+    AuthServices.setTokens(res, { access_token, refresh_token });
 
-      const { access_token, refresh_token } = AuthServices.retrieveToken(
-        user.id,
-        'access_token',
-        'refresh_token',
-      );
-
-      AuthServices.setTokens(res, { access_token, refresh_token });
-
-      return {
-        statusCode: StatusCodes.CREATED,
-        message: `${capitalize(user.role) ?? 'Unknown'} registered successfully!`,
-        data: {
-          access_token,
-          refresh_token,
-          user,
-        },
-      };
-    }),
+    return {
+      statusCode: StatusCodes.CREATED,
+      message: `${capitalize(user.role) ?? 'Unknown'} registered successfully!`,
+      data: {
+        access_token,
+        refresh_token,
+        user,
+      },
+    };
+  }),
 
   editProfile: catchAsync(async req => {
     const data = await UserServices.updateUser(req);

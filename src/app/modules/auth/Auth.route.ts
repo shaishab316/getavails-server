@@ -5,38 +5,37 @@ import { UserControllers } from '../user/User.controller';
 import { UserValidations } from '../user/User.validation';
 import purifyRequest from '../../middlewares/purifyRequest';
 import auth from '../../middlewares/auth';
-import { EUserRole } from '../../../../prisma';
 
 const router = Router();
 {
   router.post(
     '/register',
-    purifyRequest(UserValidations.register),
-    UserControllers.register(EUserRole.USER),
+    purifyRequest(UserValidations.userRegister),
+    UserControllers.register,
   );
 
   router.post(
     '/agent-register',
     purifyRequest(UserValidations.agentRegister),
-    UserControllers.register(EUserRole.AGENT),
+    UserControllers.register,
   );
 
   router.post(
     '/venue-register',
     purifyRequest(UserValidations.venueRegister),
-    UserControllers.register(EUserRole.VENUE),
+    UserControllers.register,
   );
 
   router.post(
     '/artist-register',
     purifyRequest(UserValidations.artistRegister),
-    UserControllers.register(EUserRole.ARTIST),
+    UserControllers.register,
   );
 
   router.post(
     '/organizer-register',
     purifyRequest(UserValidations.organizerRegister),
-    UserControllers.register(EUserRole.ORGANIZER),
+    UserControllers.register,
   );
 }
 

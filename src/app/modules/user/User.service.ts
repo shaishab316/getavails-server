@@ -1,34 +1,69 @@
 import { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
-  userAgentOmit,
-  userArtistOmit,
   userDefaultOmit,
-  userOrganizerOmit,
-  userUserOmit,
-  userVenueOmit,
+  userOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
-import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
+import { Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import {
-  TAgentRegister,
-  TArtistRegister,
-  TOrganizerRegister,
-  TUpdateAvailability,
-  TUpdateVenue,
-  TUserEdit,
-  TUserRegister,
-  TVenueRegister,
-} from './User.interface';
+import { TUpdateAvailability, TUpdateVenue, TUserEdit } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';
+import { generateOTP } from '../../../utils/crypto/otp';
+import { sendEmail } from '../../../utils/sendMail';
+import { errorLogger } from '../../../utils/logger';
+import { otp_send_template } from '../../../templates';
+import config from '../../../config';
 
 export const UserServices = {
+  async register({ email, role, password, ...payload }: TUser) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser)
+      throw new ServerError(
+        StatusCodes.CONFLICT,
+        `${existingUser.role} already exists with this ${email} email.`,
+      );
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        role,
+        password: await hashPassword(password),
+        ...payload,
+      },
+      omit: userOmit[role],
+    });
+
+    try {
+      const otp = generateOTP({
+        tokenType: 'access_token',
+        userId: user.id,
+      });
+
+      await sendEmail({
+        to: user.email,
+        subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
+        html: otp_send_template({
+          userName: user.name,
+          otp,
+          template: 'account_verify',
+        }),
+      });
+    } catch (error) {
+      if (error instanceof Error) errorLogger.error(error.message);
+    }
+
+    return user;
+  },
+
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
-    if (body.avatar && user?.avatar) await deleteFile(user.avatar);
+    if (body.avatar && user.avatar) await deleteFile(user.avatar);
 
     return prisma.user.update({
       where: { id: user.id },
@@ -108,134 +143,6 @@ export const UserServices = {
     if (user?.avatar) await deleteFile(user.avatar);
 
     return prisma.user.delete({ where: { id: userId } });
-  },
-
-  async userRegister({ password, email }: TUserRegister) {
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `User already exists with this ${email} email`.trim(),
-      );
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.USER,
-      },
-      omit: userUserOmit,
-    });
-
-    return user;
-  },
-
-  async agentRegister({ password, email, ...payload }: TAgentRegister) {
-    const existingAgent = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingAgent)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `Agent already exists with this ${email} email`.trim(),
-      );
-
-    return prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.AGENT,
-        ...payload,
-      },
-      omit: userAgentOmit,
-    });
-  },
-
-  async venueRegister({
-    password,
-    email,
-    location,
-    name,
-    venue_type,
-    capacity,
-  }: TVenueRegister) {
-    const existingVenue = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingVenue)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `Venue already exists with this ${email} email`.trim(),
-      );
-
-    return prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.VENUE,
-        name,
-        location,
-        capacity,
-        venue_type,
-      },
-      omit: userVenueOmit,
-    });
-  },
-
-  async artistRegister({ password, email, ...payload }: TArtistRegister) {
-    const existingArtist = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingArtist)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `Artist already exists with this ${email} email`.trim(),
-      );
-
-    return prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.ARTIST,
-        ...payload,
-      },
-      omit: userArtistOmit,
-    });
-  },
-
-  async organizerRegister({
-    email,
-    password,
-    name,
-    location,
-  }: TOrganizerRegister) {
-    const existingOrganizer = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingOrganizer)
-      throw new ServerError(
-        StatusCodes.CONFLICT,
-        `Organizer already exists with this ${email} email`.trim(),
-      );
-
-    // TODO: implement organizer model
-
-    return prisma.user.create({
-      data: {
-        email,
-        password: await hashPassword(password),
-        role: EUserRole.ORGANIZER,
-        name,
-        location,
-      },
-      omit: userOrganizerOmit,
-    });
   },
 
   async updateAvailability({ availability, user_id }: TUpdateAvailability) {
