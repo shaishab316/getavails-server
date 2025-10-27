@@ -1,5 +1,15 @@
 import { Router } from 'express';
+import { VenueControllers } from './Venue.controller';
+import purifyRequest from '../../middlewares/purifyRequest';
+import { VenueValidations } from './Venue.validation';
 
-const router = Router();
+const venue = Router();
+{
+  venue.patch(
+    '/edit',
+    purifyRequest(VenueValidations.updateVenue),
+    VenueControllers.updateVenue,
+  );
+}
 
-export const VenueRoutes = router;
+export const VenueRoutes = { venue };
