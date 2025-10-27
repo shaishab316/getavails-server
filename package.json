@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alpha-Bytes-Department/getavails-server.git"
+    "url": "https://github.com/shaishab316/getavails-server.git"
   },
   "scripts": {
     "prepare": "simple-git-hooks",
