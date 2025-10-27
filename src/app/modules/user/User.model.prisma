@@ -23,7 +23,12 @@ model User {
   availability DateTime[] @default([])
   price        String?
 
-  venue Venue?
+  venue                 Venue?
+  agent_artists         String[] @default([])
+  agent_pending_artists String[] @default([])
+  artist_agents         String[] @default([])
+  artist_pending_agents String[] @default([])
+  organizer_venues      String[] @default([])
 
   @@map("users")
 }

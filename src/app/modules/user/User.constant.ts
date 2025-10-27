@@ -6,47 +6,57 @@ export const userDefaultOmit: Prisma.UserOmit = {
   password: true,
 };
 
-export const userUserOmit: Prisma.UserOmit = Object.assign(
-  {
-    experience: true,
-    genre: true,
-    availability: true,
-    price: true,
-    location: true,
-  },
-  userDefaultOmit,
-);
+export const userUserOmit: Prisma.UserOmit = {
+  ...userDefaultOmit,
+  experience: true,
+  genre: true,
+  availability: true,
+  price: true,
+  location: true,
+  agent_artists: true,
+  agent_pending_artists: true,
+  artist_agents: true,
+  artist_pending_agents: true,
+  organizer_venues: true,
+};
 
-export const userVenueOmit: Prisma.UserOmit = Object.assign(
-  {
-    experience: true,
-    genre: true,
-    availability: true,
-    price: true,
-  },
-  userDefaultOmit,
-);
+export const userVenueOmit: Prisma.UserOmit = {
+  ...userDefaultOmit,
+  experience: true,
+  genre: true,
+  availability: true,
+  price: true,
+  agent_artists: true,
+  agent_pending_artists: true,
+  artist_agents: true,
+  artist_pending_agents: true,
+  organizer_venues: true,
+};
 
-export const userAgentOmit: Prisma.UserOmit = Object.assign(
-  {
-    genre: true,
-  },
-  userDefaultOmit,
-);
+export const userAgentOmit: Prisma.UserOmit = {
+  ...userDefaultOmit,
+  genre: true,
+  artist_agents: true,
+  artist_pending_agents: true,
+  organizer_venues: true,
+};
 
-export const userArtistOmit: Prisma.UserOmit = Object.assign(
-  {
-    experience: true,
-  },
-  userDefaultOmit,
-);
+export const userArtistOmit: Prisma.UserOmit = {
+  ...userDefaultOmit,
+  experience: true,
+  agent_artists: true,
+  agent_pending_artists: true,
+  organizer_venues: true,
+};
 
-export const userOrganizerOmit: Prisma.UserOmit = Object.assign(
-  {
-    experience: true,
-    genre: true,
-    availability: true,
-    price: true,
-  },
-  userDefaultOmit,
-);
+export const userOrganizerOmit: Prisma.UserOmit = {
+  ...userDefaultOmit,
+  experience: true,
+  genre: true,
+  availability: true,
+  price: true,
+  artist_agents: true,
+  artist_pending_agents: true,
+  agent_artists: true,
+  agent_pending_artists: true,
+};
