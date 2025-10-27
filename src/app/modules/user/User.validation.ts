@@ -140,4 +140,12 @@ export const UserValidations = {
         .nonempty('Location is required'),
     } satisfies TModelZod<TUser, 'looking_for'>),
   }),
+
+  updateAvailability: z.object({
+    body: z.object({
+      availability: z.array(z.iso.datetime(), {
+        error: 'Availability is required',
+      }),
+    }),
+  }),
 };

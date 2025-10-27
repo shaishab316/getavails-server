@@ -20,3 +20,7 @@ export type TArtistRegister = z.infer<
 export type TOrganizerRegister = z.infer<
   typeof UserValidations.organizerRegister
 >['body'];
+
+export type TUpdateAvailability = z.infer<
+  typeof UserValidations.updateAvailability
+>['body'] & { user_id: string };

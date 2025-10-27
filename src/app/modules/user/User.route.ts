@@ -50,6 +50,12 @@ const user = Router();
     UserControllers.editProfile,
   );
 
+  user.post(
+    '/update-availability',
+    purifyRequest(UserValidations.updateAvailability),
+    UserControllers.updateAvailability,
+  );
+
   user.delete('/delete', UserControllers.deleteAccount);
 
   user.post(

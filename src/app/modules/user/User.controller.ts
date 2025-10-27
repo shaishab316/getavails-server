@@ -132,4 +132,16 @@ export const UserControllers = {
       message: `Goodbye ${user?.name ?? enum_decode(user.role)}! Your account has been deleted successfully!`,
     };
   }),
+
+  updateAvailability: catchAsync(async ({ body, user }) => {
+    await UserServices.updateAvailability({
+      ...body,
+      user_id: user.id,
+    });
+
+    return {
+      message: 'Availability updated successfully!',
+      data: body,
+    };
+  }),
 };

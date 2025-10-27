@@ -16,6 +16,7 @@ import {
   TAgentRegister,
   TArtistRegister,
   TOrganizerRegister,
+  TUpdateAvailability,
   TUserEdit,
   TUserRegister,
   TVenueRegister,
@@ -246,6 +247,16 @@ export const UserServices = {
         location,
       },
       omit: userOrganizerOmit,
+    });
+  },
+
+  async updateAvailability({ availability, user_id }: TUpdateAvailability) {
+    return prisma.user.update({
+      where: { id: user_id },
+      data: {
+        availability,
+      },
+      select: { id: true },
     });
   },
 };
