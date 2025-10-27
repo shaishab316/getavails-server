@@ -137,13 +137,13 @@ export const UserValidations = {
         .string({ error: 'Password is missing' })
         .min(6, 'Password must be at least 6 characters long')
         .max(30, 'Password must be at most 30 characters long'),
-      looking_for: z
-        .string({ error: 'Looking for category is required' })
-        .nonempty('Looking for category is required'),
+      genre: z
+        .string({ error: 'Looking for genre is required' })
+        .nonempty('Looking for genre is required'),
       location: z
         .string({ error: 'Location is required' })
         .nonempty('Location is required'),
-    } satisfies TModelZod<TUser, 'looking_for'>),
+    } satisfies TModelZod<TUser>),
   }),
 
   updateAvailability: z.object({

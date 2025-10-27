@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { User as TUser } from '../../../../prisma';
 import {
   TAccountVerify,
   TAccountVerifyOtpSend,
+  TResetPassword,
   TUserLogin,
 } from './Auth.interface';
 import { encodeToken, hashPassword, verifyPassword } from './Auth.utils';
@@ -16,17 +16,26 @@ import { errorLogger } from '../../../utils/logger';
 import ms from 'ms';
 import { Response } from 'express';
 import { generateOTP, validateOTP } from '../../../utils/crypto/otp';
-import { userDefaultOmit } from '../user/User.constant';
+import { userOmit } from '../user/User.constant';
 import { TToken } from '../../../types/auth.types';
+import { User as TUser } from '../../../../prisma';
 
 export const AuthServices = {
-  async login({ password, email }: TUserLogin): Promise<Partial<TUser>> {
+  async login({ password, email }: TUserLogin) {
     const user = await prisma.user.findUnique({
       where: { email },
+      select: {
+        id: true,
+        password: true,
+        name: true,
+        is_verified: true,
+        role: true,
+      },
     });
 
-    if (!user)
+    if (!user) {
       throw new ServerError(StatusCodes.NOT_FOUND, "User doesn't exist");
+    }
 
     if (!(await verifyPassword(password, user.password))) {
       throw new ServerError(StatusCodes.UNAUTHORIZED, 'Incorrect password');
@@ -49,15 +58,17 @@ export const AuthServices = {
               template: 'account_verify',
             }),
           });
-      } catch (error: any) {
-        errorLogger.error(error.message);
+      } catch (error) {
+        if (error instanceof Error) {
+          errorLogger.error(error.message);
+        }
       }
     }
 
-    return {
-      ...user,
-      password: undefined,
-    };
+    return prisma.user.findUnique({
+      where: { id: user.id },
+      omit: userOmit[user.role],
+    });
   },
 
   setTokens(res: Response, tokens: { [key in TToken]?: string }) {
@@ -185,7 +196,7 @@ export const AuthServices = {
         is_verified: true,
         is_active: true, //TODO: account activation
       },
-      omit: userDefaultOmit,
+      omit: userOmit[user.role],
     });
   },
 
@@ -202,6 +213,25 @@ export const AuthServices = {
       select: {
         id: true,
       },
+    });
+  },
+
+  async resetPassword(user: TUser, { password }: TResetPassword) {
+    if (await verifyPassword(password, user.password)) {
+      throw new ServerError(
+        StatusCodes.UNAUTHORIZED,
+        'You cannot use old password',
+      );
+    }
+
+    await this.modifyPassword({
+      userId: user.id,
+      password,
+    });
+
+    return prisma.user.findUnique({
+      where: { id: user.id },
+      omit: userOmit[user.role],
     });
   },
 };

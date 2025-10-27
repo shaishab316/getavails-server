@@ -58,7 +58,6 @@ export const userArtistOmit: Prisma.UserOmit = {
 export const userOrganizerOmit: Prisma.UserOmit = {
   ...userDefaultOmit,
   experience: true,
-  genre: true,
   availability: true,
   price: true,
   artist_agents: true,
