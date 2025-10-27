@@ -5,6 +5,8 @@ import { VenueValidations } from './Venue.validation';
 
 const venue = Router();
 {
+  venue.get('/', VenueControllers.getMyVenue);
+
   venue.patch(
     '/edit',
     purifyRequest(VenueValidations.updateVenue),
