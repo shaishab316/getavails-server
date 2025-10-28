@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { PrismaClient } from '../../../prisma';
+export * from '../../../prisma';
 
 export const prisma = new PrismaClient();
 

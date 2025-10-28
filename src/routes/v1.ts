@@ -11,6 +11,7 @@ export default injectRoutes(Router(), {
   // no auth required
   '/auth': [AuthRoutes.free],
   '/artists': [ArtistRoutes.free],
+  '/agents': [AgentRoutes.free],
 
   // all user can access
   '/profile': [auth.all, UserRoutes.all],

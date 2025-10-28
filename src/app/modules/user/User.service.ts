@@ -3,8 +3,7 @@ import {
   userSearchableFields as searchFields,
   userOmit,
 } from './User.constant';
-import { prisma } from '../../../utils/db';
-import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
+import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
 import type {
@@ -60,7 +59,10 @@ export const UserServices = {
         password: await hashPassword(password),
         ...payload,
       },
-      omit: userOmit[role],
+      omit: {
+        ...userOmit[role],
+        email: false,
+      },
     });
 
     try {

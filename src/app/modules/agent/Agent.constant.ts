@@ -1,9 +1,9 @@
 import { User as TUser } from '../../../utils/db';
 
-export const artistSearchableFields = [
+export const agentSearchableFields = [
   'name',
   'email',
-  'genre',
+  'experience',
   'location',
   'id',
 ] satisfies (keyof TUser)[];
