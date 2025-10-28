@@ -4,6 +4,7 @@ import { logger } from '../../../utils/logger';
 import config from '../../../config';
 import { prisma } from '../../../utils/db';
 import { hashPassword } from '../auth/Auth.utils';
+import { UserServices } from '../user/User.service';
 
 export const AdminServices = {
   /**
@@ -41,6 +42,7 @@ export const AdminServices = {
       } else {
         await prisma.user.create({
           data: {
+            id: await UserServices.getNextUserId({ is_admin: true }),
             name,
             email,
             password: await hashPassword(password),
