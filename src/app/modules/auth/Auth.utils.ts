@@ -7,6 +7,8 @@ import chalk from 'chalk';
 import bcrypt from 'bcryptjs';
 import { enum_decode } from '../../../utils/transform/enum';
 import { TToken, TTokenPayload } from '../../../types/auth.types';
+import rateLimit from 'express-rate-limit';
+import ms from 'ms';
 
 /**
  * Create a token
@@ -60,3 +62,28 @@ export const hashPassword = async (password: string) => {
 export const verifyPassword = async (password: string, hash: string) => {
   return bcrypt.compare(password, hash);
 };
+
+export const otpVerifyRateLimiter = rateLimit({
+  windowMs: ms('15m'),
+  max: 5,
+  message:
+    'Too many requests for account verification. Try again in 15 minutes.',
+});
+
+export const loginRateLimiter = rateLimit({
+  windowMs: ms('10m'),
+  max: 10,
+  message: 'Too many login attempts. Try again in 10 minutes.',
+});
+
+export const forgotPasswordRateLimiter = rateLimit({
+  windowMs: ms('15m'),
+  max: 5,
+  message: 'Too many forgot password attempts. Try again in 15 minutes.',
+});
+
+export const registerRateLimiter = rateLimit({
+  windowMs: ms('30m'),
+  max: 10,
+  message: 'Too many registration attempts. Try again in 30 minutes.',
+});
