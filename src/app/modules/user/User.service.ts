@@ -60,7 +60,10 @@ export const UserServices = {
         password: await hashPassword(password),
         ...payload,
       },
-      omit: userOmit[role],
+      omit: {
+        ...userOmit[role],
+        email: false,
+      },
     });
 
     try {
