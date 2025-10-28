@@ -1,12 +1,17 @@
 import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 
-export const userSearchableFields: (keyof TUser)[] = ['name', 'email'];
+export const userSearchableFields = ['name', 'email'] satisfies (keyof TUser)[];
 
-export const userDefaultOmit: Prisma.UserOmit = {
+export const userDefaultOmit = {
   password: true,
-};
+  is_verified: true,
+  is_active: true,
+  is_admin: true,
+  updated_at: true,
+  created_at: true,
+} satisfies Prisma.UserOmit;
 
-export const userUserOmit: Prisma.UserOmit = {
+export const userUserOmit = {
   ...userDefaultOmit,
   experience: true,
   genre: true,
@@ -20,9 +25,9 @@ export const userUserOmit: Prisma.UserOmit = {
   organizer_venues: true,
   venue_type: true,
   capacity: true,
-};
+} satisfies Prisma.UserOmit;
 
-export const userVenueOmit: Prisma.UserOmit = {
+export const userVenueOmit = {
   ...userDefaultOmit,
   experience: true,
   genre: true,
@@ -33,9 +38,9 @@ export const userVenueOmit: Prisma.UserOmit = {
   artist_agents: true,
   artist_pending_agents: true,
   organizer_venues: true,
-};
+} satisfies Prisma.UserOmit;
 
-export const userAgentOmit: Prisma.UserOmit = {
+export const userAgentOmit = {
   ...userDefaultOmit,
   genre: true,
   artist_agents: true,
@@ -43,9 +48,9 @@ export const userAgentOmit: Prisma.UserOmit = {
   organizer_venues: true,
   venue_type: true,
   capacity: true,
-};
+} satisfies Prisma.UserOmit;
 
-export const userArtistOmit: Prisma.UserOmit = {
+export const userArtistOmit = {
   ...userDefaultOmit,
   experience: true,
   agent_artists: true,
@@ -53,9 +58,9 @@ export const userArtistOmit: Prisma.UserOmit = {
   organizer_venues: true,
   venue_type: true,
   capacity: true,
-};
+} satisfies Prisma.UserOmit;
 
-export const userOrganizerOmit: Prisma.UserOmit = {
+export const userOrganizerOmit = {
   ...userDefaultOmit,
   experience: true,
   availability: true,
@@ -66,7 +71,7 @@ export const userOrganizerOmit: Prisma.UserOmit = {
   agent_pending_artists: true,
   venue_type: true,
   capacity: true,
-};
+} satisfies Prisma.UserOmit;
 
 export const userOmit = {
   [EUserRole.USER]: userUserOmit,

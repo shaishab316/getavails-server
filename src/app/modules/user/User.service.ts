@@ -1,11 +1,10 @@
 import { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
-  userDefaultOmit,
   userOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
-import { Prisma, User as TUser } from '../../../../prisma';
+import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
 import { TUpdateAvailability, TUpdateVenue, TUserEdit } from './User.interface';
@@ -67,7 +66,7 @@ export const UserServices = {
 
     return prisma.user.update({
       where: { id: user.id },
-      omit: userDefaultOmit,
+      omit: userOmit[body.role ?? user.role ?? EUserRole.USER],
       data: body,
     });
   },

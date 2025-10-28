@@ -26,25 +26,27 @@ const auth = ({
 
     const id = decodeToken(token, token_type)?.uid;
 
-    if (!id)
+    if (!id) {
       throw new ServerError(
         StatusCodes.UNAUTHORIZED,
         'Your session has expired. Login again.',
       );
+    }
 
     const user = await prisma.user.findUnique({
       where: { id },
     });
 
-    if (!user)
+    if (!user) {
       throw new ServerError(
         StatusCodes.UNAUTHORIZED,
         'Maybe your account has been deleted. Register again.',
       );
+    }
 
     await Promise.all(validators.map(fn => fn(user)));
 
-    Object.assign(req, { user });
+    req.user = user;
 
     next();
   });
@@ -71,8 +73,9 @@ auth.admin = auth({
   validators: [
     commonValidator,
     ({ is_admin }) => {
-      if (!is_admin)
+      if (!is_admin) {
         throw new ServerError(StatusCodes.FORBIDDEN, 'You are not an admin');
+      }
     },
   ],
 });
@@ -84,11 +87,12 @@ Object.values(EUserRole).forEach(role => {
       validators: [
         commonValidator,
         user => {
-          if (user.role !== role)
+          if (user.role !== role) {
             throw new ServerError(
               StatusCodes.FORBIDDEN,
               `You do not have ${role} permissions`,
             );
+          }
         },
       ],
     }),
