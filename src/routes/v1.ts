@@ -1,36 +1,26 @@
 import { Router } from 'express';
 import auth from '../app/middlewares/auth';
-import AdminRoutes from '../app/modules/admin/Admin.route';
+import { AdminRoutes } from '../app/modules/admin/Admin.route';
 import { AuthRoutes } from '../app/modules/auth/Auth.route';
 import { UserRoutes } from '../app/modules/user/User.route';
-import { StatusCodes } from 'http-status-codes';
-import { fileTypes } from '../app/middlewares/capture';
 import { injectRoutes } from '../utils/router/injectRouter';
 import { ArtistRoutes } from '../app/modules/artist/Artist.route';
+import { AgentRoutes } from '../app/modules/agent/Agent.route';
 
-const appRouter = Router();
+export default injectRoutes(Router(), {
+  // no auth required
+  '/auth': [AuthRoutes.free],
+  '/artists': [auth.all, ArtistRoutes.free],
 
-/** Forward uploaded files requests */
-fileTypes.map((filetype: string) =>
-  appRouter.get(`/${filetype}/:filename`, (req, res) =>
-    res.redirect(
-      StatusCodes.MOVED_PERMANENTLY,
-      `/${filetype}/${encodeURIComponent(req.params.filename)}`,
-    ),
-  ),
-);
-
-export default injectRoutes(appRouter, {
-  // No auth
-  '/auth': [AuthRoutes],
-
-  // Free auth
+  // all user can access
   '/profile': [auth.all, UserRoutes.all],
-  '/artists': [auth.all, ArtistRoutes.all],
 
-  // Venue auth
+  // venue can access
   '/venue': [auth.venue, UserRoutes.venue],
 
-  // Admin auth
-  '/admin': [auth.admin, AdminRoutes],
+  // agent can access
+  '/agent': [auth.agent, AgentRoutes.agent],
+
+  // only admin can access
+  '/admin': [auth.admin, AdminRoutes.admin],
 });

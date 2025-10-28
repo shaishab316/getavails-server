@@ -4,9 +4,9 @@ import { QueryValidations } from '../query/Query.validation';
 import { ArtistControllers } from './Artist.controller';
 import { ArtistValidations } from './Artist.validation';
 
-const all = Router();
+const free = Router();
 {
-  all.get(
+  free.get(
     '/',
     purifyRequest(QueryValidations.list),
     ArtistControllers.getAllArtists,
@@ -22,4 +22,4 @@ const agent = Router();
   );
 }
 
-export const ArtistRoutes = { all, agent };
+export const ArtistRoutes = { free, agent };

@@ -8,12 +8,6 @@ import { EUserRole, User as TUser } from '../../../prisma';
 import config from '../../config';
 import { TToken } from '../../types/auth.types';
 
-/**
- * Middleware to authenticate and authorize requests based on user roles
- *
- * @param token_type - The type of token to validate
- * @param validators - Array of validator functions to run on the user
- */
 const auth = ({
   token_type = 'access_token',
   validators = [],
@@ -116,4 +110,10 @@ export type TAuth = typeof auth & {
   [K in TToken]: ReturnType<typeof auth>;
 };
 
+/**
+ * Middleware to authenticate and authorize requests based on user roles
+ *
+ * @param token_type - The type of token to validate
+ * @param validators - Array of validator functions to run on the user
+ */
 export default auth as TAuth;
