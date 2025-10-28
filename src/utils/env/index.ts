@@ -21,7 +21,7 @@ export default function env<T>(
   } = {},
 ): T {
   options.regex ??= Array.isArray(defaultValue)
-    ? '^([a-zA-Z0-9]+,?)+$'
+    ? '^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*$'
     : typeof defaultValue === 'string'
       ? '^[a-zA-Z0-9]+$'
       : typeof defaultValue === 'number'
