@@ -1,4 +1,4 @@
-import { TList } from '../query/Query.interface';
+import type { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
   userOmit,
@@ -7,7 +7,11 @@ import { prisma } from '../../../utils/db';
 import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TUpdateAvailability, TUpdateVenue, TUserEdit } from './User.interface';
+import type {
+  TUpdateAvailability,
+  TUpdateVenue,
+  TUserEdit,
+} from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';

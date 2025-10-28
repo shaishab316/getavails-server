@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {
+import type {
   TAccountVerify,
   TAccountVerifyOtpSend,
   TResetPassword,
