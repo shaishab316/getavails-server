@@ -11,4 +11,15 @@ export const ArtistControllers = {
       data: artists,
     };
   }),
+
+  sentRequestToArtist: catchAsync(async ({ body, user }) => {
+    await ArtistServices.sentRequestToArtist({
+      agent_id: user.id,
+      ...body,
+    });
+
+    return {
+      message: 'Request sent successfully!',
+    };
+  }),
 };
