@@ -1,5 +1,4 @@
-import { EUserRole, Prisma } from '../../../../prisma';
-import { prisma } from '../../../utils/db';
+import { EUserRole, Prisma, prisma } from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
 import { TList } from '../query/Query.interface';
 import { userOmit } from '../user/User.constant';

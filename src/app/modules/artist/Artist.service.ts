@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { EUserRole, Prisma } from '../../../../prisma';
 import ServerError from '../../../errors/ServerError';
-import { prisma } from '../../../utils/db';
+import { EUserRole, Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';

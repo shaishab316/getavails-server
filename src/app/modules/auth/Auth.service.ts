@@ -6,7 +6,7 @@ import type {
   TUserLogin,
 } from './Auth.interface';
 import { encodeToken, hashPassword, verifyPassword } from './Auth.utils';
-import { prisma } from '../../../utils/db';
+import { prisma, User as TUser } from '../../../utils/db';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import config from '../../../config';
@@ -18,7 +18,6 @@ import { Response } from 'express';
 import { generateOTP, validateOTP } from '../../../utils/crypto/otp';
 import { userOmit } from '../user/User.constant';
 import { TToken } from '../../../types/auth.types';
-import { User as TUser } from '../../../../prisma';
 
 export const AuthServices = {
   async login({ password, email }: TUserLogin) {

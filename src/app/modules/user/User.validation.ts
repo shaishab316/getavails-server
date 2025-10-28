@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EGender, EUserRole, User as TUser } from '../../../../prisma';
+import { EGender, EUserRole, User as TUser } from '../../../utils/db';
 import { enum_encode } from '../../../utils/transform/enum';
 import { TModelZod } from '../../../types/zod';
 

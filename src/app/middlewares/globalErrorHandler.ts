@@ -10,7 +10,7 @@ import { errorLogger } from '../../utils/logger';
 import { TErrorHandler, TErrorMessage } from '../../types/errors';
 import multer from 'multer';
 import handleMulterError from '../../errors/handleMulterError';
-import { Prisma } from '../../../prisma';
+import { Prisma } from '../../utils/db';
 import {
   handlePrismaRequestError,
   handlePrismaValidationError,
