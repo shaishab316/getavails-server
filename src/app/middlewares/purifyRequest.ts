@@ -28,11 +28,19 @@ const purifyRequest = (...schemas: SchemaOrFn[]) =>
       );
 
       keys.forEach(key => {
-        req[key] = Object.assign(
+        const purified = Object.assign(
           {},
           key === 'params' && req.params,
           ...results.map((result: any) => result?.[key] ?? {}),
         );
+
+        //? Fix express 5 issue (req is read-only)
+        Object.defineProperty(req, key, {
+          value: purified,
+          writable: true,
+          configurable: true,
+          enumerable: true,
+        });
       });
 
       next();
