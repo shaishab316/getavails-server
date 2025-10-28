@@ -44,7 +44,7 @@ export const AuthControllers = {
 
     return {
       message: 'Account verified successfully!',
-      data: { user, access_token, refresh_token },
+      data: { access_token, refresh_token, user },
     };
   }),
 
@@ -60,7 +60,7 @@ export const AuthControllers = {
 
     return {
       message: 'OTP verified successfully!',
-      data: { user, reset_token },
+      data: { reset_token, user },
     };
   }),
 
