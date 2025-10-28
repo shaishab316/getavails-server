@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { UserRoutes } from '../user/User.route';
 import { injectRoutes } from '../../../utils/router/injectRouter';
 
-export default injectRoutes(Router(), {
+const admin = injectRoutes(Router(), {
   '/users': [UserRoutes.admin],
 });
+
+export const AdminRoutes = { admin };

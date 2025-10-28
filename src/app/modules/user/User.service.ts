@@ -1,14 +1,17 @@
-import { TList } from '../query/Query.interface';
+import type { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
-  userDefaultOmit,
   userOmit,
 } from './User.constant';
 import { prisma } from '../../../utils/db';
-import { Prisma, User as TUser } from '../../../../prisma';
+import { EUserRole, Prisma, User as TUser } from '../../../../prisma';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import { TUpdateAvailability, TUpdateVenue, TUserEdit } from './User.interface';
+import type {
+  TUpdateAvailability,
+  TUpdateVenue,
+  TUserEdit,
+} from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';
@@ -19,7 +22,26 @@ import { otp_send_template } from '../../../templates';
 import config from '../../../config';
 
 export const UserServices = {
-  async register({ email, role, password, ...payload }: TUser) {
+  async getNextUserId(
+    where:
+      | { role: EUserRole; is_admin?: never }
+      | { role?: never; is_admin: true },
+  ): Promise<string> {
+    const prefix = where.role ? where.role.toLowerCase().slice(0, 2) : 'su';
+
+    const user = await prisma.user.findFirst({
+      where,
+      orderBy: { id: 'desc' },
+      select: { id: true },
+    });
+
+    if (!user) return `${prefix}-1`;
+
+    const currSL = parseInt(user.id.split('-')[1], 10);
+    return `${prefix}-${currSL + 1}`;
+  },
+
+  async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -32,6 +54,7 @@ export const UserServices = {
 
     const user = await prisma.user.create({
       data: {
+        id: await UserServices.getNextUserId({ role }),
         email,
         role,
         password: await hashPassword(password),
@@ -63,12 +86,17 @@ export const UserServices = {
   },
 
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
+    const data: Prisma.UserUpdateInput = body;
+
     if (body.avatar && user.avatar) await deleteFile(user.avatar);
+
+    if (body.role && body.role !== user.role)
+      data.id = await this.getNextUserId({ role: body.role });
 
     return prisma.user.update({
       where: { id: user.id },
-      omit: userDefaultOmit,
-      data: body,
+      omit: userOmit[body.role ?? user.role ?? EUserRole.USER],
+      data,
     });
   },
 

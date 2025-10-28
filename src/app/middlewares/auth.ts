@@ -8,12 +8,6 @@ import { EUserRole, User as TUser } from '../../../prisma';
 import config from '../../config';
 import { TToken } from '../../types/auth.types';
 
-/**
- * Middleware to authenticate and authorize requests based on user roles
- *
- * @param token_type - The type of token to validate
- * @param validators - Array of validator functions to run on the user
- */
 const auth = ({
   token_type = 'access_token',
   validators = [],
@@ -26,25 +20,27 @@ const auth = ({
 
     const id = decodeToken(token, token_type)?.uid;
 
-    if (!id)
+    if (!id) {
       throw new ServerError(
         StatusCodes.UNAUTHORIZED,
         'Your session has expired. Login again.',
       );
+    }
 
     const user = await prisma.user.findUnique({
       where: { id },
     });
 
-    if (!user)
+    if (!user) {
       throw new ServerError(
         StatusCodes.UNAUTHORIZED,
         'Maybe your account has been deleted. Register again.',
       );
+    }
 
     await Promise.all(validators.map(fn => fn(user)));
 
-    Object.assign(req, { user });
+    req.user = user;
 
     next();
   });
@@ -71,8 +67,9 @@ auth.admin = auth({
   validators: [
     commonValidator,
     ({ is_admin }) => {
-      if (!is_admin)
+      if (!is_admin) {
         throw new ServerError(StatusCodes.FORBIDDEN, 'You are not an admin');
+      }
     },
   ],
 });
@@ -84,11 +81,12 @@ Object.values(EUserRole).forEach(role => {
       validators: [
         commonValidator,
         user => {
-          if (user.role !== role)
+          if (user.role !== role) {
             throw new ServerError(
               StatusCodes.FORBIDDEN,
               `You do not have ${role} permissions`,
             );
+          }
         },
       ],
     }),
@@ -112,4 +110,10 @@ export type TAuth = typeof auth & {
   [K in TToken]: ReturnType<typeof auth>;
 };
 
+/**
+ * Middleware to authenticate and authorize requests based on user roles
+ *
+ * @param token_type - The type of token to validate
+ * @param validators - Array of validator functions to run on the user
+ */
 export default auth as TAuth;

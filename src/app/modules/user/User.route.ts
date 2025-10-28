@@ -23,7 +23,7 @@ const admin = Router();
   );
 
   admin.patch(
-    ':userId/edit',
+    '/:userId/edit',
     avatarCapture,
     purifyRequest(
       QueryValidations.exists('userId', 'user'),
