@@ -10,7 +10,7 @@ import { AgentRoutes } from '../app/modules/agent/Agent.route';
 export default injectRoutes(Router(), {
   // no auth required
   '/auth': [AuthRoutes.free],
-  '/artists': [auth.all, ArtistRoutes.free],
+  '/artists': [ArtistRoutes.free],
 
   // all user can access
   '/profile': [auth.all, UserRoutes.all],
@@ -20,6 +20,9 @@ export default injectRoutes(Router(), {
 
   // agent can access
   '/agent': [auth.agent, AgentRoutes.agent],
+
+  // artist can access
+  '/artist': [auth.artist, ArtistRoutes.artist],
 
   // only admin can access
   '/admin': [auth.admin, AdminRoutes.admin],

@@ -5,11 +5,11 @@ import { prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
-import type { TSentRequestToArtist } from './Artist.interface';
+import type { TProcessAgentRequest, TInviteArtist } from './Artist.interface';
 import { userOmit } from '../user/User.constant';
 
 export const ArtistServices = {
-  async getAllArtists({ limit, page, search }: TList) {
+  async getArtistList({ limit, page, search }: TList) {
     const where: Prisma.UserWhereInput = {
       role: EUserRole.ARTIST,
     };
@@ -55,7 +55,7 @@ export const ArtistServices = {
     };
   },
 
-  async sentRequestToArtist({ artist_id, agent_id }: TSentRequestToArtist) {
+  async inviteArtist({ artist_id, agent_id }: TInviteArtist) {
     const artist = await prisma.user.findUnique({
       where: { id: artist_id, role: EUserRole.ARTIST },
       select: {
@@ -85,6 +85,55 @@ export const ArtistServices = {
         artist_pending_agents: { push: agent_id },
       },
       omit: userOmit.ARTIST,
+    });
+  },
+
+  async processAgentRequest({
+    agent_id,
+    is_approved,
+    artist_id,
+  }: TProcessAgentRequest) {
+    const artist = (await prisma.user.findUnique({
+      where: { id: artist_id },
+      select: {
+        artist_pending_agents: true,
+      },
+    }))!;
+
+    if (!artist.artist_pending_agents.includes(agent_id)) {
+      throw new ServerError(
+        StatusCodes.NOT_FOUND,
+        'Agent not found in pending list',
+      );
+    }
+
+    const artistData: Prisma.UserUpdateInput = {
+      artist_pending_agents: {
+        //? Pop agent from pending list
+        set: artist.artist_pending_agents.filter(id => id !== agent_id),
+      },
+    };
+
+    return prisma.$transaction(async tx => {
+      if (is_approved) {
+        artistData.artist_agents = { push: agent_id };
+
+        //? update into agent
+        await tx.user.update({
+          where: { id: agent_id },
+          data: {
+            agent_artists: { push: artist_id },
+          },
+          omit: userOmit.AGENT,
+        });
+      }
+
+      //? update into artist
+      await tx.user.update({
+        where: { id: artist_id },
+        data: artistData,
+        omit: userOmit.ARTIST,
+      });
     });
   },
 };

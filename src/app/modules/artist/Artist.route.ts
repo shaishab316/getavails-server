@@ -9,17 +9,32 @@ const free = Router();
   free.get(
     '/',
     purifyRequest(QueryValidations.list),
-    ArtistControllers.getAllArtists,
+    ArtistControllers.getArtistList,
   );
 }
 
 const agent = Router();
 {
   agent.post(
-    '/request',
-    purifyRequest(ArtistValidations.sentRequestToArtist),
-    ArtistControllers.sentRequestToArtist,
+    '/invite-artist',
+    purifyRequest(ArtistValidations.inviteArtist),
+    ArtistControllers.inviteArtist,
   );
 }
 
-export const ArtistRoutes = { free, agent };
+const artist = Router();
+{
+  artist.post(
+    '/approve-agent',
+    purifyRequest(ArtistValidations.processAgentRequest),
+    ArtistControllers.processAgentRequest(true),
+  );
+
+  artist.post(
+    '/reject-agent',
+    purifyRequest(ArtistValidations.processAgentRequest),
+    ArtistControllers.processAgentRequest(false),
+  );
+}
+
+export const ArtistRoutes = { free, agent, artist };
