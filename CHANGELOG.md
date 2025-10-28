@@ -1,3 +1,24 @@
+# [1.1.0](https://github.com/shaishab316/getavails-server/compare/v1.0.0...v1.1.0) (2025-10-28)
+
+
+### Bug Fixes
+
+* Fix purifyRequest middleware for Express 5 read-only requests ([5444809](https://github.com/shaishab316/getavails-server/commit/54448098935d673ed38af6833b3f32f0b2717904))
+
+
+### Features
+
+* Add functionality for agents to send requests to artists ([183e944](https://github.com/shaishab316/getavails-server/commit/183e94404f4c87344735087d47baf21f251136f8))
+* Enhance auth middleware, refactor user data handling ([64dfd73](https://github.com/shaishab316/getavails-server/commit/64dfd735107b6d3d4bb889512cf527a2e6da28d7))
+* Enhance security with rate limiting and update dependencies ([f73de00](https://github.com/shaishab316/getavails-server/commit/f73de006bb26d58f1cbb1bbb79ec43d156491231))
+* Enhance security with rate limiting and update dependencies ([2c9767c](https://github.com/shaishab316/getavails-server/commit/2c9767c48d4031967c57c846a228188209ae9d72))
+* Implement agent invites and artist approval/rejection ([49310a2](https://github.com/shaishab316/getavails-server/commit/49310a270b1f366ac2ec44653db9ed6f86d7b6d4))
+* Implement Agent module and refactor auth route configuration ([1a6d57d](https://github.com/shaishab316/getavails-server/commit/1a6d57da3131e322cbb50611b164123f64351cfc))
+* Implement Artist module with retrieval functionalities ([f2b654f](https://github.com/shaishab316/getavails-server/commit/f2b654fb5f3a575983bd63d9239dd63b5de8effb))
+* Implement automatic user ID generation ([6f5f6cb](https://github.com/shaishab316/getavails-server/commit/6f5f6cb4037bc5a5458cdcccb2c00c64a76b0b33))
+* Introduce Agent module with listing functionality ([c096637](https://github.com/shaishab316/getavails-server/commit/c096637bf140605ec7d4fd2e1ff3d74601379d34))
+* Remove Stripe webhook script, add agent-to-artist route ([f12849c](https://github.com/shaishab316/getavails-server/commit/f12849c5610597e61ce4c323fd1a958f3a57967c))
+
 # 1.0.0 (2025-10-27)
 
 
