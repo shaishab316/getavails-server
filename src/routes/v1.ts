@@ -6,6 +6,7 @@ import { UserRoutes } from '../app/modules/user/User.route';
 import { StatusCodes } from 'http-status-codes';
 import { fileTypes } from '../app/middlewares/capture';
 import { injectRoutes } from '../utils/router/injectRouter';
+import { ArtistRoutes } from '../app/modules/artist/Artist.route';
 
 const appRouter = Router();
 
@@ -25,6 +26,7 @@ export default injectRoutes(appRouter, {
 
   // Free auth
   '/profile': [auth.all, UserRoutes.all],
+  '/artists': [auth.all, ArtistRoutes.all],
 
   // Venue auth
   '/venue': [auth.venue, UserRoutes.venue],
