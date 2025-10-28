@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// user login\r\n{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
+							"raw": "// user login\r\n// {\r\n//     \"email\": \"shaishab316@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// agent login\r\n{\r\n    \"email\": \"agent@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1503,7 +1503,7 @@
 			"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
 		},
 		{
-			"name": "User",
+			"name": "USER",
 			"item": [
 				{
 					"name": "Profile",
@@ -1543,7 +1543,7 @@
 											"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399"
 										},
 										{
-											"key": "country",
+											"key": "location",
 											"value": "Bangladesh",
 											"type": "text",
 											"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
@@ -1553,6 +1553,12 @@
 											"value": "MALE",
 											"type": "text",
 											"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
+										},
+										{
+											"key": "role",
+											"value": "USER",
+											"type": "text",
+											"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663"
 										}
 									]
 								},
@@ -1576,7 +1582,7 @@
 			"id": "34549363-f17e0b3e-90fa-4b04-a43e-e40e29d6d192"
 		},
 		{
-			"name": "Artist",
+			"name": "ARTIST",
 			"item": [
 				{
 					"name": "Profile",
@@ -1623,12 +1629,380 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "approve-agent",
+					"id": "34549363-154e2e40-3bac-437c-a70a-e4850873d7a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artist/approve-agent",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"approve-agent"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-d77f7ec0-6eee-40e1-8d33-bfad31025864",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/artist/approve-agent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"approve-agent"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-XFsIwExXTuTo02SH2f1AEiNvJ3Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 09:13:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Approved successfully!\"\n}"
+						},
+						{
+							"id": "34549363-2da63e48-a1f1-4992-b28a-653d3f786fa9",
+							"name": "error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/artist/approve-agent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"approve-agent"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "577"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"241-RXLeN6DEag6k0njmOAphn3se8qI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 09:14:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 404,\n    \"message\": \"Agent not found in pending list\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"Agent not found in pending list\"\n        }\n    ],\n    \"stack\": \"ServerError: Agent not found in pending list\\n    at Object.processAgentRequest (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.service.ts:105:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.controller.ts:28:7)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "reject-agent",
+					"id": "34549363-e68469ef-4e85-4799-918a-feffd93c9be1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artist/reject-agent",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"reject-agent"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-917f42ff-a71d-400c-b766-c1389326b1f4",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/artist/reject-agent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"reject-agent"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-blDyeHpLvbIjOR/rb2dVOLfwyMw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 09:16:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Rejected successfully!\"\n}"
+						},
+						{
+							"id": "34549363-01025876-4492-4acd-894f-e72d91181490",
+							"name": "error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/artist/reject-agent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"reject-agent"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "577"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"241-RXLeN6DEag6k0njmOAphn3se8qI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 09:16:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 404,\n    \"message\": \"Agent not found in pending list\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"Agent not found in pending list\"\n        }\n    ],\n    \"stack\": \"ServerError: Agent not found in pending list\\n    at Object.processAgentRequest (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.service.ts:105:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.controller.ts:28:7)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
 				}
 			],
 			"id": "34549363-b5d4b510-425c-4613-aa6b-63753beeb64f"
 		},
 		{
-			"name": "Venue",
+			"name": "VENUE",
 			"item": [
 				{
 					"name": "My venue",
@@ -1745,6 +2119,315 @@
 				}
 			],
 			"id": "34549363-b5833648-dde8-4459-b425-3e5b099d01da"
+		},
+		{
+			"name": "AGENT",
+			"item": [
+				{
+					"name": "get all artist",
+					"id": "34549363-f07645b4-0d09-42eb-80a0-b438389d8107",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artists?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artists"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "artist",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-522e3e3a-ee8a-4995-bdcc-944089a127ca",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/artists?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artists"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": "artist",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "359"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"167-Bz+xNxC/eREnBSvxcY3mk+YjyeE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 08:41:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artists retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ar-1\",\n            \"name\": \"Artist\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"gender\": \"OTHER\",\n            \"genre\": \"Pop\",\n            \"location\": \"Bangladesh\",\n            \"availability\": [],\n            \"price\": \"$50 hours\",\n            \"artist_agents\": [],\n            \"artist_pending_agents\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "invite-artist",
+					"id": "34549363-b9f7c8cb-5649-40f8-806c-043db9be0a65",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/artists/invite-artist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"artists",
+								"invite-artist"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-c7088d3d-d638-4bfe-9893-422f865dbee1",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/artists/request",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"artists",
+										"request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-L9jBWQdCFckrjZRMG4ZrUOyF5q8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 08:41:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Request sent successfully!\"\n}"
+						},
+						{
+							"id": "34549363-8a0a09b6-8583-4db8-b9d0-c64c5950026c",
+							"name": "error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/artists/request",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"artists",
+										"request"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "615"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"267-4Djatod5rvlR/75oZnoPhSmQtG8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 08:42:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"You have already sent request to this artist\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"You have already sent request to this artist\"\n        }\n    ],\n    \"stack\": \"ServerError: You have already sent request to this artist\\n    at Object.sentRequestToArtist (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.service.ts:76:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.controller.ts:16:5)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-21b464fe-f807-4bb3-850c-2a46d5368712"
 		}
 	]
 }
