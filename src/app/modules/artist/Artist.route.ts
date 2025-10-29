@@ -3,8 +3,6 @@ import purifyRequest from '../../middlewares/purifyRequest';
 import { QueryValidations } from '../query/Query.validation';
 import { ArtistControllers } from './Artist.controller';
 import { ArtistValidations } from './Artist.validation';
-import { AgentValidations } from '../agent/Agent.validation';
-import { AgentControllers } from '../agent/Agent.controller';
 
 const free = Router();
 {
@@ -25,8 +23,8 @@ const artist = Router();
 
   artist.post(
     '/invite-agent',
-    purifyRequest(AgentValidations.inviteAgent),
-    AgentControllers.inviteAgent,
+    purifyRequest(ArtistValidations.inviteAgent),
+    ArtistControllers.inviteAgent,
   );
 
   artist.post(

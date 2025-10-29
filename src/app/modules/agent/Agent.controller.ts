@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes';
+import ServerError from '../../../errors/ServerError';
 import catchAsync from '../../middlewares/catchAsync';
 import { AgentServices } from './Agent.service';
 
@@ -12,23 +14,30 @@ export const AgentControllers = {
     };
   }),
 
-  inviteAgent: catchAsync(async ({ body, user }) => {
-    await AgentServices.inviteAgent({
-      ...body,
-      artist_id: user.id,
+  inviteArtist: catchAsync(async ({ body, user: agent }) => {
+    await AgentServices.inviteArtist({
+      artist_id: body.artist_id,
+      agent,
     });
 
     return {
-      message: 'Agent invited successfully!',
+      message: 'Artist invited successfully!',
     };
   }),
 
   processAgentRequest: (is_approved: boolean) =>
-    catchAsync(async ({ body, user }) => {
+    catchAsync(async ({ body, user: agent }) => {
+      if (!agent.agent_pending_artists.includes(body.artist_id)) {
+        throw new ServerError(
+          StatusCodes.NOT_FOUND,
+          'Artist not found in pending list',
+        );
+      }
+
       await AgentServices.processAgentRequest({
-        ...body,
+        agent,
         is_approved,
-        agent_id: user.id,
+        artist_id: body.artist_id,
       });
 
       return {
