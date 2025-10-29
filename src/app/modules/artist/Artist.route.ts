@@ -13,28 +13,45 @@ const free = Router();
   );
 }
 
-const agent = Router();
-{
-  agent.post(
-    '/invite-artist',
-    purifyRequest(ArtistValidations.inviteArtist),
-    ArtistControllers.inviteArtist,
-  );
-}
-
 const artist = Router();
 {
+  artist.get(
+    '/agents',
+    purifyRequest(QueryValidations.list),
+    ArtistControllers.getMyAgentList,
+  );
+
+  artist.post(
+    '/invite-agent',
+    purifyRequest(ArtistValidations.inviteAgent),
+    ArtistControllers.inviteAgent,
+  );
+
   artist.post(
     '/approve-agent',
-    purifyRequest(ArtistValidations.processAgentRequest),
-    ArtistControllers.processAgentRequest(true),
+    purifyRequest(ArtistValidations.processArtistRequest),
+    ArtistControllers.processArtistRequest(true),
   );
 
   artist.post(
     '/reject-agent',
-    purifyRequest(ArtistValidations.processAgentRequest),
-    ArtistControllers.processAgentRequest(false),
+    purifyRequest(ArtistValidations.processArtistRequest),
+    ArtistControllers.processArtistRequest(false),
   );
 }
 
-export const ArtistRoutes = { free, agent, artist };
+export const ArtistRoutes = {
+  /**
+   * Everyone can access
+   *
+   * @url : (base_url)/artists/
+   */
+  free,
+
+  /**
+   * Only artists can access
+   *
+   * @url : (base_url)/artist/agents/
+   */
+  artist,
+};

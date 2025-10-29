@@ -1,10 +1,11 @@
 import z from 'zod';
-import { ArtistValidations } from './Artist.validation';
+import type { ArtistValidations } from './Artist.validation';
+import type { User as TUser } from '../../../../prisma';
 
-export type TInviteArtist = z.infer<
-  typeof ArtistValidations.inviteArtist
->['body'] & { agent_id: string };
+export type TInviteAgent = z.infer<
+  typeof ArtistValidations.inviteAgent
+>['body'] & { artist: TUser };
 
-export type TProcessAgentRequest = z.infer<
-  typeof ArtistValidations.processAgentRequest
->['body'] & { artist_id: string; is_approved: boolean };
+export type TProcessArtistRequest = z.infer<
+  typeof ArtistValidations.processArtistRequest
+>['body'] & { artist: TUser; is_approved: boolean };
