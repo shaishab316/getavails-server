@@ -17,6 +17,12 @@ const free = Router();
 
 const artist = Router();
 {
+  artist.get(
+    '/agents',
+    purifyRequest(QueryValidations.list),
+    ArtistControllers.getMyAgentList,
+  );
+
   artist.post(
     '/invite-agent',
     purifyRequest(AgentValidations.inviteAgent),

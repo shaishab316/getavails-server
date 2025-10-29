@@ -35,4 +35,14 @@ export const AgentControllers = {
         message: `${is_approved ? 'Approved' : 'Rejected'} successfully!`,
       };
     }),
+
+  getMyArtistList: catchAsync(async ({ query, user }) => {
+    const { meta, artists } = await AgentServices.getMyArtistList(user, query);
+
+    return {
+      message: 'Artists retrieved successfully!',
+      meta,
+      data: artists,
+    };
+  }),
 };

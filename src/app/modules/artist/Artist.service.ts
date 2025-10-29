@@ -1,11 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EUserRole, Prisma, prisma } from '../../../utils/db';
+import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
 import type { TProcessArtistRequest, TInviteArtist } from './Artist.interface';
 import { userOmit } from '../user/User.constant';
+import { agentSearchableFields } from '../agent/Agent.constant';
 
 export const ArtistServices = {
   async getArtistList({ limit, page, search }: TList) {
@@ -124,5 +125,55 @@ export const ArtistServices = {
         omit: userOmit.ARTIST,
       });
     });
+  },
+
+  /**
+   * Retrieve all agent list for a specific artist
+   *
+   * @param {TUser['artist_agents']} artist_agents
+   * @param {TList} { limit, page, search }
+   */
+  async getMyAgentList(
+    { artist_agents }: TUser,
+    { limit, page, search }: TList,
+  ) {
+    const agentWhere: Prisma.UserWhereInput = {
+      id: { in: artist_agents },
+      role: EUserRole.AGENT,
+    };
+
+    /**
+     * Search agent using searchable fields
+     */
+    if (search) {
+      agentWhere.OR = agentSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const agents = await prisma.user.findMany({
+      where: agentWhere,
+      skip: (page - 1) * limit,
+      take: limit,
+      //? exclude unnecessary fields
+      omit: userOmit.AGENT,
+    });
+
+    const total = await prisma.user.count({ where: agentWhere });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      agents,
+    };
   },
 };
