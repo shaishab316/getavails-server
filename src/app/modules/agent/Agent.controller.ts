@@ -11,4 +11,28 @@ export const AgentControllers = {
       data: agents,
     };
   }),
+
+  inviteAgent: catchAsync(async ({ body, user }) => {
+    await AgentServices.inviteAgent({
+      ...body,
+      artist_id: user.id,
+    });
+
+    return {
+      message: 'Agent invited successfully!',
+    };
+  }),
+
+  processAgentRequest: (is_approved: boolean) =>
+    catchAsync(async ({ body, user }) => {
+      await AgentServices.processAgentRequest({
+        ...body,
+        is_approved,
+        agent_id: user.id,
+      });
+
+      return {
+        message: 'Request processed successfully!',
+      };
+    }),
 };

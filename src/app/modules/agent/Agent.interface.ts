@@ -1,8 +1,10 @@
-import z from 'zod';
+import type z from 'zod';
 import { AgentValidations } from './Agent.validation';
 
-export type TInviteAgent = z.infer<typeof AgentValidations.inviteAgent>['body'];
+export type TInviteAgent = z.infer<
+  typeof AgentValidations.inviteAgent
+>['body'] & { artist_id: string };
 
-export type TProcessArtistRequest = z.infer<
-  typeof AgentValidations.processArtistRequest
->['body'];
+export type TProcessAgentRequest = z.infer<
+  typeof AgentValidations.processAgentRequest
+>['body'] & { agent_id: string; is_approved: boolean };

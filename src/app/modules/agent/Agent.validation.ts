@@ -11,7 +11,7 @@ export const AgentValidations = {
     }),
   }),
 
-  processArtistRequest: z.object({
+  processAgentRequest: z.object({
     body: z.object({
       artist_id: z.string().refine(exists('user'), {
         error: ({ input }) => `Artist not found with id: ${input}`,

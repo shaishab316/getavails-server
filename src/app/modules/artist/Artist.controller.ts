@@ -14,8 +14,8 @@ export const ArtistControllers = {
 
   inviteArtist: catchAsync(async ({ body, user }) => {
     await ArtistServices.inviteArtist({
-      agent_id: user.id,
       ...body,
+      agent_id: user.id,
     });
 
     return {
@@ -23,9 +23,9 @@ export const ArtistControllers = {
     };
   }),
 
-  processAgentRequest: (is_approved: boolean) =>
+  processArtistRequest: (is_approved: boolean) =>
     catchAsync(async ({ body, user }) => {
-      await ArtistServices.processAgentRequest({
+      await ArtistServices.processArtistRequest({
         ...body,
         artist_id: user.id,
         is_approved,

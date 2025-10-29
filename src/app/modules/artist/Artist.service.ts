@@ -4,7 +4,7 @@ import { EUserRole, Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
-import type { TProcessAgentRequest, TInviteArtist } from './Artist.interface';
+import type { TProcessArtistRequest, TInviteArtist } from './Artist.interface';
 import { userOmit } from '../user/User.constant';
 
 export const ArtistServices = {
@@ -77,11 +77,11 @@ export const ArtistServices = {
     });
   },
 
-  async processAgentRequest({
+  async processArtistRequest({
     agent_id,
     is_approved,
     artist_id,
-  }: TProcessAgentRequest) {
+  }: TProcessArtistRequest) {
     const artist = (await prisma.user.findUnique({
       where: { id: artist_id },
       select: {
