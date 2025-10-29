@@ -75,7 +75,25 @@ const venue = Router();
 }
 
 export const UserRoutes = {
+  /**
+   * Only admin can access
+   *
+   * @url : (base_url)/admin/users/
+   */
   admin,
+
+  /**
+   * All users can access
+   *
+   * @url : (base_url)/profile/
+   */
   all,
+
+  /**
+   * @deprecated
+   * Only venue can access
+   *
+   * @url : (base_url)/venue/
+   */
   venue,
 };

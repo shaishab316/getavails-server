@@ -6,4 +6,11 @@ const admin = injectRoutes(Router(), {
   '/users': [UserRoutes.admin],
 });
 
-export const AdminRoutes = { admin };
+export const AdminRoutes = {
+  /**
+   * Only admin can access
+   *
+   * @url : (base_url)/admin/
+   */
+  admin,
+};

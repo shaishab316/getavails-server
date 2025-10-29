@@ -98,4 +98,11 @@ free.get('/logout', AuthControllers.logout);
  */
 free.get('/refresh-token', auth.refresh_token, AuthControllers.refreshToken);
 
-export const AuthRoutes = { free };
+export const AuthRoutes = {
+  /**
+   * Everyone can access
+   *
+   * @url : (base_url)/auth/
+   */
+  free,
+};

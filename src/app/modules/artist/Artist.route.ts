@@ -41,4 +41,25 @@ const artist = injectRoutes(Router(), {
   );
 }
 
-export const ArtistRoutes = { free, agent, artist };
+export const ArtistRoutes = {
+  /**
+   * Everyone can access
+   *
+   * @url : (base_url)/artists/
+   */
+  free,
+
+  /**
+   * Only agents can access
+   *
+   * @url : (base_url)/agent/artists/
+   */
+  agent,
+
+  /**
+   * Only artists can access
+   *
+   * @url : (base_url)/artist/agents/
+   */
+  artist,
+};
