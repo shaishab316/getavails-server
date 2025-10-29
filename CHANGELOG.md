@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/shaishab316/getavails-server/compare/v1.1.0...v1.2.0) (2025-10-29)
+
+
+### Features
+
+* Implement agent invitations and artist request processing ([0c2fbca](https://github.com/shaishab316/getavails-server/commit/0c2fbca0044ba8d74507ca2a2034af5d3530d027))
+* Implement endpoints for agents/artists to retrieve their lists ([d1d77e1](https://github.com/shaishab316/getavails-server/commit/d1d77e1a461428b1eb3b30da1b2f33c1a145df58))
+
 # [1.1.0](https://github.com/shaishab316/getavails-server/compare/v1.0.0...v1.1.0) (2025-10-28)
 
 
