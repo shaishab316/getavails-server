@@ -6,11 +6,7 @@ import {
 import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import type {
-  TUpdateAvailability,
-  TUpdateVenue,
-  TUserEdit,
-} from './User.interface';
+import type { TUpdateAvailability, TUserEdit } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';
@@ -181,14 +177,6 @@ export const UserServices = {
       data: {
         availability,
       },
-      select: { id: true },
-    });
-  },
-
-  async updateVenue({ user_id, ...payload }: TUpdateVenue) {
-    return prisma.user.update({
-      where: { id: user_id },
-      data: payload,
       select: { id: true },
     });
   },

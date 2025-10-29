@@ -65,15 +65,6 @@ const all = Router();
   );
 }
 
-const venue = Router();
-{
-  venue.patch(
-    '/edit',
-    purifyRequest(UserValidations.updateVenue),
-    UserControllers.updateVenue,
-  );
-}
-
 export const UserRoutes = {
   /**
    * Only admin can access
@@ -88,12 +79,4 @@ export const UserRoutes = {
    * @url : (base_url)/profile/
    */
   all,
-
-  /**
-   * @deprecated
-   * Only venue can access
-   *
-   * @url : (base_url)/venue/
-   */
-  venue,
 };
