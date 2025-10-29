@@ -38,8 +38,17 @@ const artist = Router();
     purifyRequest(ArtistValidations.processArtistRequest),
     ArtistControllers.processArtistRequest(false),
   );
+
+  artist.delete(
+    '/delete-agent',
+    purifyRequest(ArtistValidations.deleteAgent),
+    ArtistControllers.deleteAgent,
+  );
 }
 
+/**
+ * All artist related routes
+ */
 export const ArtistRoutes = {
   /**
    * Everyone can access
