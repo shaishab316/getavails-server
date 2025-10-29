@@ -17,21 +17,20 @@
   },
   "scripts": {
     "prepare": "simple-git-hooks",
-    "new-module": "node ./src/app/modules/.builder.js",
-    "build": "node esbuild.js",
+    "new-module": "tsx ./src/app/modules/.builder.ts",
+    "build": "node esbuild.mjs",
     "start": "node dist/server.js",
     "dev": "set DEBUG=socket.io* && tsx --watch src/server.ts",
-    "seedAdmin": "tsx scripts/seedAdmin.ts",
-    "seedIndex": "tsx scripts/seedIndex.ts",
+    "seed-admin": "tsx scripts/seedAdmin.ts",
     "lint": "eslint src --ignore-path .gitignore --ext .ts",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma:studio": "npx prisma studio",
-    "prisma:reset": "npx prisma migrate reset --force",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:generate": "rm -rf prisma && npx prisma generate",
-    "prisma:seed": "npx prisma db seed"
+    "prisma-studio": "npx prisma studio",
+    "prisma-reset": "npx prisma migrate reset --force",
+    "prisma-migrate": "npx prisma migrate dev",
+    "prisma-generate": "rm -rf prisma && npx prisma generate",
+    "prisma-seed": "npx prisma db seed"
   },
   "keywords": [
     "getavails",
@@ -41,9 +40,7 @@
   ],
   "license": "MIT",
   "simple-git-hooks": {
-    "pre-commit": [
-      "npm run lint && npm run type-check && npm run prettier"
-    ]
+    "pre-commit": "npm run lint && npm run type-check && npm run prettier"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -63,11 +60,13 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "inquirer": "^12.10.0",
+    "ora": "^9.0.0",
     "prettier": "^3.4.2",
     "prettier-eslint": "^16.3.0",
     "prisma": "^6.18.0",
     "semantic-release": "^24.2.7",
     "simple-git-hooks": "^2.13.1",
+    "table": "^6.9.0",
     "tsx": "^4.20.6",
     "typescript": "^5.5.4"
   },

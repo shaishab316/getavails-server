@@ -1,7 +1,11 @@
+/* eslint-disable no-console */
+import chalk from 'chalk';
 import { build } from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
-build({
+const startTime = performance.now();
+
+await build({
   entryPoints: ['src/server.ts'],
   bundle: true,
   platform: 'node',
@@ -17,4 +21,10 @@ build({
     '@prisma/client',
     './prisma/client',
   ],
-}).catch(() => process.exit(1));
+});
+
+const endTime = performance.now();
+
+console.log(
+  `${chalk.greenBright.bold('✅ Build Complete')} ${chalk.gray(`(${endTime - startTime}ms)`)}`,
+);
