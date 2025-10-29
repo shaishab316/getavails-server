@@ -3,8 +3,8 @@ import purifyRequest from '../../middlewares/purifyRequest';
 import { QueryValidations } from '../query/Query.validation';
 import { ArtistControllers } from './Artist.controller';
 import { ArtistValidations } from './Artist.validation';
-import { injectRoutes } from '../../../utils/router/injectRouter';
-import { AgentRoutes } from '../agent/Agent.route';
+import { AgentValidations } from '../agent/Agent.validation';
+import { AgentControllers } from '../agent/Agent.controller';
 
 const free = Router();
 {
@@ -15,19 +15,14 @@ const free = Router();
   );
 }
 
-const agent = Router();
+const artist = Router();
 {
-  agent.post(
-    '/invite-artist',
-    purifyRequest(ArtistValidations.inviteArtist),
-    ArtistControllers.inviteArtist,
+  artist.post(
+    '/invite-agent',
+    purifyRequest(AgentValidations.inviteAgent),
+    AgentControllers.inviteAgent,
   );
-}
 
-const artist = injectRoutes(Router(), {
-  '/agents': [AgentRoutes.artist],
-});
-{
   artist.post(
     '/approve-agent',
     purifyRequest(ArtistValidations.processArtistRequest),
@@ -48,13 +43,6 @@ export const ArtistRoutes = {
    * @url : (base_url)/artists/
    */
   free,
-
-  /**
-   * Only agents can access
-   *
-   * @url : (base_url)/agent/artists/
-   */
-  agent,
 
   /**
    * Only artists can access

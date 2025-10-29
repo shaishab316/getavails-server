@@ -32,7 +32,7 @@ export const AgentControllers = {
       });
 
       return {
-        message: 'Request processed successfully!',
+        message: `${is_approved ? 'Approved' : 'Rejected'} successfully!`,
       };
     }),
 };
