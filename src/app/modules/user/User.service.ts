@@ -39,6 +39,7 @@ export const UserServices = {
   async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
       where: { email },
+      select: { role: true }, //? select only role
     });
 
     if (existingUser)
@@ -81,7 +82,10 @@ export const UserServices = {
       if (error instanceof Error) errorLogger.error(error.message);
     }
 
-    return user;
+    return {
+      ...user,
+      otp_id: undefined,
+    };
   },
 
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {

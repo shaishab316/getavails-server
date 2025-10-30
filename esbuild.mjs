@@ -20,6 +20,9 @@ await build({
     'nodemailer',
     '@prisma/client',
     './prisma/client',
+    'bull',
+    'redis',
+    'ioredis',
   ],
 });
 

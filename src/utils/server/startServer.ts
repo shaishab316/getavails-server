@@ -1,3 +1,5 @@
+const startTime = performance.now();
+
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { createServer } from 'http';
@@ -24,8 +26,12 @@ export default async function startServer() {
 
     await new Promise<void>(done => server.listen(port, '0.0.0.0', done));
 
+    const endTime = performance.now();
+
     process.stdout.write('\x1Bc');
-    console.log(chalk.gray('[console cleared]'));
+    console.log(
+      chalk.gray(`[console cleared] startup time: ${endTime - startTime}ms`),
+    );
     logger.info(
       chalk.yellow(`🚀 ${name} is running on http://localhost:${port}`),
     );
