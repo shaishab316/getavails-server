@@ -7,5 +7,6 @@ model Chat {
 
   messages Message[]
 
+  @@unique([user_ids])
   @@map("chats")
 }
