@@ -1,0 +1,18 @@
+model Message {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  chat_id    String
+  user_id    String
+  text       String   @default("")
+  media_urls String[] @default([])
+
+  seen_users String[] @default([])
+  parent_id  String? //? for reply
+
+  chat Chat @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}

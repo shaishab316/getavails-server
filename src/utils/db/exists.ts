@@ -11,8 +11,7 @@ export const exists =
   (model: TModels) =>
   async (id: string | null = null) => {
     if (id) {
-      // ts-ignore
-      return prisma[model].findUnique({
+      return (prisma[model] as any).findUnique({
         where: { id },
         select: { id: true }, //? skip body
       });

@@ -27,11 +27,12 @@ model User {
 
   venue_type            String?
   capacity              Int?
-  agent_artists         String[] @default([])
-  agent_pending_artists String[] @default([])
-  artist_agents         String[] @default([])
-  artist_pending_agents String[] @default([])
-  organizer_venues      String[] @default([])
+  agent_artists         String[]  @default([])
+  agent_pending_artists String[]  @default([])
+  artist_agents         String[]  @default([])
+  artist_pending_agents String[]  @default([])
+  organizer_venues      String[]  @default([])
+  messages              Message[]
 
   @@map("users")
 }
