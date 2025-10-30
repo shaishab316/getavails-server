@@ -10,6 +10,8 @@ model User {
   is_verified Boolean   @default(false)
   is_active   Boolean   @default(false)
   is_admin    Boolean   @default(false)
+  otp_id      Int       @default(0)
+  //! end
 
   //! profile
   avatar   String  @default("/images/placeholder.png")

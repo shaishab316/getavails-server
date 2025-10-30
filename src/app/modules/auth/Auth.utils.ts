@@ -65,25 +65,25 @@ export const verifyPassword = async (password: string, hash: string) => {
 
 export const otpVerifyRateLimiter = rateLimit({
   windowMs: ms('15m'),
-  max: 5,
+  max: 50,
   message:
     'Too many requests for account verification. Try again in 15 minutes.',
 });
 
 export const loginRateLimiter = rateLimit({
   windowMs: ms('10m'),
-  max: 10,
+  max: 100,
   message: 'Too many login attempts. Try again in 10 minutes.',
 });
 
 export const forgotPasswordRateLimiter = rateLimit({
   windowMs: ms('15m'),
-  max: 5,
+  max: 50,
   message: 'Too many forgot password attempts. Try again in 15 minutes.',
 });
 
 export const registerRateLimiter = rateLimit({
   windowMs: ms('30m'),
-  max: 10,
+  max: 100,
   message: 'Too many registration attempts. Try again in 30 minutes.',
 });

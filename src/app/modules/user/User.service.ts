@@ -58,13 +58,14 @@ export const UserServices = {
       omit: {
         ...userOmit[role],
         email: false,
+        otp_id: false,
       },
     });
 
     try {
       const otp = generateOTP({
         tokenType: 'access_token',
-        userId: user.id,
+        otpId: user.id + user.otp_id,
       });
 
       await emailQueue.add({
