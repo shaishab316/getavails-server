@@ -78,6 +78,9 @@ const config = {
       up: 'Database info - start',
       regex: '',
     }),
+    redis: env('redis url', `redis://localhost:6379`, {
+      regex: '',
+    }),
     ui: env('ui url', `http://localhost:${port}`, {
       regex: '^https?:\\/\\/.*$|^$',
     }),
@@ -95,8 +98,6 @@ const config = {
   otp: {
     length: env('otp length', 6, { regex: '^\\d{1,2}$' }),
     exp: env<ms.StringValue>('otp expire in', '5m', { regex: ms_regex }),
-    limit: env('otp limit', 2, { regex: '^\\d+$' }),
-    window: env<ms.StringValue>('otp window', '10s', { regex: ms_regex }),
   },
 
   jwt: {

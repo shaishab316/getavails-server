@@ -11,7 +11,7 @@ import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
-import { sendEmail } from '../../../utils/sendMail';
+import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
 import { otp_send_template } from '../../../templates';
 import config from '../../../config';
@@ -67,7 +67,7 @@ export const UserServices = {
         userId: user.id,
       });
 
-      await sendEmail({
+      await emailQueue.add({
         to: user.email,
         subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
         html: otp_send_template({

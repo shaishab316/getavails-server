@@ -5,19 +5,31 @@ import { errorLogger, logger } from './logger';
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../errors/ServerError';
 import chalk from 'chalk';
+import type { TSendMail } from '../types/utils.types';
+
 const { host, port, user, pass, from } = config.email;
 const { mock_mail } = config.server;
 
+/**
+ * Nodemailer transporter
+ *
+ * used to send emails
+ */
 let transporter = nodemailer.createTransport({
   host,
   port,
-  secure: false,
+  secure: false, //! true for 465, false for other ports
   auth: {
     user,
     pass,
   },
 });
 
+/**
+ * If mock mail is enabled, use a mock transporter
+ *
+ * used for testing
+ */
 if (mock_mail) {
   logger.info(chalk.yellow('Mock mail enabled'));
   transporter = {
@@ -32,19 +44,13 @@ if (mock_mail) {
 }
 
 /**
- * Send email
- * @param {TEmailProps} values - Email values
- * @returns void
+ * Send email using nodemailer
+ *
+ * @param {TSendMail} { to, subject, html }
+ *
+ * @deprecated use emailQueue
  */
-export const sendEmail = async ({
-  to,
-  subject,
-  html,
-}: {
-  to: string;
-  subject: string;
-  html: string;
-}) => {
+export const sendEmail = async ({ to, subject, html }: TSendMail) => {
   logger.info(chalk.yellow('Sending email...'), to);
 
   if (mock_mail) {
@@ -55,6 +61,7 @@ export const sendEmail = async ({
   }
 
   try {
+    //? Send email
     const { accepted } = await transporter.sendMail({
       from,
       to,

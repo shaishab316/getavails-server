@@ -10,7 +10,7 @@ import { prisma, User as TUser } from '../../../utils/db';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import config from '../../../config';
-import { sendEmail } from '../../../utils/sendMail';
+import emailQueue from '../../../utils/mq/emailQueue';
 import { otp_send_template } from '../../../templates';
 import { errorLogger } from '../../../utils/logger';
 import ms from 'ms';
@@ -48,7 +48,7 @@ export const AuthServices = {
 
       try {
         if (email)
-          sendEmail({
+          await emailQueue.add({
             to: email,
             subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
             html: otp_send_template({
@@ -125,7 +125,7 @@ export const AuthServices = {
 
     try {
       if (email)
-        sendEmail({
+        await emailQueue.add({
           to: email,
           subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
           html: otp_send_template({
@@ -154,7 +154,7 @@ export const AuthServices = {
 
     try {
       if (email)
-        sendEmail({
+        await emailQueue.add({
           to: email,
           subject: `Your ${config.server.name} Password Reset OTP is ⚡ ${otp} ⚡.`,
           html: otp_send_template({
