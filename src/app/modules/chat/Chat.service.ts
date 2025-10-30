@@ -1,7 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { Chat as TChat, prisma } from '../../../utils/db';
-import { TDeleteChatArgs, TNewChatArgs } from './Chat.interface';
+import { Prisma, Chat as TChat, prisma } from '../../../utils/db';
+import { TDeleteChatArgs, TGetInboxArgs, TNewChatArgs } from './Chat.interface';
+import { TPagination } from '../../../utils/server/serveResponse';
 
 /**
  * All chat related services
@@ -23,8 +24,13 @@ export const ChatServices = {
     //? find or create chat between users
     return prisma.chat.upsert({
       where: { user_ids },
-      update: { user_ids },
-      create: { user_ids },
+      update: {},
+      create: {
+        user_ids,
+        users: {
+          connect: user_ids.map(id => ({ id })),
+        },
+      },
     });
   },
 
@@ -49,5 +55,76 @@ export const ChatServices = {
       where: { id: chat_id },
       select: { id: true }, //? skip body
     });
+  },
+
+  /**
+   * Get inbox of user
+   */
+  async getInbox({ limit, page, user_id, search }: TGetInboxArgs) {
+    const chatWhere: Prisma.ChatWhereInput = {
+      user_ids: {
+        has: user_id,
+      },
+    };
+
+    if (search) {
+      chatWhere.users = {
+        some: {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      };
+    }
+
+    const chats = await prisma.chat.findMany({
+      where: chatWhere,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      select: {
+        id: true,
+        users: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true,
+          },
+        },
+        messages: {
+          take: 1,
+          orderBy: {
+            updated_at: 'desc',
+          },
+        },
+      },
+    });
+
+    const total = await prisma.chat.count({ where: chatWhere });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      chats: chats.map(({ id, users, messages }) => {
+        const opponent = users.find(user => user.id !== user_id);
+
+        return {
+          id,
+          name: opponent?.name || null,
+          avatar: opponent?.avatar || null,
+          last_message: messages[0]?.text || null,
+          timestamp: messages[0]?.updated_at || null,
+        };
+      }),
+    };
   },
 };
