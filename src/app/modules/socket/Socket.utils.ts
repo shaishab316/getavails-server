@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import z, { ZodType } from 'zod';
-import { TServeResponse } from '../../../utils/server/serveResponse';
+import type z from 'zod';
+import type { TServeResponse } from '../../../utils/server/serveResponse';
 import { StatusCodes } from 'http-status-codes';
 import { formatError } from '../../middlewares/globalErrorHandler';
 import chalk from 'chalk';
@@ -9,19 +9,19 @@ import { errorLogger } from '../../../utils/logger';
 /**
  * Catch Async Socket Handler
  */
-export const catchAsyncSocket = <S extends ZodType>(
+export const catchAsyncSocket = <S extends z.ZodType>(
   fn: (data: z.infer<S>) => Promise<Partial<TServeResponse<any>>>,
   validator: S,
 ) => {
   return async (
-    payload: unknown,
+    payload: JSON | string,
     ack?: (response: any) => void,
   ): Promise<void> => {
     const response: any = { success: false };
+
     try {
-      const parsed = await validator.parseAsync(
-        typeof payload === 'string' ? JSON.parse(payload) : payload,
-      );
+      if (typeof payload === 'string') payload = JSON.parse(payload.trim());
+      const parsed = await validator.parseAsync(payload);
 
       Object.assign(response, {
         success: true,
@@ -33,7 +33,7 @@ export const catchAsyncSocket = <S extends ZodType>(
       Object.assign(response, formatError(error));
       errorLogger.error(chalk.red(response.message));
     } finally {
-      ack?.(JSON.stringify(response));
+      ack?.(response);
     }
   };
 };
