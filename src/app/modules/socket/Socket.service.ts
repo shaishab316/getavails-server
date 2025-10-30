@@ -4,7 +4,7 @@ import config from '../../../config';
 import { SocketRoutes } from './Socket.route';
 import auth from './Socket.middleware';
 import { TAuthenticatedSocket } from './Socket.interface';
-import { logger } from '../../../utils/logger';
+import { errorLogger, logger } from '../../../utils/logger';
 import chalk from 'chalk';
 
 type OnlineMap = Record<string, Set<string>>;
@@ -75,7 +75,7 @@ export const SocketServices = {
         });
 
         // Event: error
-        socket.on('error', logger.error);
+        socket.on('error', errorLogger.error);
 
         // Call module-specific handler
         try {
