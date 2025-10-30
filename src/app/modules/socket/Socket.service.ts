@@ -25,10 +25,12 @@ const onlineUsers: OnlineMap = {};
 export const SocketServices = {
   /**
    * Initialize socket services
+   *
+   * @returns cleanup function
    */
-  init(server: Server) {
+  init(server: Server): () => void {
     //? Do nothing if already initialized, make it singleton
-    if (io) return;
+    if (io) return this.cleanup;
 
     io = new IOServer(server, {
       cors: { origin: config.server.allowed_origins },
@@ -79,12 +81,14 @@ export const SocketServices = {
 
         // Call module-specific handler
         try {
-          handler(nsp, socket);
+          handler({ io: nsp, socket });
         } catch (err) {
           logger.error(`Namespace "${namespace}" handler error:`, err);
         }
       });
     });
+
+    return this.cleanup;
   },
 
   markOnline(namespace: string, userId: string) {

@@ -6,10 +6,13 @@ import { userDefaultOmit } from '../user/User.constant';
 /**
  * Socket handler plugin
  */
-export type TSocketHandler = (
-  io: Namespace,
-  socket: TAuthenticatedSocket,
-) => void;
+export type TSocketHandler = ({
+  io,
+  socket,
+}: {
+  io: Namespace;
+  socket: TAuthenticatedSocket;
+}) => void;
 
 /**
  * Authenticated Socket
