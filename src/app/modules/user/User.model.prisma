@@ -33,6 +33,7 @@ model User {
   artist_pending_agents String[]  @default([])
   organizer_venues      String[]  @default([])
   messages              Message[]
+  chats                 Chat[]    @relation("UserChats")
 
   @@map("users")
 }

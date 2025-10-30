@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import type { z } from 'zod';
 import { ChatValidations } from './Chat.validation';
+import { TList } from '../query/Query.interface';
 
 /**
  * Type for new chat
@@ -15,3 +16,10 @@ export type TNewChatArgs = z.infer<typeof ChatValidations.newChat>['body'] & {
 export type TDeleteChatArgs = z.infer<
   typeof ChatValidations.deleteChat
 >['body'] & { user_id: string };
+
+/**
+ * Type for get inbox
+ */
+export type TGetInboxArgs = TList & {
+  user_id: string;
+};

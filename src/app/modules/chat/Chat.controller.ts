@@ -33,4 +33,17 @@ export const ChatControllers = {
       message: 'Chat deleted successfully!',
     };
   }),
+
+  getInbox: catchAsync(async ({ query, user }) => {
+    const { chats, meta } = await ChatServices.getInbox({
+      ...query,
+      user_id: user.id,
+    });
+
+    return {
+      message: 'Inbox retrieved successfully!',
+      meta,
+      data: chats,
+    };
+  }),
 };

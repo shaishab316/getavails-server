@@ -2,9 +2,12 @@ import { Router } from 'express';
 import { ChatControllers } from './Chat.controller';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { ChatValidations } from './Chat.validation';
+import { QueryValidations } from '../query/Query.validation';
 
 const all = Router();
 {
+  all.get('/', purifyRequest(QueryValidations.list), ChatControllers.getInbox);
+
   all.post(
     '/new-chat',
     purifyRequest(ChatValidations.newChat),
