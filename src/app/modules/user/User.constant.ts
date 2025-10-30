@@ -10,6 +10,7 @@ export const userDefaultOmit = {
   is_admin: true,
   updated_at: true,
   created_at: true,
+  otp_id: true,
 } satisfies Prisma.UserOmit;
 
 export const userUserOmit = {

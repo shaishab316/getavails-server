@@ -113,16 +113,4 @@ export const UserControllers = {
       data: body,
     };
   }),
-
-  updateVenue: catchAsync(async ({ body, user }) => {
-    await UserServices.updateVenue({
-      ...body,
-      user_id: user.id,
-    });
-
-    return {
-      message: 'Venue updated successfully!',
-      data: body,
-    };
-  }),
 };

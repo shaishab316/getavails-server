@@ -4,16 +4,29 @@ import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
-import type { TInviteAgent, TProcessArtistRequest } from './Artist.interface';
+import type {
+  TDeleteAgent,
+  TInviteAgent,
+  TProcessArtistRequest,
+} from './Artist.interface';
 import { userOmit } from '../user/User.constant';
 import { agentSearchableFields } from '../agent/Agent.constant';
 
+/**
+ * All artist related services
+ */
 export const ArtistServices = {
+  /**
+   * Retrieve all artist list
+   *
+   * @param {TList} { limit, page, search }
+   */
   async getArtistList({ limit, page, search }: TList) {
     const where: Prisma.UserWhereInput = {
       role: EUserRole.ARTIST,
     };
 
+    //? Search artist using searchable fields
     if (search) {
       where.OR = artistSearchableFields.map(field => ({
         [field]: {
@@ -27,6 +40,7 @@ export const ArtistServices = {
       where,
       skip: (page - 1) * limit,
       take: limit,
+      //? exclude unnecessary fields
       omit: userOmit.ARTIST,
     });
 
@@ -45,7 +59,13 @@ export const ArtistServices = {
     };
   },
 
+  /**
+   * Invite an agent for an artist
+   *
+   * @param {TInviteAgent} { agent_id, artist }
+   */
   async inviteAgent({ agent_id, artist }: TInviteAgent) {
+    //? ensure that the agent does not exist
     if (artist.artist_agents.includes(agent_id)) {
       throw new ServerError(
         StatusCodes.BAD_REQUEST,
@@ -53,6 +73,7 @@ export const ArtistServices = {
       );
     }
 
+    //? if agent is already in artist pending list then approve request
     if (artist.artist_pending_agents.includes(agent_id)) {
       return this.processArtistRequest({
         is_approved: true,
@@ -63,6 +84,7 @@ export const ArtistServices = {
 
     const agent = await prisma.user.findUnique({
       where: { id: agent_id, role: EUserRole.AGENT },
+      //? skip unnecessary fields
       select: {
         agent_pending_artists: true,
       },
@@ -72,6 +94,7 @@ export const ArtistServices = {
       throw new ServerError(StatusCodes.NOT_FOUND, 'Agent not found');
     }
 
+    //? ensure that the agent had not sent request to this artist before
     if (agent.agent_pending_artists.includes(artist.id)) {
       throw new ServerError(
         StatusCodes.BAD_REQUEST,
@@ -82,12 +105,18 @@ export const ArtistServices = {
     await prisma.user.update({
       where: { id: agent_id },
       data: {
+        //? append artist to agent pending list
         agent_pending_artists: { push: artist.id },
       },
       select: { id: true }, //? skip body
     });
   },
 
+  /**
+   * Approve or reject artist request from agent
+   *
+   * @param {TProcessArtistRequest} { agent_id, is_approved, artist }
+   */
   async processArtistRequest({
     agent_id,
     is_approved,
@@ -100,14 +129,17 @@ export const ArtistServices = {
       },
     };
 
+    //? use transaction to update both artist and agent at the same time
     await prisma.$transaction(async tx => {
       if (is_approved) {
+        //? append agent to artist list
         artistData.artist_agents = { push: agent_id };
 
         //? update into agent
         await tx.user.update({
           where: { id: agent_id },
           data: {
+            //? append artist to agent list
             agent_artists: { push: artist.id },
           },
           select: { id: true }, //? skip body
@@ -130,7 +162,7 @@ export const ArtistServices = {
    * @param {TList} { limit, page, search }
    */
   async getMyAgentList(
-    { artist_agents }: TUser,
+    artist_agents: TUser['artist_agents'],
     { limit, page, search }: TList,
   ) {
     const agentWhere: Prisma.UserWhereInput = {
@@ -138,9 +170,7 @@ export const ArtistServices = {
       role: EUserRole.AGENT,
     };
 
-    /**
-     * Search agent using searchable fields
-     */
+    //? Search agent using searchable fields
     if (search) {
       agentWhere.OR = agentSearchableFields.map(field => ({
         [field]: {
@@ -171,5 +201,47 @@ export const ArtistServices = {
       },
       agents,
     };
+  },
+
+  /**
+   * Delete agent from artist list
+   *
+   * @param {TDeleteAgent} { agent_id, artist }
+   */
+  async deleteAgent({ agent_id, artist }: TDeleteAgent) {
+    //? use transaction to update both artist and agent at the same time
+    await prisma.$transaction(async tx => {
+      //? update into artist
+      await tx.user.update({
+        where: { id: artist.id },
+        data: {
+          artist_agents: {
+            //? remove agent from artist list
+            set: artist.artist_agents.filter(id => id !== agent_id),
+          },
+        },
+        select: { id: true }, //? skip body
+      });
+
+      const agent = await tx.user.findUnique({
+        where: { id: agent_id },
+        //? skip unnecessary fields
+        select: {
+          agent_artists: true,
+        },
+      });
+
+      //? update into agent
+      await tx.user.update({
+        where: { id: agent_id },
+        data: {
+          agent_artists: {
+            //? remove artist from agent list
+            set: agent!.agent_artists.filter(id => id !== artist.id),
+          },
+        },
+        select: { id: true }, //? skip body
+      });
+    });
   },
 };

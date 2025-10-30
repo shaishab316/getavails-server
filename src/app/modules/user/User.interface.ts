@@ -26,7 +26,3 @@ export type TOrganizerRegister = z.infer<
 export type TUpdateAvailability = z.infer<
   typeof UserValidations.updateAvailability
 >['body'] & { user_id: string };
-
-export type TUpdateVenue = z.infer<
-  typeof UserValidations.updateVenue
->['body'] & { user_id: string };

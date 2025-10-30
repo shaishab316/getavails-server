@@ -38,6 +38,12 @@ const agent = Router();
     purifyRequest(AgentValidations.processAgentRequest),
     AgentControllers.processAgentRequest(false),
   );
+
+  agent.delete(
+    '/delete-artist',
+    purifyRequest(AgentValidations.deleteArtist),
+    AgentControllers.deleteArtist,
+  );
 }
 
 export const AgentRoutes = {

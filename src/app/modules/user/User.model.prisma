@@ -10,6 +10,8 @@ model User {
   is_verified Boolean   @default(false)
   is_active   Boolean   @default(false)
   is_admin    Boolean   @default(false)
+  otp_id      Int       @default(0)
+  //! end
 
   //! profile
   avatar   String  @default("/images/placeholder.png")
@@ -25,11 +27,13 @@ model User {
 
   venue_type            String?
   capacity              Int?
-  agent_artists         String[] @default([])
-  agent_pending_artists String[] @default([])
-  artist_agents         String[] @default([])
-  artist_pending_agents String[] @default([])
-  organizer_venues      String[] @default([])
+  agent_artists         String[]  @default([])
+  agent_pending_artists String[]  @default([])
+  artist_agents         String[]  @default([])
+  artist_pending_agents String[]  @default([])
+  organizer_venues      String[]  @default([])
+  messages              Message[]
+  chats                 Chat[]    @relation("UserChats")
 
   @@map("users")
 }

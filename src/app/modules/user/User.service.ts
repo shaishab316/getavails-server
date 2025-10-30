@@ -6,16 +6,12 @@ import {
 import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { deleteFile } from '../../middlewares/capture';
-import type {
-  TUpdateAvailability,
-  TUpdateVenue,
-  TUserEdit,
-} from './User.interface';
+import type { TUpdateAvailability, TUserEdit } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
-import { sendEmail } from '../../../utils/sendMail';
+import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
 import { otp_send_template } from '../../../templates';
 import config from '../../../config';
@@ -43,6 +39,7 @@ export const UserServices = {
   async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
       where: { email },
+      select: { role: true }, //? select only role
     });
 
     if (existingUser)
@@ -62,16 +59,17 @@ export const UserServices = {
       omit: {
         ...userOmit[role],
         email: false,
+        otp_id: false,
       },
     });
 
     try {
       const otp = generateOTP({
         tokenType: 'access_token',
-        userId: user.id,
+        otpId: user.id + user.otp_id,
       });
 
-      await sendEmail({
+      await emailQueue.add({
         to: user.email,
         subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
         html: otp_send_template({
@@ -84,7 +82,10 @@ export const UserServices = {
       if (error instanceof Error) errorLogger.error(error.message);
     }
 
-    return user;
+    return {
+      ...user,
+      otp_id: undefined,
+    };
   },
 
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
@@ -181,14 +182,6 @@ export const UserServices = {
       data: {
         availability,
       },
-      select: { id: true },
-    });
-  },
-
-  async updateVenue({ user_id, ...payload }: TUpdateVenue) {
-    return prisma.user.update({
-      where: { id: user_id },
-      data: payload,
       select: { id: true },
     });
   },
