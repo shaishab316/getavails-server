@@ -1,3 +1,20 @@
+# [1.3.0](https://github.com/shaishab316/getavails-server/compare/v1.2.0...v1.3.0) (2025-10-30)
+
+
+### Features
+
+* Define Prisma schema for Chat and Message models ([ac88ab7](https://github.com/shaishab316/getavails-server/commit/ac88ab7c03aeb2209f925020d81075452aaffecc))
+* Enhance AuthService with OTP, JSDoc, and rate limit changes ([9c35078](https://github.com/shaishab316/getavails-server/commit/9c35078321145e927cfa13c26beebc9ca5f9b43f))
+* Implement agent-artist relation deletion and topic metadata optimization ([ffe65fc](https://github.com/shaishab316/getavails-server/commit/ffe65fc465b880fe72440b18746606dd8b0c1f09))
+* Implement chat module with create/delete functionalities ([f4a7126](https://github.com/shaishab316/getavails-server/commit/f4a7126f9c4040ecf12bae2a2aaf9e2259ec031b))
+* Implement email queuing with Redis and Bull ([5a02498](https://github.com/shaishab316/getavails-server/commit/5a02498a35211e5aee050c21f9b51df9a00fc00e))
+* Implement message module with socket integration ([b597628](https://github.com/shaishab316/getavails-server/commit/b597628d848f790d04319220c98e193db60ec865))
+* Implement user inbox retrieval with pagination and search ([26fa918](https://github.com/shaishab316/getavails-server/commit/26fa91891c67cebf9e5295c829363fa6b3cc4d13))
+* Implement WebSocket handling with Socket.IO ([e9f4547](https://github.com/shaishab316/getavails-server/commit/e9f45473a705e2b14a180aa32842093070a65242))
+* Improve user registration and bundle dependencies ([1a8c7ea](https://github.com/shaishab316/getavails-server/commit/1a8c7eadfdb117bfc5845bb40415ecbd2237d9dc))
+* Introduce module builder and modernize build process ([8e37f42](https://github.com/shaishab316/getavails-server/commit/8e37f42cac9aa8fe396255e2c149a18c77ad72e4))
+* Introduce Venue module and routes, deprecate User venue route ([ae7aa4e](https://github.com/shaishab316/getavails-server/commit/ae7aa4ecdfb636985f0fd9dd9b63b83638a82a38))
+
 # [1.2.0](https://github.com/shaishab316/getavails-server/compare/v1.1.0...v1.2.0) (2025-10-29)
 
 
