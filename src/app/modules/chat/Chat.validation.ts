@@ -26,4 +26,13 @@ export const ChatValidations = {
       }),
     }),
   }),
+
+  /**
+   * Validation schema for get inbox
+   */
+  getInbox: z.object({
+    query: z.object({
+      unread: z.string().optional(),
+    }),
+  }),
 };

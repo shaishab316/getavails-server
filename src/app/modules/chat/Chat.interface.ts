@@ -20,6 +20,7 @@ export type TDeleteChatArgs = z.infer<
 /**
  * Type for get inbox
  */
-export type TGetInboxArgs = TList & {
-  user_id: string;
-};
+export type TGetInboxArgs = z.infer<typeof ChatValidations.getInbox>['query'] &
+  TList & {
+    user_id: string;
+  };

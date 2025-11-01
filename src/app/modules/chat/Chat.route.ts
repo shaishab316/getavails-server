@@ -6,7 +6,11 @@ import { QueryValidations } from '../query/Query.validation';
 
 const all = Router();
 {
-  all.get('/', purifyRequest(QueryValidations.list), ChatControllers.getInbox);
+  all.get(
+    '/',
+    purifyRequest(QueryValidations.list, ChatValidations.getInbox),
+    ChatControllers.getInbox,
+  );
 
   all.post(
     '/new-chat',
