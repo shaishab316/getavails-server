@@ -7,22 +7,20 @@ import { MessageValidations } from './Message.validation';
 export const MessageSocket: TSocketHandler = ({ socket, io }) => {
   const { user } = socket.data;
 
+  //? send message
   socket.on(
     'send_message',
     catchAsyncSocket(async payload => {
-      if (!payload.text && !payload.media_urls?.length)
-        throw new ZodError([
-          {
+      //? ensure that text or media is provided
+      if (!payload.text && !payload.media_urls?.length) {
+        throw new ZodError(
+          ['text', 'media_urls'].map(path => ({
             code: 'custom',
             message: 'Text or media is required',
-            path: ['text'],
-          },
-          {
-            code: 'custom',
-            message: 'Text or media is required',
-            path: ['media_urls'],
-          },
-        ]);
+            path: [path],
+          })),
+        );
+      }
 
       const { chat, seen_by, ...message } = await MessageServices.createMessage(
         {
@@ -54,6 +52,7 @@ export const MessageSocket: TSocketHandler = ({ socket, io }) => {
     }, MessageValidations.createMessage),
   );
 
+  //? delete message
   socket.on(
     'delete_message',
     catchAsyncSocket(async ({ message_id }) => {

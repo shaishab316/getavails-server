@@ -8,6 +8,18 @@ import type { Message as TMessage } from '../../../utils/db';
  */
 export const MessageValidations = {
   /**
+   * Validation schema for get chat messages
+   */
+  getChatMessages: z.object({
+    query: z.object({
+      chat_id: z.string().refine(exists('chat'), {
+        error: ({ input }) => `Chat not found with id: ${input}`,
+        path: ['chat_id'],
+      }),
+    }),
+  }),
+
+  /**
    *! socket validations
    */
 

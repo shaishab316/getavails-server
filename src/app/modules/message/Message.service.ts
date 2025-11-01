@@ -1,11 +1,14 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { prisma } from '../../../utils/db';
+import { type Prisma, prisma } from '../../../utils/db';
 import type {
   TCreateMessageArgs,
   TDeleteMessageArgs,
+  TGetChatMessagesArgs,
 } from './Message.interface';
 import { deleteFiles } from '../../middlewares/capture';
+import { messageSearchableFields } from './Message.constant';
+import type { TPagination } from '../../../utils/server/serveResponse';
 
 /**
  * All message related services
@@ -84,5 +87,61 @@ export const MessageServices = {
         },
       },
     });
+  },
+
+  /**
+   * Get chat messages
+   */
+  async getChatMessages({
+    chat_id,
+    limit,
+    page,
+    search,
+  }: TGetChatMessagesArgs) {
+    const messageWhere: Prisma.MessageWhereInput = {
+      chat_id,
+    };
+
+    if (search) {
+      messageWhere.OR = messageSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const messages = await prisma.message.findMany({
+      where: messageWhere,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      include: {
+        seen_by: {
+          select: {
+            avatar: true,
+          },
+        },
+      },
+    });
+
+    const total = await prisma.message.count({ where: messageWhere });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      messages: messages.map(({ seen_by, ...message }) => ({
+        ...message,
+        seen_by: seen_by.map(user => user.avatar),
+      })),
+    };
   },
 };
