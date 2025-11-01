@@ -3,6 +3,8 @@ import { AgentControllers } from './Agent.controller';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { QueryValidations } from '../query/Query.validation';
 import { AgentValidations } from './Agent.validation';
+import { AgentOfferValidations } from '../AgentOffer/AgentOffer.validation';
+import { AgentOfferControllers } from '../AgentOffer/AgentOffer.controller';
 
 const free = Router();
 {
@@ -43,6 +45,12 @@ const agent = Router();
     '/delete-artist',
     purifyRequest(AgentValidations.deleteArtist),
     AgentControllers.deleteArtist,
+  );
+
+  agent.post(
+    '/create-offer',
+    purifyRequest(AgentOfferValidations.createOffer),
+    AgentOfferControllers.createOffer,
   );
 }
 

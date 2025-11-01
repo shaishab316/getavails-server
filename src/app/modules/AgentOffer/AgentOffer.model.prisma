@@ -1,0 +1,30 @@
+model Agent_offer {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  status       EAgentOfferStatus @default(PENDING)
+  approved_at  DateTime?
+  cancelled_at DateTime?
+
+  amount       Float
+  start_date   DateTime
+  end_date     DateTime
+  agent_id     String
+  artist_id    String
+  organizer_id String
+  address      String
+
+  agent     User @relation("AgentOffersAgent", fields: [agent_id], references: [id])
+  artist    User @relation("AgentOffersArtist", fields: [artist_id], references: [id])
+  organizer User @relation("AgentOffersOrganizer", fields: [organizer_id], references: [id])
+
+  @@map("agent_offers")
+}
+
+enum EAgentOfferStatus {
+  PENDING
+  APPROVED
+  CANCELLED
+  TIMEOUT
+}
