@@ -8,6 +8,7 @@ import { ArtistRoutes } from '../app/modules/artist/Artist.route';
 import { AgentRoutes } from '../app/modules/agent/Agent.route';
 import { VenueRoutes } from '../app/modules/venue/Venue.route';
 import { ChatRoutes } from '../app/modules/chat/Chat.route';
+import { MessageRoutes } from '../app/modules/message/Message.route';
 
 export default injectRoutes(Router(), {
   // no auth required
@@ -18,6 +19,7 @@ export default injectRoutes(Router(), {
   // all user can access
   '/profile': [auth.all, UserRoutes.all],
   '/inbox': [auth.all, ChatRoutes.all],
+  '/messages': [auth.all, MessageRoutes.all],
 
   // venue can access
   '/venue': [auth.venue, VenueRoutes.venue],
