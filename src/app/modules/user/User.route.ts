@@ -5,6 +5,7 @@ import { QueryValidations } from '../query/Query.validation';
 import { UserValidations } from './User.validation';
 import capture from '../../middlewares/capture';
 import { AuthControllers } from '../auth/Auth.controller';
+import { changePasswordRateLimiter } from '../auth/Auth.utils';
 
 const avatarCapture = capture({
   avatar: {
@@ -60,6 +61,7 @@ const all = Router();
 
   all.post(
     '/change-password',
+    changePasswordRateLimiter,
     purifyRequest(UserValidations.changePassword),
     AuthControllers.changePassword,
   );
