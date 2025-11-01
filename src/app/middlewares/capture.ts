@@ -227,7 +227,8 @@ const fileFilter =
 
     const mime = file.mimetype.toLowerCase();
 
-    if (validator.test(mime)) {
+    //? if mime is application/octet-stream, it's a binary file, so it's valid, but we need to check the file extension
+    if (mime === 'application/octet-stream' || validator.test(mime)) {
       return cb(null, true);
     }
 
