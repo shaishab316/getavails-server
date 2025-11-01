@@ -83,7 +83,7 @@ export const ChatServices = {
       skip: (page - 1) * limit,
       take: limit,
       orderBy: {
-        created_at: 'desc',
+        timestamp: 'desc',
       },
       select: {
         id: true,
