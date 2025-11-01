@@ -1,7 +1,7 @@
 import z from 'zod';
 import { exists } from '../../../utils/db/exists';
 import type { TModelZod } from '../../../types/zod';
-import type { Agent_offer as TAgent_offer } from '../../../../prisma';
+import type { AgentOffer as TAgentOffer } from '../../../../prisma';
 
 /**
  * Validation for agent offer
@@ -24,6 +24,6 @@ export const AgentOfferValidations = {
         path: ['organizer_id'],
       }),
       address: z.string({ error: 'Address is required' }),
-    } satisfies TModelZod<TAgent_offer>),
+    } satisfies TModelZod<TAgentOffer>),
   }),
 };

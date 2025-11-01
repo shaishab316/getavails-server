@@ -9,6 +9,7 @@ import { AgentRoutes } from '../app/modules/agent/Agent.route';
 import { VenueRoutes } from '../app/modules/venue/Venue.route';
 import { ChatRoutes } from '../app/modules/chat/Chat.route';
 import { MessageRoutes } from '../app/modules/message/Message.route';
+import { OrganizerRoutes } from '../app/modules/organizer/Organizer.route';
 
 export default injectRoutes(Router(), {
   // no auth required
@@ -29,6 +30,9 @@ export default injectRoutes(Router(), {
 
   // artist can access
   '/artist': [auth.artist, ArtistRoutes.artist],
+
+  //organizer can access
+  '/organizer': [auth.organizer, OrganizerRoutes.organizer],
 
   // only admin can access
   '/admin': [auth.admin, AdminRoutes.admin],

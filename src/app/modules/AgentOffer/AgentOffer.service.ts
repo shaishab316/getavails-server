@@ -9,7 +9,7 @@ export const AgentOfferServices = {
    * Create new agent offer
    */
   async createOffer(payload: TCreateAgentOfferArgs) {
-    return prisma.agent_offer.create({
+    return prisma.agentOffer.create({
       data: {
         ...payload,
         end_date: payload.end_date ?? payload.start_date,
