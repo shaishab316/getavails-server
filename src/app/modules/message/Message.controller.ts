@@ -17,4 +17,14 @@ export const MessageControllers = {
       data: messages.reverse(),
     };
   }),
+
+  /**
+   * Upload media
+   */
+  uploadMedia: catchAsync(async ({ body }) => {
+    return {
+      message: 'Media uploaded successfully!',
+      data: body,
+    };
+  }),
 };
