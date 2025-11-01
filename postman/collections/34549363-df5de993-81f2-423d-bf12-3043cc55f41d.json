@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// user login\r\n// {\r\n//     \"email\": \"shaishab316@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// agent login\r\n{\r\n    \"email\": \"agent@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
+							"raw": "// user login\r\n{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent3@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist2@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1230,7 +1230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"otp\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\": \"agent3@gmail.com\",\r\n    \"otp\": \"564091\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1503,6 +1503,666 @@
 			"id": "34549363-552892da-ed37-4192-a220-adabfa51547c"
 		},
 		{
+			"name": "Inbox",
+			"item": [
+				{
+					"name": "inbox",
+					"id": "34549363-5c666b2b-a538-4487-a7b2-ab3de1cbd7ff",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inbox",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inbox"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-f5ebf6ec-ecb9-4593-8d49-d0196bc68b9b",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/inbox",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inbox"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "311"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"137-D9O2/kyyPcKOrHd4BBCKkBo3E5g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 01 Nov 2025 04:10:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Inbox retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"d96f7889-8317-4817-b753-43608f617824\",\n            \"name\": \"Agent\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"last_message\": \"hello\",\n            \"timestamp\": \"2025-11-01T04:08:51.914Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get chat messages",
+					"id": "34549363-71932ea7-1d3a-49a7-83a3-b8c0ed6257f4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/messages?chat_id=54d345a0-adbb-4576-be9e-bcfa82b50eb4&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "chat_id",
+									"value": "54d345a0-adbb-4576-be9e-bcfa82b50eb4"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "agent",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-6ec0c567-39c2-4ef1-a9ec-731adf95ca4d",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/messages?chat_id=54d345a0-adbb-4576-be9e-bcfa82b50eb4&page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"messages"
+									],
+									"query": [
+										{
+											"key": "chat_id",
+											"value": "54d345a0-adbb-4576-be9e-bcfa82b50eb4"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": "agent",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "860"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35c-WKlUBSTw+1wvr2l7J7UjItz2+cs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 01 Nov 2025 04:58:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Messages retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"f2537042-a0f0-41b2-bcad-5f2f2a0ed915\",\n            \"created_at\": \"2025-11-01T04:26:43.502Z\",\n            \"updated_at\": \"2025-11-01T04:26:56.538Z\",\n            \"chat_id\": \"54d345a0-adbb-4576-be9e-bcfa82b50eb4\",\n            \"parent_id\": null,\n            \"user_id\": \"us-1\",\n            \"text\": \"𝒹𝑒𝓁𝑒𝓉𝑒𝒹 𝓂𝑒𝓈𝓈𝒶𝑔𝑒\",\n            \"media_urls\": [],\n            \"isDeleted\": true,\n            \"seen_by\": [\n                \"/images/placeholder.png\"\n            ]\n        },\n        {\n            \"id\": \"f0294d11-6bff-4cae-b9a3-2e75b374b60d\",\n            \"created_at\": \"2025-11-01T04:57:10.244Z\",\n            \"updated_at\": \"2025-11-01T04:57:10.244Z\",\n            \"chat_id\": \"54d345a0-adbb-4576-be9e-bcfa82b50eb4\",\n            \"parent_id\": null,\n            \"user_id\": \"us-1\",\n            \"text\": \"hello agent\",\n            \"media_urls\": [\n                \"https://avatars.githubusercontent.com/u/109936547?v=4\"\n            ],\n            \"isDeleted\": false,\n            \"seen_by\": [\n                \"/images/placeholder.png\"\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "upload-media",
+					"id": "34549363-14b4d785-d015-404b-aa50-550bec7d2981",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"uuid": "75e58890-4359-4ee5-9bbc-8fdbdfd2b4f3",
+									"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+								},
+								{
+									"key": "videos",
+									"type": "file",
+									"uuid": "1b894a68-c785-49a7-aecc-8adb97a32a90",
+									"src": "/C:/Users/Incognito/Downloads/854164-hd_1920_1080_25fps-1758449915551.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/messages/upload-media",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"messages",
+								"upload-media"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-3c762e07-a782-495e-a0be-184e5c5476a5",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "images",
+											"type": "file",
+											"uuid": "75e58890-4359-4ee5-9bbc-8fdbdfd2b4f3",
+											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+										},
+										{
+											"key": "videos",
+											"type": "file",
+											"uuid": "1b894a68-c785-49a7-aecc-8adb97a32a90",
+											"src": "/C:/Users/Incognito/Downloads/854164-hd_1920_1080_25fps-1758449915551.mp4"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/messages/upload-media",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"messages",
+										"upload-media"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "210"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d2-bxX8nIvNqbRjaK7k+tTItWvtKUc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 01 Nov 2025 05:15:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Media uploaded successfully!\",\n    \"data\": {\n        \"images\": [\n            \"/images/shaishab-1761974120507.png\"\n        ],\n        \"videos\": [\n            \"/videos/854164-hd_1920_1080_25fps-1758449915551-1761974120508.mp4\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "new-chat",
+					"id": "34549363-17971a22-9d8f-4c2e-be97-61eca7f231ad",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"us-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/inbox/new-chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inbox",
+								"new-chat"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-47c608c8-17d7-4c02-a95a-3ea7547ba448",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"ve-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inbox/new-chat",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inbox",
+										"new-chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "215"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d7-fw/sGKx7iq0va3DYv+n8p1itI5Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Oct 2025 08:31:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Chat created successfully!\",\n    \"data\": {\n        \"id\": \"11020750-d705-4a07-972c-197c7623f355\",\n        \"created_at\": \"2025-10-30T08:31:23.135Z\",\n        \"user_ids\": [\n            \"us-1\",\n            \"ve-1\"\n        ],\n        \"last_message_id\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-chat",
+					"id": "34549363-b7f23cc6-5f26-487a-8f1d-9a59674928c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chat_id\": \"36990b41-3633-4ac6-8860-7aad67c54804\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/inbox/delete-chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inbox",
+								"delete-chat"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-2424ad75-3d6e-47d5-88e1-500dfebe7591",
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chat_id\": \"11020750-d705-4a07-972c-197c7623f355\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inbox/delete-chat",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inbox",
+										"delete-chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-PR5SQJKICBRe/b2c1ttYdeM4PJE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Oct 2025 08:51:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Chat deleted successfully!\"\n}"
+						},
+						{
+							"id": "34549363-73887ec4-aa3b-4695-887c-c60c7fb61643",
+							"name": "error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chat_id\": \"36990b41-3633-4ac6-8860-7aad67c54804\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inbox/delete-chat",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inbox",
+										"delete-chat"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "553"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"229-AM/dcYZJ89fCkIeJ9TUxb+v5Yjg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Oct 2025 08:52:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 403,\n    \"message\": \"You can't delete other's chat\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"You can't delete other's chat\"\n        }\n    ],\n    \"stack\": \"ServerError: You can't delete other's chat\\n    at Object.deleteChat (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\chat\\\\Chat.service.ts:41:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\chat\\\\Chat.controller.ts:27:5)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-d21abc1d-c96d-4dd5-a710-68617808af85"
+		},
+		{
 			"name": "USER",
 			"item": [
 				{
@@ -1590,6 +2250,214 @@
 					"id": "34549363-0c0c3092-6478-4080-b5c2-cd9f2bffdd27"
 				},
 				{
+					"name": "get-agent-list",
+					"id": "34549363-8a51036e-6b7d-4dcb-91c1-14a694e3cd86",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-78d6d211-e5d0-4c42-a1ef-4ee5c3c04cdf",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agents",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agents"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "620"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26c-gUIgOFcX1AS8lP5XAFPH9SAQGKw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Oct 2025 11:20:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agents retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ag-1\",\n            \"role\": \"AGENT\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Agent\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"experience\": \"1 years\",\n            \"availability\": [],\n            \"price\": \"$12 hours\",\n            \"agent_artists\": [\n                \"ar-1\"\n            ],\n            \"agent_pending_artists\": []\n        },\n        {\n            \"id\": \"ag-2\",\n            \"role\": \"AGENT\",\n            \"avatar\": \"/images/shaishab-1761633423744.png\",\n            \"name\": \"Shaishab Chandra Shil\",\n            \"gender\": \"MALE\",\n            \"location\": null,\n            \"experience\": null,\n            \"availability\": [],\n            \"price\": null,\n            \"agent_artists\": [],\n            \"agent_pending_artists\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "my-agents",
+					"id": "34549363-1a873b90-bdfb-4385-8a97-2310899eabd9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artist/agents?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"agents"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-07133a49-ba00-48f2-bd05-326a9f5bd0dc",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/artist/agents?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"agents"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "387"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"183-andgHlHchtX5hg1wn7NJeTffXk0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 06:22:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agents retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ag-1\",\n            \"role\": \"AGENT\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Agent\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"experience\": \"1 years\",\n            \"availability\": [],\n            \"price\": \"$12 hours\",\n            \"agent_artists\": [\n                \"ar-1\"\n            ],\n            \"agent_pending_artists\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
 					"name": "update-availability",
 					"id": "34549363-b08e5aa8-1dfa-40da-8a67-8d9cdfc1db0f",
 					"protocolProfileBehavior": {
@@ -1628,7 +2496,79 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "34549363-6dee634f-2a99-4d96-8520-995836013b5f",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"availability\": [\r\n        \"2025-10-27T08:38:18.237Z\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/update-availability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"update-availability"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"85-W6ywASrKByOMg6A4LMUPAxCYBmA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 05:52:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Availability updated successfully!\",\n    \"data\": {\n        \"availability\": [\n            \"2025-10-27T08:38:18.237Z\"\n        ]\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "approve-agent",
@@ -1997,16 +2937,10 @@
 							"body": "{\n    \"success\": false,\n    \"statusCode\": 404,\n    \"message\": \"Agent not found in pending list\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"Agent not found in pending list\"\n        }\n    ],\n    \"stack\": \"ServerError: Agent not found in pending list\\n    at Object.processAgentRequest (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.service.ts:105:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.controller.ts:28:7)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
 						}
 					]
-				}
-			],
-			"id": "34549363-b5d4b510-425c-4613-aa6b-63753beeb64f"
-		},
-		{
-			"name": "VENUE",
-			"item": [
+				},
 				{
-					"name": "My venue",
-					"id": "34549363-33981bc8-09c3-4b87-9937-a3977c82512d",
+					"name": "invite-agent",
+					"id": "34549363-bc40271e-e986-4dca-b012-44828c0b8df9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2016,16 +2950,16 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{venue_token}}",
+									"value": "{{artist_token}}",
 									"type": "string"
 								}
 							]
 						},
-						"method": "PATCH",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"capacity\": 20,\r\n    \"email\": \"venue@gmail.com\",\r\n    \"location\": \"bangladesh\",\r\n    \"name\": \"Venue\",\r\n    \"price\": \"52\",\r\n    \"venue_type\": \"pop\"\r\n}",
+							"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2033,26 +2967,26 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/venue/edit",
+							"raw": "{{base_url}}/artist/invite-agent",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"venue",
-								"edit"
+								"artist",
+								"invite-agent"
 							]
 						}
 					},
 					"response": [
 						{
-							"id": "34549363-a4f4e820-ab7c-4e1f-9969-eab281470c32",
+							"id": "34549363-d220c1b6-f074-47e2-a801-acaa494e0cfe",
 							"name": "success",
 							"originalRequest": {
-								"method": "PATCH",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"capacity\": 20,\r\n    \"email\": \"venue@gmail.com\",\r\n    \"location\": \"bangladesh\",\r\n    \"name\": \"Venue\",\r\n    \"price\": \"52\",\r\n    \"venue_type\": \"pop\"\r\n}",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2060,13 +2994,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/venue/edit",
+									"raw": "{{base_url}}/artist/invite-agent",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"venue",
-										"edit"
+										"artist",
+										"invite-agent"
 									]
 								}
 							},
@@ -2092,15 +3026,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "193"
+									"value": "73"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"c1-fGUWBVLenkuIaB1bY+bJ2/Icb0A\""
+									"value": "W/\"49-+/EPlTYszX8f+P3mI8JzMS6YcQA\""
 								},
 								{
 									"key": "Date",
-									"value": "Mon, 27 Oct 2025 10:29:33 GMT"
+									"value": "Wed, 29 Oct 2025 05:52:00 GMT"
 								},
 								{
 									"key": "Connection",
@@ -2113,12 +3047,127 @@
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue updated successfully!\",\n    \"data\": {\n        \"name\": \"Venue\",\n        \"email\": \"venue@gmail.com\",\n        \"location\": \"bangladesh\",\n        \"capacity\": 20,\n        \"venue_type\": \"pop\",\n        \"price\": \"52\"\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent invited successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-agent",
+					"id": "34549363-df8a51a1-62c2-4c76-9aab-3fc4f3752772",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artist/delete-agent",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"delete-agent"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-353802a2-733b-40b1-ac01-1a3c04a16e1b",
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"agent_id\": \"ag-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/artist/delete-agent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"delete-agent"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-kYirPTpTdsu8nKqCiS18/F9pKOQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 08:52:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent deleted successfully!\"\n}"
 						}
 					]
 				}
 			],
-			"id": "34549363-b5833648-dde8-4459-b425-3e5b099d01da"
+			"id": "34549363-b5d4b510-425c-4613-aa6b-63753beeb64f"
 		},
 		{
 			"name": "AGENT",
@@ -2240,6 +3289,244 @@
 					]
 				},
 				{
+					"name": "my-artists",
+					"id": "34549363-8519631c-34c3-47c4-a980-c5d079c2b732",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/artists?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"artists"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-d060b420-5e4a-4b39-bae2-f9eab7afed59",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agent/artists?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"artists"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "414"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"19e-sOje1KsRXi38iUL4wsK/0okBPIs\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 06:16:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artists retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ar-1\",\n            \"role\": \"ARTIST\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Artist\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"genre\": \"Pop\",\n            \"availability\": [\n                \"2025-10-27T08:38:18.237Z\"\n            ],\n            \"price\": \"$50 hours\",\n            \"artist_agents\": [\n                \"ag-1\",\n                \"ag-1\"\n            ],\n            \"artist_pending_agents\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "update-availability",
+					"id": "34549363-270d2869-5e09-499f-9e54-7868f75c8d22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"availability\": [\r\n        \"2025-10-27T08:38:18.237Z\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/profile/update-availability",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"update-availability"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-70806939-6734-4c1f-b6b6-85fbc8b14d3c",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"availability\": [\r\n        \"2025-10-27T08:38:18.237Z\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/update-availability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"update-availability"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"85-W6ywASrKByOMg6A4LMUPAxCYBmA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 05:52:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Availability updated successfully!\",\n    \"data\": {\n        \"availability\": [\n            \"2025-10-27T08:38:18.237Z\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "invite-artist",
 					"id": "34549363-b9f7c8cb-5649-40f8-806c-043db9be0a65",
 					"protocolProfileBehavior": {
@@ -2268,13 +3555,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/agent/artists/invite-artist",
+							"raw": "{{base_url}}/agent/invite-artist",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"agent",
-								"artists",
 								"invite-artist"
 							]
 						}
@@ -2425,9 +3711,467 @@
 							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"You have already sent request to this artist\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"You have already sent request to this artist\"\n        }\n    ],\n    \"stack\": \"ServerError: You have already sent request to this artist\\n    at Object.sentRequestToArtist (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.service.ts:76:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\modules\\\\artist\\\\Artist.controller.ts:16:5)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\Getavails\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
 						}
 					]
+				},
+				{
+					"name": "approve-artist",
+					"id": "34549363-e1461b56-6660-49e0-af00-dd0d995c6a3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/approve-artist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"approve-artist"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-8a6cb6c5-b6ec-4588-aa90-3d80b34ff38f",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/approve-artist",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"approve-artist"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-XFsIwExXTuTo02SH2f1AEiNvJ3Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 06:01:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Approved successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "reject-artist",
+					"id": "34549363-b108325e-6b9a-461b-a09d-aca1aa0610e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/reject-artist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"reject-artist"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-9a1840f3-a7f7-410e-b4c4-d87a358e4ee0",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/reject-artist",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"reject-artist"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-blDyeHpLvbIjOR/rb2dVOLfwyMw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 06:01:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Rejected successfully!\"\n}"
+						}
+					]
 				}
 			],
 			"id": "34549363-21b464fe-f807-4bb3-850c-2a46d5368712"
+		},
+		{
+			"name": "VENUE",
+			"item": [
+				{
+					"name": "update-availability",
+					"id": "34549363-10067dcf-d9ba-469d-975e-9e77cfd83c0c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"availability\": [\r\n        \"2025-10-27T08:38:18.237Z\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/profile/update-availability",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"update-availability"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-af00e13a-8039-4ce0-a487-9c07f2576f91",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"availability\": [\r\n        \"2025-10-27T08:38:18.237Z\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/update-availability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"update-availability"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"85-W6ywASrKByOMg6A4LMUPAxCYBmA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 05:52:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Availability updated successfully!\",\n    \"data\": {\n        \"availability\": [\n            \"2025-10-27T08:38:18.237Z\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update-venue",
+					"id": "34549363-33981bc8-09c3-4b87-9937-a3977c82512d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"capacity\": 20,\r\n    \"email\": \"venue@gmail.com\",\r\n    \"location\": \"bangladesh\",\r\n    \"name\": \"Venue\",\r\n    \"price\": \"52\",\r\n    \"venue_type\": \"pop\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/venue/edit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"venue",
+								"edit"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-a1253b98-e48f-48ca-b685-d8655fec40fc",
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"capacity\": 20,\r\n    \"email\": \"venue@gmail.com\",\r\n    \"location\": \"bangladesh\",\r\n    \"name\": \"Venue\",\r\n    \"price\": \"52\",\r\n    \"venue_type\": \"pop\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/venue/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"venue",
+										"edit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-hFDrC5Hf/WFfYO5w3jVC6aZB+k0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 12:00:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue updated successfully!\",\n    \"data\": {\n        \"id\": \"ve-1\",\n        \"role\": \"VENUE\",\n        \"avatar\": \"/images/placeholder.png\",\n        \"name\": \"Venue\",\n        \"gender\": \"OTHER\",\n        \"location\": \"bangladesh\",\n        \"venue_type\": \"pop\",\n        \"capacity\": 20\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-b5833648-dde8-4459-b425-3e5b099d01da"
 		}
 	]
 }
