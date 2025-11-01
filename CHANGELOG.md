@@ -1,3 +1,21 @@
+# [1.4.0](https://github.com/shaishab316/getavails-server/compare/v1.3.0...v1.4.0) (2025-11-01)
+
+
+### Features
+
+* Add filtering by unread messages to getInbox API ([a3c96cf](https://github.com/shaishab316/getavails-server/commit/a3c96cf6f14f0203284ebe5f6fe5262cda8c21d9))
+* Add filtering by unread messages to getInbox API ([cb4d631](https://github.com/shaishab316/getavails-server/commit/cb4d631ac9b55b91b5960d8be24e76b9c693cb78))
+* Define Prisma schema for Chat and Message models ([3f276d2](https://github.com/shaishab316/getavails-server/commit/3f276d2afb927d10c40892e78ad0a5090fbfc556))
+* Implement chat module with create/delete functionalities ([2347869](https://github.com/shaishab316/getavails-server/commit/234786980c4ac09e25c30a06ac40db48dbc468f9))
+* Implement media upload endpoint with file validation ([5b2f0a9](https://github.com/shaishab316/getavails-server/commit/5b2f0a97c31022f86fa1bcf8118e01e711b33918))
+* Implement media upload endpoint with file validation ([1cef4ce](https://github.com/shaishab316/getavails-server/commit/1cef4ce2e7c0e46f233442f53e10b7367793d79f))
+* Implement message module with socket integration ([b11b185](https://github.com/shaishab316/getavails-server/commit/b11b18575cb4b41920914922684d912759948cd8))
+* Implement message retrieval and validation ([1d2bea1](https://github.com/shaishab316/getavails-server/commit/1d2bea198af4c9c255b8441c9ba25a99e7cc7ab8))
+* Implement message retrieval and validation ([f65e526](https://github.com/shaishab316/getavails-server/commit/f65e5267a585ad1fd943d1ac90ea90d6a07b465f))
+* Implement user inbox retrieval with pagination and search ([7ac7db7](https://github.com/shaishab316/getavails-server/commit/7ac7db7fce90f27fa3a6590adc72f2c95bc61d7f))
+* Refactor chat and message models, add read receipts ([b54d789](https://github.com/shaishab316/getavails-server/commit/b54d7890d1ba30a4ec0b2e5fffd293c8ab27e5b4))
+* Refactor chat and message models, add read receipts ([6fcdf31](https://github.com/shaishab316/getavails-server/commit/6fcdf315ed93b27b56f49793620efa80a2f76a1c))
+
 # [1.3.0](https://github.com/shaishab316/getavails-server/compare/v1.2.0...v1.3.0) (2025-10-30)
 
 
