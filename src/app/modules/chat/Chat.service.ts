@@ -60,19 +60,27 @@ export const ChatServices = {
   /**
    * Get inbox of user
    */
-  async getInbox({ limit, page, user_id, search }: TGetInboxArgs) {
+  async getInbox({ limit, page, user_id, search, unread }: TGetInboxArgs) {
     const chatWhere: Prisma.ChatWhereInput = {
-      user_ids: {
-        has: user_id,
-      },
+      user_ids: { has: user_id },
     };
 
     if (search) {
       chatWhere.users = {
         some: {
-          name: {
-            contains: search,
-            mode: 'insensitive',
+          name: { contains: search, mode: 'insensitive' },
+        },
+      };
+    }
+
+    if (unread) {
+      chatWhere.messages = {
+        some: {
+          user_id: { not: user_id },
+          seen_by: {
+            none: {
+              id: user_id, //? user has not seen message
+            },
           },
         },
       };
@@ -82,22 +90,20 @@ export const ChatServices = {
       where: chatWhere,
       skip: (page - 1) * limit,
       take: limit,
-      orderBy: {
-        created_at: 'desc',
-      },
+      orderBy: { timestamp: 'desc' },
       select: {
         id: true,
         users: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true,
-          },
+          select: { id: true, name: true, avatar: true },
         },
         messages: {
           take: 1,
-          orderBy: {
-            updated_at: 'desc',
+          orderBy: { updated_at: 'desc' },
+          select: {
+            text: true,
+            updated_at: true,
+            seen_by: { select: { id: true } },
+            user_id: true,
           },
         },
       },
@@ -116,13 +122,18 @@ export const ChatServices = {
       },
       chats: chats.map(({ id, users, messages }) => {
         const opponent = users.find(user => user.id !== user_id);
+        const lastMessage = messages[0];
 
         return {
           id,
-          name: opponent?.name || null,
-          avatar: opponent?.avatar || null,
-          last_message: messages[0]?.text || null,
-          timestamp: messages[0]?.updated_at || null,
+          name: opponent?.name ?? null,
+          avatar: opponent?.avatar ?? null,
+          last_message: lastMessage?.text ?? null,
+          timestamp: lastMessage?.updated_at ?? null,
+          unread: lastMessage
+            ? !lastMessage.seen_by.some(sb => sb.id === user_id) &&
+              lastMessage.user_id !== user_id
+            : false,
         };
       }),
     };
