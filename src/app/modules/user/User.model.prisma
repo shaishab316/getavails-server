@@ -32,6 +32,7 @@ model User {
   artist_agents         String[]  @default([])
   artist_pending_agents String[]  @default([])
   organizer_venues      String[]  @default([])
+  seen_messages         Message[] @relation("SeenMessages")
   messages              Message[]
   chats                 Chat[]    @relation("UserChats")
 

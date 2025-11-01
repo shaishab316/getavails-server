@@ -1,6 +1,6 @@
 model Chat {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
 
   user_ids String[]
 

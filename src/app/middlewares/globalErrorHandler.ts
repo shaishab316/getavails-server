@@ -7,7 +7,7 @@ import config from '../../config';
 import ServerError from '../../errors/ServerError';
 import handleZodError from '../../errors/handleZodError';
 import { errorLogger } from '../../utils/logger';
-import { TErrorHandler, TErrorMessage } from '../../types/errors';
+import type { TErrorHandler, TErrorMessage } from '../../types/errors';
 import multer from 'multer';
 import handleMulterError from '../../errors/handleMulterError';
 import { Prisma } from '../../utils/db';
@@ -22,7 +22,9 @@ export const defaultError: TErrorHandler = {
   message: 'Something went wrong',
   errorMessages: [],
 };
-
+/**
+ * Global error handler middleware
+ */
 const globalErrorHandler: ErrorRequestHandler = async (error, req, res, _) => {
   /** delete uploaded files */
   if (req.tempFiles) await deleteFiles(req.tempFiles);
@@ -44,7 +46,10 @@ const globalErrorHandler: ErrorRequestHandler = async (error, req, res, _) => {
 
 export default globalErrorHandler;
 
-export const formatError = (error: any): TErrorHandler => {
+/**
+ * Formats the error message
+ */
+export const formatError = (error: Error): TErrorHandler => {
   if (error instanceof multer.MulterError) return handleMulterError(error);
   if (error instanceof ZodError) return handleZodError(error);
   if (error instanceof Prisma.PrismaClientKnownRequestError)
