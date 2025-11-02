@@ -15,6 +15,7 @@ import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
 import { emailTemplate } from '../../../templates/emailTemplate';
 import config from '../../../config';
+import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 
 export const UserServices = {
   async getNextUserId(
@@ -38,11 +39,11 @@ export const UserServices = {
 
   async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
-      where: { email, is_verified: true },
-      select: { role: true }, //? select only role
+      where: { email },
+      select: { role: true, is_verified: true }, //? skip body
     });
 
-    if (existingUser)
+    if (existingUser?.is_verified)
       throw new ServerError(
         StatusCodes.CONFLICT,
         `${existingUser.role} already exists with this ${email} email.`,
@@ -65,8 +66,15 @@ export const UserServices = {
       omit: {
         ...userSelfOmit[role],
         otp_id: false,
+        stripe_account_id: false,
       },
     });
+
+    if (!user.stripe_account_id) {
+      await stripeAccountConnectQueue.add({
+        user_id: user.id,
+      });
+    }
 
     try {
       const otp = generateOTP({
@@ -90,6 +98,7 @@ export const UserServices = {
     return {
       ...user,
       otp_id: undefined,
+      stripe_account_id: undefined,
     };
   },
 

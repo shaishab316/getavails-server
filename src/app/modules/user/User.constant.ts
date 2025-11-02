@@ -15,6 +15,7 @@ export const userDefaultOmit = {
   is_admin: true,
   updated_at: true,
   created_at: true,
+  ballance: true,
   is_stripe_connected: true,
 } satisfies Prisma.UserOmit;
 
