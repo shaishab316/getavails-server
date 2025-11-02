@@ -1,7 +1,10 @@
 import z from 'zod';
 import { exists } from '../../../utils/db/exists';
-import { TModelZod } from '../../../types/zod';
-import { AgentOffer as TAgentOffer } from '../../../../prisma';
+import type { TModelZod } from '../../../types/zod';
+import {
+  EAgentOfferStatus,
+  AgentOffer as TAgentOffer,
+} from '../../../../prisma';
 
 /**
  * Validation for agent
@@ -73,5 +76,26 @@ export const AgentValidations = {
       }),
       address: z.string({ error: 'Address is required' }),
     } satisfies TModelZod<TAgentOffer>),
+  }),
+
+  /**
+   * Validation schema for get agent offers
+   */
+  getMyOffers: z.object({
+    query: z.object({
+      status: z.enum(EAgentOfferStatus).default(EAgentOfferStatus.PENDING),
+    }),
+  }),
+
+  /**
+   *
+   */
+  cancelOffer: z.object({
+    body: z.object({
+      offer_id: z.string().refine(exists('agentOffer'), {
+        error: ({ input }) => `Offer not found with id: ${input}`,
+        path: ['offer_id'],
+      }),
+    }),
   }),
 };

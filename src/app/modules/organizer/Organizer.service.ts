@@ -1,8 +1,15 @@
 import { Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
-import { TGetAgentOffersForOrganizerArgs } from './Organizer.interface';
+import { agentOfferSearchableFields } from '../agent/Agent.constant';
+import type { TGetAgentOffersForOrganizerArgs } from './Organizer.interface';
 
+/**
+ * All organizer related services
+ */
 export const OrganizerServices = {
+  /**
+   * Get agent offers
+   */
   async getAgentOffers({
     limit,
     page,
@@ -17,9 +24,12 @@ export const OrganizerServices = {
 
     //? Search agent using searchable fields
     if (search) {
-      where.OR = [
-        { agent: { name: { contains: search, mode: 'insensitive' } } },
-      ];
+      where.OR = agentOfferSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
     }
 
     const offers = await prisma.agentOffer.findMany({

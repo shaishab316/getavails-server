@@ -1,13 +1,24 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
+import {
+  EAgentOfferStatus,
+  EUserRole,
+  Prisma,
+  prisma,
+  User as TUser,
+} from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { userOmit } from '../user/User.constant';
-import { agentSearchableFields } from './Agent.constant';
+import {
+  agentOfferSearchableFields,
+  agentSearchableFields,
+} from './Agent.constant';
 import type {
+  TCancelAgentOfferArgs,
   TCreateAgentOfferArgs,
   TDeleteArtist,
+  TGetAgentOffersArgs,
   TInviteArtist,
   TProcessAgentRequest,
 } from './Agent.interface';
@@ -254,6 +265,80 @@ export const AgentServices = {
         ...payload,
         end_date: payload.end_date ?? payload.start_date,
       },
+    });
+  },
+
+  /**
+   * Retrieve all offers for a specific agent
+   */
+  async getMyOffers({
+    agent_id,
+    limit,
+    page,
+    status,
+    search,
+  }: TGetAgentOffersArgs) {
+    const where: Prisma.AgentOfferWhereInput = {
+      agent_id,
+      status,
+    };
+
+    //? Search agent using searchable fields
+    if (search) {
+      where.OR = agentOfferSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const offers = await prisma.agentOffer.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+
+    const total = await prisma.agentOffer.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      offers,
+    };
+  },
+
+  /**
+   * Cancel agent offer
+   */
+  async cancelOffer({
+    offer_id,
+    agent_id,
+    organizer_id,
+  }: TCancelAgentOfferArgs) {
+    const offer = await prisma.agentOffer.findFirst({
+      where: { id: offer_id, agent_id, organizer_id },
+    });
+
+    if (!offer) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'You do not have permission to cancel this offer',
+      );
+    }
+
+    return prisma.agentOffer.update({
+      where: { id: offer_id },
+      data: { status: EAgentOfferStatus.CANCELLED, cancelled_at: new Date() },
     });
   },
 };
