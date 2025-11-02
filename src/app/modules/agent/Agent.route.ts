@@ -3,8 +3,8 @@ import { AgentControllers } from './Agent.controller';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { QueryValidations } from '../query/Query.validation';
 import { AgentValidations } from './Agent.validation';
-import { AgentOfferValidations } from '../AgentOffer/AgentOffer.validation';
-import { AgentOfferControllers } from '../AgentOffer/AgentOffer.controller';
+import { AgentOfferValidations } from '../agentOffer/AgentOffer.validation';
+import { AgentOfferControllers } from '../agentOffer/AgentOffer.controller';
 
 const free = Router();
 {
