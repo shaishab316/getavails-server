@@ -406,7 +406,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "// Done\r\n{\r\n    \"name\": \"Artist\",\r\n    \"email\": \"artist2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"genre\": \"Pop\",\r\n    \"location\": \"Bangladesh\",\r\n    \"price\": \"$50 hours\"\r\n}",
+									"raw": "// Done\r\n{\r\n    \"name\": \"Artist\",\r\n    \"email\": \"artist@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"genre\": \"Pop\",\r\n    \"location\": \"Bangladesh\",\r\n    \"price\": \"$50 hours\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1230,7 +1230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"agent3@gmail.com\",\r\n    \"otp\": \"564091\"\r\n}",
+							"raw": "{\r\n    \"email\": \"artist@gmail.com\",\r\n    \"otp\": \"564091\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1517,7 +1517,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{user_token}}",
+									"value": "{{agent_token}}",
 									"type": "string"
 								}
 							]
@@ -1525,12 +1525,31 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/inbox",
+							"raw": "{{base_url}}/inbox?page=1&limit=10&unread=true",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"inbox"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "unread",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -3937,6 +3956,47 @@
 							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Rejected successfully!\"\n}"
 						}
 					]
+				},
+				{
+					"name": "create-offer",
+					"id": "34549363-8e09f848-bab0-41f6-b140-99b32641f0dc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"Gulshan\",\r\n    \"amount\": 500,\r\n    \"artist_id\": \"ar-1\",\r\n    \"organizer_id\": \"or-1\",\r\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\r\n    \"end_date\": \"2025-11-03T06:03:52.203Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/create-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"create-offer"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "34549363-21b464fe-f807-4bb3-850c-2a46d5368712"
