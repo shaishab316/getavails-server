@@ -13,7 +13,7 @@ import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
 import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
-import { otp_send_template } from '../../../templates';
+import { emailTemplate } from '../../../templates/emailTemplate';
 import config from '../../../config';
 
 export const UserServices = {
@@ -72,7 +72,7 @@ export const UserServices = {
       await emailQueue.add({
         to: user.email,
         subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
-        html: otp_send_template({
+        html: await emailTemplate({
           userName: user.name,
           otp,
           template: 'account_verify',
