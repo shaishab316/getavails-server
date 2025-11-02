@@ -1,3 +1,14 @@
+# [1.6.0](https://github.com/shaishab316/getavails-server/compare/v1.5.0...v1.6.0) (2025-11-02)
+
+
+### Features
+
+* Implement agent offer management and organizer cancellation ([2b5c898](https://github.com/shaishab316/getavails-server/commit/2b5c8983e66f76688be20a08c1c4e17e158d0985))
+* Implement AgentOffer module with API endpoint ([7f524de](https://github.com/shaishab316/getavails-server/commit/7f524de178c346f6a01c4612f97b4135b17685a8))
+* Implement MJML email templating and update dependencies ([f25a01a](https://github.com/shaishab316/getavails-server/commit/f25a01a9d0ebfff5b321a7498c87d03afaf40a1a))
+* Integrate AgentOffer functionality into Agent module ([ff5f2fa](https://github.com/shaishab316/getavails-server/commit/ff5f2fa09dcaf6b226496bdefe072db98abea19d))
+* Refactor user data exclusion and fix user registration ([9459921](https://github.com/shaishab316/getavails-server/commit/9459921133d0896f56e751a27e956b0e3438ed9b))
+
 # [1.5.0](https://github.com/shaishab316/getavails-server/compare/v1.4.0...v1.5.0) (2025-11-01)
 
 
