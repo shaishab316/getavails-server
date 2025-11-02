@@ -5,6 +5,7 @@ export const userSearchableFields = ['name', 'email'] satisfies (keyof TUser)[];
 const selfOmit = {
   password: true,
   otp_id: true,
+  stripe_account_id: true,
 } satisfies Prisma.UserOmit;
 
 export const userDefaultOmit = {
@@ -14,6 +15,7 @@ export const userDefaultOmit = {
   is_admin: true,
   updated_at: true,
   created_at: true,
+  is_stripe_connected: true,
 } satisfies Prisma.UserOmit;
 
 export const userUserOmit = {

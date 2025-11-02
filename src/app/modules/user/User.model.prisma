@@ -20,6 +20,12 @@ model User {
   location String?
   //! end
 
+  //! payment
+  ballance            Float   @default(0)
+  stripe_account_id   String?
+  is_stripe_connected Boolean @default(false)
+  //! end
+
   experience   String?
   genre        String?
   availability DateTime[] @default([])

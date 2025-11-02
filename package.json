@@ -18,10 +18,11 @@
   "scripts": {
     "prepare": "simple-git-hooks",
     "new-module": "tsx ./src/app/modules/.builder.ts",
-    "build": "node esbuild.mjs",
+    "build": "tsx esbuild.mts",
     "start": "node dist/server.js",
     "dev": "set DEBUG=socket.io* && tsx --watch src/server.ts",
     "seed-admin": "tsx scripts/seedAdmin.ts",
+    "seed-stripe": "tsx scripts/seedStripe.ts",
     "lint": "eslint src --ignore-path .gitignore --ext .ts",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "type-check": "tsc --noEmit",
