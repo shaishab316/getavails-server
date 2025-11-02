@@ -10,12 +10,14 @@ import { VenueRoutes } from '../app/modules/venue/Venue.route';
 import { ChatRoutes } from '../app/modules/chat/Chat.route';
 import { MessageRoutes } from '../app/modules/message/Message.route';
 import { OrganizerRoutes } from '../app/modules/organizer/Organizer.route';
+import { PaymentRoutes } from '../app/modules/payment/Payment.route';
 
 export default injectRoutes(Router(), {
   // no auth required
   '/auth': [AuthRoutes.free],
   '/artists': [ArtistRoutes.free],
   '/agents': [AgentRoutes.free],
+  '/payments': [PaymentRoutes.free],
 
   // all user can access
   '/profile': [auth.all, UserRoutes.all],

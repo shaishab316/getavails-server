@@ -65,6 +65,8 @@ const all = Router();
     purifyRequest(UserValidations.changePassword),
     AuthControllers.changePassword,
   );
+
+  all.get('/connect-stripe', UserControllers.connectStripeAccount);
 }
 
 export const UserRoutes = {

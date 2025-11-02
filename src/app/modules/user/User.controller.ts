@@ -5,8 +5,18 @@ import { AuthServices } from '../auth/Auth.service';
 import { prisma, User as TUser } from '../../../utils/db';
 import { enum_decode } from '../../../utils/transform/enum';
 import { capitalize } from '../../../utils/transform/capitalize';
+import { stripe } from '../payment/Payment.utils';
+import ServerError from '../../../errors/ServerError';
+import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
+import config from '../../../config';
 
+/**
+ * User controllers
+ */
 export const UserControllers = {
+  /**
+   * Register user
+   */
   register: catchAsync(async ({ body }, res) => {
     const user = await UserServices.register(body);
 
@@ -29,6 +39,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Edit profile
+   */
   editProfile: catchAsync(async req => {
     const data = await UserServices.updateUser(req);
 
@@ -38,6 +51,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Super edit profile
+   */
   superEditProfile: catchAsync(async ({ params, body }) => {
     const user = (await prisma.user.findUnique({
       where: { id: params.userId },
@@ -54,6 +70,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Get all users
+   */
   getAllUser: catchAsync(async ({ query }) => {
     const { meta, users } = await UserServices.getAllUser(query);
 
@@ -64,6 +83,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Get all users
+   */
   superGetAllUser: catchAsync(async ({ query }) => {
     const { meta, users } = await UserServices.getAllUser(query);
 
@@ -78,6 +100,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Get profile
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   profile: catchAsync(({ user: { password: _, ...user } }) => {
     return {
@@ -86,6 +111,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Delete account
+   */
   superDeleteAccount: catchAsync(async ({ params }) => {
     const user = await UserServices.deleteAccount(params.userId);
 
@@ -94,6 +122,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Delete account
+   */
   deleteAccount: catchAsync(async ({ user }) => {
     await UserServices.deleteAccount(user.id);
 
@@ -102,6 +133,9 @@ export const UserControllers = {
     };
   }),
 
+  /**
+   * Update availability
+   */
   updateAvailability: catchAsync(async ({ body, user }) => {
     await UserServices.updateAvailability({
       ...body,
@@ -111,6 +145,41 @@ export const UserControllers = {
     return {
       message: 'Availability updated successfully!',
       data: body,
+    };
+  }),
+
+  /**
+   *
+   */
+  connectStripeAccount: catchAsync(async ({ user }) => {
+    if (!user.stripe_account_id) {
+      await stripeAccountConnectQueue.add({ user_id: user.id });
+
+      return {
+        statusCode: StatusCodes.ACCEPTED,
+        message: 'Stripe account connecting. Try again later!',
+      };
+    }
+
+    if (user.is_stripe_connected) {
+      throw new ServerError(
+        StatusCodes.BAD_REQUEST,
+        'Stripe account already connected',
+      );
+    }
+
+    const { url } = await stripe.accountLinks.create({
+      account: user.stripe_account_id,
+      refresh_url: `${config.url.href}/not-found`,
+      return_url: `${config.url.href}/payments/stripe/connect?user_id=${user.id}`,
+      type: 'account_onboarding',
+    });
+
+    return {
+      message: 'Stripe account connected successfully!',
+      data: {
+        url,
+      },
     };
   }),
 };

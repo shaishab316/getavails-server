@@ -54,4 +54,7 @@ stripeAccountConnectQueue.process(async ({ data }) => {
   }
 });
 
+/**
+ * This queue is used to create a Stripe account for a user
+ */
 export default stripeAccountConnectQueue;

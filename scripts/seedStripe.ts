@@ -10,9 +10,11 @@ import ora from 'ora';
 import type { TStripWebhookEvent } from '../src/app/modules/payment/Payment.interface';
 
 (async () => {
-  if (process.env.STRIPE_WEB_HOOK_SECRET) return;
-
   const spinner = ora(chalk.blue('Setting up Stripe webhooks...')).start();
+  if (process.env.STRIPE_WEB_HOOK_SECRET) {
+    spinner.succeed(chalk.green('Webhooks already set up.'));
+    return;
+  }
 
   try {
     const events = Object.keys(stripWebhookEventMap) as TStripWebhookEvent[];
@@ -42,13 +44,9 @@ import type { TStripWebhookEvent } from '../src/app/modules/payment/Payment.inte
       description: `Webhook for ${config.server.name}`,
     });
 
-    config.payment.stripe.web_hook_secret = env(
-      'stripe web hook secret',
-      newWebhook.secret,
-      {
-        regex: '^whsec_[0-9a-zA-Z]{32,}$',
-      },
-    );
+    env('stripe web hook secret', newWebhook.secret, {
+      regex: '^whsec_[0-9a-zA-Z]{32,}$',
+    });
 
     spinner.succeed(chalk.green('Stripe webhooks setup successfully!'));
   } catch (error: any) {
