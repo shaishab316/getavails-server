@@ -1,6 +1,8 @@
 import type z from 'zod';
 import type { AgentValidations } from './Agent.validation';
 import type { User as TUser } from '../../../../prisma';
+import { TList } from '../query/Query.interface';
+import { OrganizerValidations } from '../organizer/Organizer.validation';
 
 /**
  * @type: Invite artist for agent
@@ -22,3 +24,27 @@ export type TDeleteArtist = z.infer<
 export type TProcessAgentRequest = z.infer<
   typeof AgentValidations.processAgentRequest
 >['body'] & { agent: TUser; is_approved: boolean };
+
+/**
+ * @type: for create agent offer
+ */
+export type TCreateAgentOfferArgs = z.infer<
+  typeof AgentValidations.createOffer
+>['body'] & {
+  agent_id: string;
+};
+
+/**
+ * @type: for get agent offers
+ */
+export type TGetAgentOffersArgs = TList &
+  z.infer<typeof OrganizerValidations.getAgentOffers>['query'] & {
+    agent_id: string;
+  };
+
+export type TCancelAgentOfferArgs = z.infer<
+  typeof AgentValidations.cancelOffer
+>['body'] & {
+  agent_id?: string;
+  organizer_id?: string;
+};

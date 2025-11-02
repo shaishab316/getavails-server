@@ -44,6 +44,24 @@ const agent = Router();
     purifyRequest(AgentValidations.deleteArtist),
     AgentControllers.deleteArtist,
   );
+
+  agent.post(
+    '/create-offer',
+    purifyRequest(AgentValidations.createOffer),
+    AgentControllers.createOffer,
+  );
+
+  agent.get(
+    '/my-offers',
+    purifyRequest(QueryValidations.list, AgentValidations.getMyOffers),
+    AgentControllers.getMyOffers,
+  );
+
+  agent.post(
+    '/cancel-offer',
+    purifyRequest(AgentValidations.cancelOffer),
+    AgentControllers.cancelOffer,
+  );
 }
 
 export const AgentRoutes = {

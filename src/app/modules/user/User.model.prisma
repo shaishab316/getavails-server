@@ -25,16 +25,19 @@ model User {
   availability DateTime[] @default([])
   price        String?
 
-  venue_type            String?
-  capacity              Int?
-  agent_artists         String[]  @default([])
-  agent_pending_artists String[]  @default([])
-  artist_agents         String[]  @default([])
-  artist_pending_agents String[]  @default([])
-  organizer_venues      String[]  @default([])
-  seen_messages         Message[] @relation("SeenMessages")
-  messages              Message[]
-  chats                 Chat[]    @relation("UserChats")
+  venue_type              String?
+  capacity                Int?
+  agent_artists           String[]     @default([])
+  agent_pending_artists   String[]     @default([])
+  artist_agents           String[]     @default([])
+  artist_pending_agents   String[]     @default([])
+  organizer_venues        String[]     @default([])
+  seen_messages           Message[]    @relation("SeenMessages")
+  messages                Message[]
+  chats                   Chat[]       @relation("UserChats")
+  agent_offers_agents     AgentOffer[] @relation("AgentOffersAgent")
+  agent_offers_artists    AgentOffer[] @relation("AgentOffersArtist")
+  agent_offers_organizers AgentOffer[] @relation("AgentOffersOrganizer")
 
   @@map("users")
 }

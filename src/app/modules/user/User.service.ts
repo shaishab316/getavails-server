@@ -1,7 +1,7 @@
 import type { TList } from '../query/Query.interface';
 import {
   userSearchableFields as searchFields,
-  userOmit,
+  userSelfOmit,
 } from './User.constant';
 import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
@@ -13,7 +13,7 @@ import { hashPassword } from '../auth/Auth.utils';
 import { generateOTP } from '../../../utils/crypto/otp';
 import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
-import { otp_send_template } from '../../../templates';
+import { emailTemplate } from '../../../templates/emailTemplate';
 import config from '../../../config';
 
 export const UserServices = {
@@ -38,7 +38,7 @@ export const UserServices = {
 
   async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email, is_verified: true },
       select: { role: true }, //? select only role
     });
 
@@ -48,8 +48,14 @@ export const UserServices = {
         `${existingUser.role} already exists with this ${email} email.`,
       );
 
-    const user = await prisma.user.create({
-      data: {
+    const user = await prisma.user.upsert({
+      where: { email },
+      update: {
+        role,
+        password: await hashPassword(password),
+        ...payload,
+      },
+      create: {
         id: await UserServices.getNextUserId({ role }),
         email,
         role,
@@ -57,8 +63,7 @@ export const UserServices = {
         ...payload,
       },
       omit: {
-        ...userOmit[role],
-        email: false,
+        ...userSelfOmit[role],
         otp_id: false,
       },
     });
@@ -72,7 +77,7 @@ export const UserServices = {
       await emailQueue.add({
         to: user.email,
         subject: `Your ${config.server.name} Account Verification OTP is ⚡ ${otp} ⚡.`,
-        html: otp_send_template({
+        html: await emailTemplate({
           userName: user.name,
           otp,
           template: 'account_verify',
@@ -98,7 +103,7 @@ export const UserServices = {
 
     return prisma.user.update({
       where: { id: user.id },
-      omit: userOmit[body.role ?? user.role ?? EUserRole.USER],
+      omit: userSelfOmit[body.role ?? user.role ?? EUserRole.USER],
       data,
     });
   },

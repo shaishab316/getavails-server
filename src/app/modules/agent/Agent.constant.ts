@@ -1,4 +1,4 @@
-import { User as TUser } from '../../../utils/db';
+import type { Prisma, User as TUser } from '../../../utils/db';
 
 /**
  * Fields that can be used to search for an agent
@@ -10,3 +10,9 @@ export const agentSearchableFields = [
   'location',
   'id',
 ] satisfies (keyof TUser)[];
+
+export const agentOfferSearchableFields = [
+  'artist',
+  'organizer',
+  'artist',
+] satisfies (keyof Prisma.AgentOfferWhereInput)[];

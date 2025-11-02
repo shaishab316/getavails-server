@@ -2,6 +2,8 @@ import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
 import catchAsync from '../../middlewares/catchAsync';
 import { AgentServices } from './Agent.service';
+import { TCancelAgentOfferArgs } from './Agent.interface';
+import { EUserRole } from '../../../../prisma';
 
 /**
  * All agent related controllers
@@ -86,6 +88,57 @@ export const AgentControllers = {
 
     return {
       message: 'Artist deleted successfully!',
+    };
+  }),
+
+  /**
+   * Create new agent offer
+   */
+  createOffer: catchAsync(async ({ body, user: agent }) => {
+    const offer = await AgentServices.createOffer({
+      ...body,
+      agent_id: agent.id,
+    });
+
+    return {
+      statusCode: StatusCodes.CREATED,
+      message: 'Offer created successfully!',
+      data: offer,
+    };
+  }),
+
+  /**
+   * Retrieve all offers for a specific agent
+   */
+  getMyOffers: catchAsync(async ({ query, user: agent }) => {
+    const { meta, offers } = await AgentServices.getMyOffers({
+      ...query,
+      agent_id: agent.id,
+    });
+
+    return {
+      message: 'Offers retrieved successfully!',
+      meta,
+      data: offers,
+    };
+  }),
+
+  /**
+   * cancelOffer
+   */
+  cancelOffer: catchAsync(async ({ body, user }) => {
+    const payload: TCancelAgentOfferArgs = { offer_id: body.offer_id };
+
+    if (user.role === EUserRole.AGENT) {
+      payload.agent_id = user.id;
+    } else if (user.role === EUserRole.ORGANIZER) {
+      payload.organizer_id = user.id;
+    }
+
+    await AgentServices.cancelOffer(payload);
+
+    return {
+      message: 'Offer cancelled successfully!',
     };
   }),
 };
