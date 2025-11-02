@@ -22,3 +22,12 @@ export type TDeleteArtist = z.infer<
 export type TProcessAgentRequest = z.infer<
   typeof AgentValidations.processAgentRequest
 >['body'] & { agent: TUser; is_approved: boolean };
+
+/**
+ * @type: for create agent offer
+ */
+export type TCreateAgentOfferArgs = z.infer<
+  typeof AgentValidations.createOffer
+>['body'] & {
+  agent_id: string;
+};

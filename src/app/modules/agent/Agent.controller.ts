@@ -88,4 +88,20 @@ export const AgentControllers = {
       message: 'Artist deleted successfully!',
     };
   }),
+
+  /**
+   * Create new agent offer
+   */
+  createOffer: catchAsync(async ({ body, user: agent }) => {
+    const offer = await AgentServices.createOffer({
+      ...body,
+      agent_id: agent.id,
+    });
+
+    return {
+      statusCode: StatusCodes.CREATED,
+      message: 'Offer created successfully!',
+      data: offer,
+    };
+  }),
 };

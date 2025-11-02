@@ -3,8 +3,6 @@ import { AgentControllers } from './Agent.controller';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { QueryValidations } from '../query/Query.validation';
 import { AgentValidations } from './Agent.validation';
-import { AgentOfferValidations } from '../agentOffer/AgentOffer.validation';
-import { AgentOfferControllers } from '../agentOffer/AgentOffer.controller';
 
 const free = Router();
 {
@@ -49,8 +47,8 @@ const agent = Router();
 
   agent.post(
     '/create-offer',
-    purifyRequest(AgentOfferValidations.createOffer),
-    AgentOfferControllers.createOffer,
+    purifyRequest(AgentValidations.createOffer),
+    AgentControllers.createOffer,
   );
 }
 

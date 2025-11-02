@@ -6,6 +6,7 @@ import type { TList } from '../query/Query.interface';
 import { userOmit } from '../user/User.constant';
 import { agentSearchableFields } from './Agent.constant';
 import type {
+  TCreateAgentOfferArgs,
   TDeleteArtist,
   TInviteArtist,
   TProcessAgentRequest,
@@ -241,6 +242,18 @@ export const AgentServices = {
         },
         select: { id: true }, //? skip body
       });
+    });
+  },
+
+  /**
+   * Create new agent offer
+   */
+  async createOffer(payload: TCreateAgentOfferArgs) {
+    return prisma.agentOffer.create({
+      data: {
+        ...payload,
+        end_date: payload.end_date ?? payload.start_date,
+      },
     });
   },
 };
