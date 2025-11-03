@@ -18,3 +18,12 @@ export type TAcceptAgentOfferArgs = z.infer<
 >['body'] & {
   organizer_id: string;
 };
+
+/**
+ * @type: Metadata for accept agent offer
+ */
+export type TAcceptAgentOfferMetadata = {
+  purpose: 'agent_offer';
+  amount: string;
+  offer_id: string;
+};

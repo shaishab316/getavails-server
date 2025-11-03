@@ -1,10 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { Prisma, prisma } from '../../../utils/db';
+import { EAgentOfferStatus, Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { agentOfferSearchableFields } from '../agent/Agent.constant';
 import type {
   TAcceptAgentOfferArgs,
+  TAcceptAgentOfferMetadata,
   TGetAgentOffersForOrganizerArgs,
 } from './Organizer.interface';
 import { stripe } from '../payment/Payment.utils';
@@ -76,12 +77,20 @@ export const OrganizerServices = {
       );
     }
 
+    //? ensure offer is pending
+    if (offer.status !== EAgentOfferStatus.PENDING) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        `You can't accept ${offer.status} offers`,
+      );
+    }
+
     const { amount } = offer;
 
-    const metadata = {
+    const metadata: TAcceptAgentOfferMetadata = {
       purpose: 'agent_offer',
       amount: amount.toString(),
-      organizer_id,
+      offer_id,
     };
 
     const { url } = await stripe.checkout.sessions.create({

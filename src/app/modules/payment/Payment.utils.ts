@@ -2,6 +2,7 @@
 import Stripe from 'stripe';
 import config from '../../../config';
 import { prisma } from '../../../utils/db';
+import { PaymentServices } from './Payment.service';
 
 /**
  * Stripe instance
@@ -41,10 +42,18 @@ export const stripWebhookEventMap = {
    * for stripe checkout session
    */
   'checkout.session.completed': async (session: Stripe.Checkout.Session) => {
-    const paymentIntent = await stripe.paymentIntents.retrieve(
-      session.payment_intent as string,
-    );
+    //? ensure session has a purpose
+    if (!session?.metadata?.purpose) return;
 
-    console.log(paymentIntent);
+    const purposeFn =
+      PaymentServices[
+        session?.metadata?.purpose as keyof typeof PaymentServices
+      ];
+
+    if (purposeFn) await purposeFn(session?.metadata as any);
+
+    /**
+     * Todo: save transaction info in db
+     */
   },
 } satisfies TStripWebhookEventMap;
