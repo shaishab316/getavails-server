@@ -32,6 +32,8 @@ export type TCreateAgentOfferArgs = z.infer<
   typeof AgentValidations.createOffer
 >['body'] & {
   agent_id: string;
+  agent: TUser;
+  end_date: string;
 };
 
 /**

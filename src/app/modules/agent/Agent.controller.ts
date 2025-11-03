@@ -98,6 +98,7 @@ export const AgentControllers = {
     const offer = await AgentServices.createOffer({
       ...body,
       agent_id: agent.id,
+      agent,
     });
 
     return {
