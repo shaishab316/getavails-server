@@ -15,9 +15,15 @@ import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
 import { emailTemplate } from '../../../templates/emailTemplate';
 import config from '../../../config';
-import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
+// import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 
+/**
+ * User services
+ */
 export const UserServices = {
+  /**
+   * Get next user id
+   */
   async getNextUserId(
     where:
       | { role: EUserRole; is_admin?: never }
@@ -37,12 +43,16 @@ export const UserServices = {
     return `${prefix}-${currSL + 1}`;
   },
 
+  /**
+   * Register user and send otp
+   */
   async register({ email, role, password, ...payload }: Omit<TUser, 'id'>) {
     const existingUser = await prisma.user.findUnique({
       where: { email },
       select: { role: true, is_verified: true }, //? skip body
     });
 
+    //? ensure user doesn't exist
     if (existingUser?.is_verified)
       throw new ServerError(
         StatusCodes.CONFLICT,
@@ -71,9 +81,10 @@ export const UserServices = {
     });
 
     if (!user.stripe_account_id) {
-      await stripeAccountConnectQueue.add({
-        user_id: user.id,
-      });
+      //? Todo: uncomment
+      // await stripeAccountConnectQueue.add({
+      //   user_id: user.id,
+      // });
     }
 
     try {

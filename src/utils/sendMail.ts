@@ -75,15 +75,13 @@ export const sendEmail = async ({
     });
 
     if (!accepted.length) {
-      spinner.fail(chalk.red(`❌ Email not accepted by server.`));
+      spinner.fail(chalk.red(`Email not accepted by server.`));
     } else {
-      spinner.succeed(
-        chalk.green(`✅ Email sent successfully to ${accepted[0]}`),
-      );
+      spinner.succeed(chalk.green(`Email sent successfully to ${accepted[0]}`));
     }
   } catch (error) {
     if (error instanceof Error) {
-      spinner.fail(chalk.red(`❌ Failed to send email to ${to}`));
+      spinner.fail(chalk.red(`Failed to send email to ${to}`));
     }
   }
 };

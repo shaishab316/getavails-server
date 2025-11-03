@@ -19,6 +19,12 @@ const organizer = Router();
     purifyRequest(AgentValidations.cancelOffer),
     AgentControllers.cancelOffer,
   );
+
+  organizer.post(
+    '/accept-agent-offer',
+    purifyRequest(OrganizerValidations.acceptAgentOffer),
+    OrganizerControllers.acceptAgentOffer,
+  );
 }
 
 export const OrganizerRoutes = {

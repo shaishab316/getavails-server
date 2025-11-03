@@ -42,9 +42,9 @@ stripeAccountConnectQueue.process(async ({ data }) => {
         data: { stripe_account_id: stripeAccount.id },
       });
 
-      spinner.succeed(`✅ Stripe account created for ${user.email}`);
+      spinner.succeed(`Stripe account created for ${user.email}`);
     } catch (error) {
-      spinner.fail(`❌ Failed creating Stripe account for ${user.email}`);
+      spinner.fail(`Failed creating Stripe account for ${user.email}`);
 
       errorLogger.error(
         chalk.red(`Error creating Stripe account for ${user.email}`),

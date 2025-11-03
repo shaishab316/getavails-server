@@ -92,8 +92,22 @@ const config = {
     }),
     href: env('href url', `http://localhost:${port}`, {
       regex: '^https?:\\/\\/.*$|^$',
-      down: 'Database info - end',
     }),
+    payment_success: env(
+      'payment success url',
+      `data:text/html,<script>alert('Payment Successful!');</script>`,
+      {
+        regex: '.*',
+      },
+    ),
+    payment_failure: env(
+      'payment failure url',
+      `data:text/html,<script>alert('Payment Failed!');</script>`,
+      {
+        regex: '.*',
+        down: 'Database info - end',
+      },
+    ),
   },
 
   bcrypt_salt_rounds: env('bcrypt salt rounds', 10, {
