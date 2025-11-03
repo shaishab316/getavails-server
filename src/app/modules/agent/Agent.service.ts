@@ -259,12 +259,22 @@ export const AgentServices = {
   /**
    * Create new agent offer
    */
-  async createOffer(payload: TCreateAgentOfferArgs) {
+  async createOffer({ agent, ...payload }: TCreateAgentOfferArgs) {
+    //? ensure that the artist exists in agent list
+    if (!agent.agent_artists.includes(payload.artist_id)) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'You do not have permission to create offer for this artist',
+      );
+    }
+
+    //? ensure that start date is before end date
+    if (!payload.end_date) {
+      payload.end_date = payload.start_date;
+    }
+
     return prisma.agentOffer.create({
-      data: {
-        ...payload,
-        end_date: payload.end_date ?? payload.start_date,
-      },
+      data: payload,
     });
   },
 

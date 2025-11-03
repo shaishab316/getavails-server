@@ -18,10 +18,11 @@
   "scripts": {
     "prepare": "simple-git-hooks",
     "new-module": "tsx ./src/app/modules/.builder.ts",
-    "build": "node esbuild.mjs",
+    "build": "tsx esbuild.mts",
     "start": "node dist/server.js",
     "dev": "set DEBUG=socket.io* && tsx --watch src/server.ts",
     "seed-admin": "tsx scripts/seedAdmin.ts",
+    "seed-stripe": "tsx scripts/seedStripe.ts",
     "lint": "eslint src --ignore-path .gitignore --ext .ts",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "type-check": "tsc --noEmit",
@@ -61,7 +62,6 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "inquirer": "^12.10.0",
-    "ora": "^9.0.0",
     "prettier": "^3.4.2",
     "prettier-eslint": "^16.3.0",
     "prisma": "^6.18.0",
@@ -98,6 +98,7 @@
     "strip-ansi": "^7.1.2",
     "stripe": "^19.1.0",
     "winston": "^3.13.0",
+    "ora": "^9.0.0",
     "zod": "^4.1.12"
   }
 }
