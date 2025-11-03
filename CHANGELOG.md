@@ -1,3 +1,18 @@
+# [1.7.0](https://github.com/shaishab316/getavails-server/compare/v1.6.0...v1.7.0) (2025-11-03)
+
+
+### Features
+
+* Add agent to offer payload and validate permissions ([6bcb2f7](https://github.com/shaishab316/getavails-server/commit/6bcb2f75b4a62aecf88ff4912281505c1261e144))
+* Add Stripe webhook and connect functionality ([75abbb9](https://github.com/shaishab316/getavails-server/commit/75abbb9793ef0e3816cba91cc8d60391eebb2109))
+* Implement agent offer acceptance via Stripe checkout ([bd49a91](https://github.com/shaishab316/getavails-server/commit/bd49a91aca06619047bca98b6ed79e682aac0080))
+* Implement organizer offer acceptance with Stripe payment ([630bddf](https://github.com/shaishab316/getavails-server/commit/630bddf8cf70b8eb1f97d708a32471aa12287b6f))
+* Implement user withdrawal functionality with BullMQ queue ([29668a9](https://github.com/shaishab316/getavails-server/commit/29668a93416dd7aaa9c0dbc1cccc4ce4cb12d0ca))
+* Improve seeding scripts with loading spinners, error handling ([ec98901](https://github.com/shaishab316/getavails-server/commit/ec98901bcaa743c32fba9553cd18435297f52af3))
+* Integrate Stripe for account connections and webhooks ([411fdea](https://github.com/shaishab316/getavails-server/commit/411fdea0f6990b4481b01e81dd4e7d19ea4223db))
+* Introduce payment configuration and Stripe integration ([c741755](https://github.com/shaishab316/getavails-server/commit/c7417559d876bbcf49a13567e68e10ee2c356f54))
+* Queue Stripe account creation and improve email handling ([3576b7c](https://github.com/shaishab316/getavails-server/commit/3576b7c2a12ab9052c60c6ea92e778c773475777))
+
 # [1.6.0](https://github.com/shaishab316/getavails-server/compare/v1.5.0...v1.6.0) (2025-11-02)
 
 
