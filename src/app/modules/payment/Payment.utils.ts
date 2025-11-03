@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Stripe from 'stripe';
 import config from '../../../config';
 import { prisma } from '../../../utils/db';
@@ -5,14 +6,28 @@ import { prisma } from '../../../utils/db';
 /**
  * Stripe instance
  */
-export const stripe = new Stripe(config.payment.stripe.secret_key);
+export const stripe = new Stripe(config.payment.stripe.secret_key, {
+  apiVersion: '2025-09-30.clover',
+});
+
+/**
+ * Stripe webhook event map
+ */
+type TStripWebhookEventMap = Partial<
+  Record<Stripe.Event.Type, (event: any) => Promise<void>>
+>;
 
 /**
  * Stripe webhook event map
  */
 export const stripWebhookEventMap = {
+  /**
+   * for stripe account connect
+   *
+   * @deprecated not working
+   */
   'account.updated': async (account: Stripe.Account) => {
-    return prisma.user.updateMany({
+    await prisma.user.updateMany({
       where: {
         stripe_account_id: account.id,
       },
@@ -21,4 +36,15 @@ export const stripWebhookEventMap = {
       },
     });
   },
-};
+
+  /**
+   * for stripe checkout session
+   */
+  'checkout.session.completed': async (session: Stripe.Checkout.Session) => {
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent as string,
+    );
+
+    console.log(paymentIntent);
+  },
+} satisfies TStripWebhookEventMap;

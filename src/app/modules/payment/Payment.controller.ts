@@ -5,10 +5,15 @@ import { stripe, stripWebhookEventMap } from './Payment.utils';
 import { StatusCodes } from 'http-status-codes';
 import { errorLogger } from '../../../utils/logger';
 import { TStripWebhookEvent } from './Payment.interface';
-import Stripe from 'stripe';
 import { prisma } from '../../../utils/db';
 
+/**
+ * Payment controllers
+ */
 export const PaymentControllers = {
+  /**
+   * Stripe Webhook
+   */
   stripeWebhook: catchAsync(
     async ({ body, headers }, res) => {
       const sig = headers['stripe-signature'] as string;
@@ -28,7 +33,7 @@ export const PaymentControllers = {
       if (!eventHandler)
         return res.status(StatusCodes.NOT_FOUND).json({ received: true });
 
-      await eventHandler(event.data.object as Stripe.Account);
+      await eventHandler(event.data.object as any);
 
       res.json({ received: true });
     },
@@ -43,14 +48,13 @@ export const PaymentControllers = {
     },
   ),
 
+  /**
+   * Stripe Connect
+   */
   stripConnect: catchAsync(async ({ query }) => {
     await prisma.user.update({
-      where: {
-        id: query.user_id as string,
-      },
-      data: {
-        is_stripe_connected: true,
-      },
+      where: { id: query.user_id as string },
+      data: { is_stripe_connected: true },
     });
 
     return { message: 'Stripe connected successfully' };
