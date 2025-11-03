@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { PaymentControllers } from './Payment.controller';
+import purifyRequest from '../../middlewares/purifyRequest';
+import { PaymentValidations } from './Payment.validation';
+import auth from '../../middlewares/auth';
 
 const free = Router();
 {
@@ -8,7 +11,20 @@ const free = Router();
    */
   free.all('/stripe/webhook', PaymentControllers.stripeWebhook);
 
+  /**
+   * Stripe account connect
+   */
   free.all('/stripe/connect', PaymentControllers.stripConnect);
+
+  /**
+   * Withdraw
+   */
+  free.post(
+    '/withdraw',
+    auth.all,
+    purifyRequest(PaymentValidations.withdraw),
+    PaymentControllers.withdraw,
+  );
 }
 
 /**

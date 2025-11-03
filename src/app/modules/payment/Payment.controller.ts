@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { errorLogger } from '../../../utils/logger';
 import { TStripWebhookEvent } from './Payment.interface';
 import { prisma } from '../../../utils/db';
+import { PaymentServices } from './Payment.service';
 
 /**
  * Payment controllers
@@ -58,5 +59,19 @@ export const PaymentControllers = {
     });
 
     return { message: 'Stripe connected successfully' };
+  }),
+
+  withdraw: catchAsync(async ({ body, user }) => {
+    await PaymentServices.withdraw({
+      amount: body.amount,
+      user,
+    });
+
+    return {
+      message: 'Withdraw request sent successfully',
+      data: {
+        available_balance: user.balance - body.amount,
+      },
+    };
   }),
 };

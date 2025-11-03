@@ -15,7 +15,7 @@ import emailQueue from '../../../utils/mq/emailQueue';
 import { errorLogger } from '../../../utils/logger';
 import { emailTemplate } from '../../../templates/emailTemplate';
 import config from '../../../config';
-// import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
+import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 
 /**
  * User services
@@ -81,10 +81,9 @@ export const UserServices = {
     });
 
     if (!user.stripe_account_id) {
-      //? Todo: uncomment
-      // await stripeAccountConnectQueue.add({
-      //   user_id: user.id,
-      // });
+      await stripeAccountConnectQueue.add({
+        user_id: user.id,
+      });
     }
 
     try {

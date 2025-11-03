@@ -9,6 +9,7 @@ import { stripe } from '../payment/Payment.utils';
 import ServerError from '../../../errors/ServerError';
 import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 import config from '../../../config';
+import { userSelfOmit } from './User.constant';
 
 /**
  * User controllers
@@ -104,10 +105,13 @@ export const UserControllers = {
    * Get profile
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  profile: catchAsync(({ user: { password: _, ...user } }) => {
+  profile: catchAsync(async ({ user }) => {
     return {
       message: 'Profile retrieved successfully!',
-      data: user,
+      data: await prisma.user.findUnique({
+        where: { id: user.id },
+        omit: userSelfOmit[user.role],
+      }),
     };
   }),
 
@@ -176,7 +180,7 @@ export const UserControllers = {
     });
 
     return {
-      message: 'Stripe account connected successfully!',
+      message: 'Stripe connect link created successfully!',
       data: {
         url,
       },
