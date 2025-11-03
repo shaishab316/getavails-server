@@ -5,6 +5,8 @@ import ServerError from '../../../errors/ServerError';
 import { TWithdrawArgs } from './Payment.interface';
 import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 import withdrawQueue from '../../../utils/mq/withdrawQueue';
+import Stripe from 'stripe';
+import { stripe } from './Payment.utils';
 
 /**
  * Payment Services
@@ -15,7 +17,9 @@ export const PaymentServices = {
    *
    * @event agent_offer
    */
-  async agent_offer(metadata: TAcceptAgentOfferMetadata) {
+  async agent_offer(session: Stripe.Checkout.Session) {
+    const metadata = session.metadata as TAcceptAgentOfferMetadata;
+
     const offer = await prisma.agentOffer.findFirst({
       where: { id: metadata.offer_id },
       select: { agent_id: true, artist: true, status: true },
@@ -28,10 +32,26 @@ export const PaymentServices = {
     //? if offer is already approved
     if (offer.status === EAgentOfferStatus.APPROVED) return;
 
-    const amount = Number(metadata.amount);
+    // 🧾 Retrieve the PaymentIntent
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent as string,
+    );
 
-    const artistAmount = amount * 0.8; //? 80% to artist
-    const agentAmount = amount - artistAmount; //? 20% to agent
+    // 🧩 Retrieve the related Charge (since charges are not auto-included)
+    const charge = await stripe.charges.retrieve(
+      paymentIntent.latest_charge as string,
+    );
+
+    // 💸 Retrieve the Balance Transaction for the fee info
+    const { fee } = await stripe.balanceTransactions.retrieve(
+      charge.balance_transaction as string,
+    );
+
+    //? remove fee form amount
+    const amount = Number(metadata.amount) - fee / 100;
+
+    const artistAmount = Math.floor(amount * 80) / 100; //? 80% to artist
+    const agentAmount = Math.floor(amount * 20) / 100; //? 20% to agent
 
     await prisma.$transaction(async tx => {
       //? add money in artist wallet

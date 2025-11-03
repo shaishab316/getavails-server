@@ -50,7 +50,7 @@ export const stripWebhookEventMap = {
         session?.metadata?.purpose as keyof typeof PaymentServices
       ];
 
-    if (purposeFn) await purposeFn(session?.metadata as any);
+    if (purposeFn) await purposeFn(session as any);
 
     /**
      * Todo: save transaction info in db
