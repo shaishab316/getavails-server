@@ -6,6 +6,8 @@ import { agentOfferSearchableFields } from '../agent/Agent.constant';
 import type {
   TAcceptAgentOfferArgs,
   TAcceptAgentOfferMetadata,
+  TAcceptVenueOfferArgs,
+  TAcceptVenueOfferMetadata,
   TGetAgentOffersForOrganizerArgs,
   TGetVenueOffersForOrganizerArgs,
 } from './Organizer.interface';
@@ -182,6 +184,68 @@ export const OrganizerServices = {
         totalPages: Math.ceil(total / limit),
       } satisfies TPagination,
       offers,
+    };
+  },
+
+  /**
+   * Accept venue offer
+   */
+  async acceptVenueOffer({ offer_id, organizer_id }: TAcceptVenueOfferArgs) {
+    const offer = await prisma.venueOffer.findFirst({
+      where: { id: offer_id, organizer_id },
+    });
+
+    if (!offer) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'You do not have permission to accept this offer',
+      );
+    }
+
+    //? ensure offer is pending
+    if (offer.status !== EAgentOfferStatus.PENDING) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        `You can't accept ${offer.status} offers`,
+      );
+    }
+
+    const { amount } = offer;
+
+    const metadata: TAcceptVenueOfferMetadata = {
+      purpose: 'venue_offer',
+      amount: amount.toString(),
+      offer_id,
+    };
+
+    const { url } = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      metadata,
+      line_items: [
+        {
+          price_data: {
+            currency: config.payment.currency,
+            product_data: { name: offer_id, metadata },
+            unit_amount: Math.ceil(amount * 100),
+          },
+          quantity: 1,
+        },
+      ],
+      payment_method_types: config.payment.stripe.methods,
+      success_url: config.url.payment_success,
+      cancel_url: config.url.payment_failure,
+    });
+
+    if (!url) {
+      throw new ServerError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        'Failed to create checkout session',
+      );
+    }
+
+    return {
+      url,
+      amount,
     };
   },
 };

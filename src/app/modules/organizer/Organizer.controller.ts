@@ -31,7 +31,7 @@ export const OrganizerControllers = {
     });
 
     return {
-      message: 'Agent offer accepted successfully!',
+      message: 'Agent offer accepted link generated successfully!',
       data: {
         amount,
         url,
@@ -52,6 +52,21 @@ export const OrganizerControllers = {
       message: 'Venue offers retrieved successfully!',
       meta,
       data: offers,
+    };
+  }),
+
+  acceptVenueOffer: catchAsync(async ({ body, user: organizer }) => {
+    const { amount, url } = await OrganizerServices.acceptVenueOffer({
+      offer_id: body.offer_id,
+      organizer_id: organizer.id,
+    });
+
+    return {
+      message: 'Venue offer accepted link generated successfully!',
+      data: {
+        amount,
+        url,
+      },
     };
   }),
 };

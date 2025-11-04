@@ -7,6 +7,7 @@ import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQue
 import withdrawQueue from '../../../utils/mq/withdrawQueue';
 import Stripe from 'stripe';
 import { stripe } from './Payment.utils';
+import chalk from 'chalk';
 
 /**
  * Payment Services
@@ -91,6 +92,15 @@ export const PaymentServices = {
         data: { status: EAgentOfferStatus.APPROVED, approved_at: new Date() },
       });
     });
+  },
+
+  /**
+   * Accept venue offer
+   *
+   * @event venue_offer
+   */
+  async venue_offer(session: Stripe.Checkout.Session) {
+    console.log(chalk.red('Venue offer'), session);
   },
 
   /**

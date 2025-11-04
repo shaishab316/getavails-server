@@ -11,18 +11,27 @@ import { VenueControllers } from '../venue/Venue.controller';
 const organizer = Router();
 //? agent offers routes
 {
+  /**
+   * Get agent offers
+   */
   organizer.get(
     '/agent-offers',
     purifyRequest(QueryValidations.list, OrganizerValidations.getAgentOffers),
     OrganizerControllers.getAgentOffers,
   );
 
+  /**
+   * Cancel agent offer
+   */
   organizer.post(
     '/cancel-agent-offer',
     purifyRequest(AgentValidations.cancelOffer),
     AgentControllers.cancelOffer,
   );
 
+  /**
+   * Accept agent offer
+   */
   organizer.post(
     '/accept-agent-offer',
     purifyRequest(OrganizerValidations.acceptAgentOffer),
@@ -31,16 +40,31 @@ const organizer = Router();
 }
 //? venue offers routes
 {
+  /**
+   * Get venue offers
+   */
   organizer.get(
     '/venue-offers',
     purifyRequest(QueryValidations.list, OrganizerValidations.getVenueOffers),
     OrganizerControllers.getVenueOffers,
   );
 
+  /**
+   * Cancel venue offer
+   */
   organizer.post(
     '/cancel-venue-offer',
     purifyRequest(VenueValidations.cancelOffer),
     VenueControllers.cancelOffer,
+  );
+
+  /**
+   * Accept venue offer
+   */
+  organizer.post(
+    '/accept-venue-offer',
+    purifyRequest(OrganizerValidations.acceptVenueOffer),
+    OrganizerControllers.acceptVenueOffer,
   );
 }
 
