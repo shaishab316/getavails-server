@@ -22,7 +22,12 @@ export const PaymentServices = {
 
     const offer = await prisma.agentOffer.findFirst({
       where: { id: metadata.offer_id },
-      select: { agent_id: true, artist: true, status: true },
+      select: {
+        agent_id: true,
+        artist_id: true,
+        organizer_id: true,
+        status: true,
+      },
     });
 
     if (!offer) {
@@ -56,7 +61,7 @@ export const PaymentServices = {
     await prisma.$transaction(async tx => {
       //? add money in artist wallet
       await tx.user.update({
-        where: { id: offer.artist.id },
+        where: { id: offer.artist_id },
         data: { balance: { increment: artistAmount } },
         select: { balance: true }, //? skip body
       });
@@ -66,6 +71,18 @@ export const PaymentServices = {
         where: { id: offer.agent_id },
         data: { balance: { increment: agentAmount } },
         select: { balance: true }, //? skip body
+      });
+
+      //? add artist in organizer active artists
+      await tx.user.update({
+        where: { id: offer.organizer_id },
+        data: {
+          organizer_active_artists: {
+            connect: {
+              id: metadata.offer_id,
+            },
+          },
+        },
       });
 
       //? update agent offer
