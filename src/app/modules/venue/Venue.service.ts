@@ -59,7 +59,7 @@ export const VenueServices = {
 
     if (offer.status === EVenueOfferStatus.CANCELLED) {
       throw new ServerError(
-        StatusCodes.FORBIDDEN,
+        StatusCodes.BAD_REQUEST,
         'This offer is already cancelled',
       );
     }

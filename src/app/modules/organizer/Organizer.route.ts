@@ -5,6 +5,8 @@ import { QueryValidations } from '../query/Query.validation';
 import { OrganizerValidations } from './Organizer.validation';
 import { AgentValidations } from '../agent/Agent.validation';
 import { AgentControllers } from '../agent/Agent.controller';
+import { VenueValidations } from '../venue/Venue.validation';
+import { VenueControllers } from '../venue/Venue.controller';
 
 const organizer = Router();
 //? agent offers routes
@@ -33,6 +35,12 @@ const organizer = Router();
     '/venue-offers',
     purifyRequest(QueryValidations.list, OrganizerValidations.getVenueOffers),
     OrganizerControllers.getVenueOffers,
+  );
+
+  organizer.post(
+    '/cancel-venue-offer',
+    purifyRequest(VenueValidations.cancelOffer),
+    VenueControllers.cancelOffer,
   );
 }
 
