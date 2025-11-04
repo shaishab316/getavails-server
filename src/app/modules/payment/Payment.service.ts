@@ -7,7 +7,6 @@ import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQue
 import withdrawQueue from '../../../utils/mq/withdrawQueue';
 import Stripe from 'stripe';
 import { stripe } from './Payment.utils';
-import chalk from 'chalk';
 
 /**
  * Payment Services
@@ -100,7 +99,68 @@ export const PaymentServices = {
    * @event venue_offer
    */
   async venue_offer(session: Stripe.Checkout.Session) {
-    console.log(chalk.red('Venue offer'), session);
+    const metadata = session.metadata as TAcceptAgentOfferMetadata;
+
+    const offer = await prisma.venueOffer.findFirst({
+      where: { id: metadata.offer_id },
+      select: {
+        venue_id: true,
+        organizer_id: true,
+        status: true,
+      },
+    });
+
+    if (!offer) {
+      throw new ServerError(StatusCodes.NOT_FOUND, 'Agent Offer not found');
+    }
+
+    //? if offer is already approved
+    if (offer.status === EAgentOfferStatus.APPROVED) return;
+
+    // 🧾 Retrieve the PaymentIntent
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent as string,
+    );
+
+    // 🧩 Retrieve the related Charge (since charges are not auto-included)
+    const charge = await stripe.charges.retrieve(
+      paymentIntent.latest_charge as string,
+    );
+
+    // 💸 Retrieve the Balance Transaction for the fee info
+    const { fee } = await stripe.balanceTransactions.retrieve(
+      charge.balance_transaction as string,
+    );
+
+    //? remove fee form amount
+    const venueAmount = Number(metadata.amount) - fee / 100;
+
+    await prisma.$transaction(async tx => {
+      //? add money in venue wallet
+      await tx.user.update({
+        where: { id: offer.venue_id },
+        data: { balance: { increment: venueAmount } },
+        select: { balance: true }, //? skip body
+      });
+
+      //? add venue in organizer
+      await tx.user.update({
+        where: { id: offer.organizer_id },
+        data: {
+          organizer_active_venues: {
+            connect: {
+              id: metadata.offer_id,
+            },
+          },
+        },
+      });
+
+      //? update venue offer
+      await tx.venueOffer.update({
+        where: { id: metadata.offer_id },
+        data: { status: EAgentOfferStatus.APPROVED, approved_at: new Date() },
+      });
+    });
   },
 
   /**
