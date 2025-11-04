@@ -14,3 +14,13 @@ export type TUpdateVenueArgs = z.infer<
 export type TVenueCreateOfferArgs = z.infer<
   typeof VenueValidations.createOffer
 >['body'] & { venue_id: string; end_date: string };
+
+/**
+ * Type for cancel agent offer
+ */
+export type TCancelVenueOfferArgs = z.infer<
+  typeof VenueValidations.cancelOffer
+>['body'] & {
+  venue_id?: string;
+  organizer_id?: string;
+};

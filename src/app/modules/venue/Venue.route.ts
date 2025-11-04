@@ -22,6 +22,15 @@ const venue = Router();
     purifyRequest(VenueValidations.createOffer),
     VenueControllers.createOffer,
   );
+
+  /**
+   * Cancel agent offer
+   */
+  venue.post(
+    '/cancel-offer',
+    purifyRequest(VenueValidations.cancelOffer),
+    VenueControllers.cancelOffer,
+  );
 }
 
 export const VenueRoutes = {

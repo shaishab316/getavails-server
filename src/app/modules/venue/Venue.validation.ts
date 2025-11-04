@@ -39,4 +39,16 @@ export const VenueValidations = {
       address: z.string({ error: 'Address is required' }),
     } satisfies TModelZod<TVenueOffer>),
   }),
+
+  /**
+   *
+   */
+  cancelOffer: z.object({
+    body: z.object({
+      offer_id: z.string().refine(exists('venueOffer'), {
+        error: ({ input }) => `Offer not found with id: ${input}`,
+        path: ['offer_id'],
+      }),
+    }),
+  }),
 };

@@ -44,6 +44,9 @@ export type TGetAgentOffersArgs = TList &
     agent_id: string;
   };
 
+/**
+ * @type: for cancel agent offer
+ */
 export type TCancelAgentOfferArgs = z.infer<
   typeof AgentValidations.cancelOffer
 >['body'] & {

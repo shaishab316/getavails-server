@@ -346,6 +346,13 @@ export const AgentServices = {
       );
     }
 
+    if (offer.status === EAgentOfferStatus.CANCELLED) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'This offer is already cancelled',
+      );
+    }
+
     return prisma.agentOffer.update({
       where: { id: offer_id },
       data: { status: EAgentOfferStatus.CANCELLED, cancelled_at: new Date() },

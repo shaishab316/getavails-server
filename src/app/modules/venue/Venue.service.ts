@@ -1,6 +1,9 @@
-import { prisma } from '../../../utils/db';
+import { StatusCodes } from 'http-status-codes';
+import ServerError from '../../../errors/ServerError';
+import { EVenueOfferStatus, prisma } from '../../../utils/db';
 import { userOmit } from '../user/User.constant';
 import type {
+  TCancelVenueOfferArgs,
   TUpdateVenueArgs,
   TVenueCreateOfferArgs,
 } from './Venue.interface';
@@ -32,6 +35,38 @@ export const VenueServices = {
 
     return prisma.venueOffer.create({
       data: payload,
+    });
+  },
+
+  /**
+   * Cancel agent offer
+   */
+  async cancelOffer({
+    offer_id,
+    venue_id,
+    organizer_id,
+  }: TCancelVenueOfferArgs) {
+    const offer = await prisma.venueOffer.findFirst({
+      where: { id: offer_id, venue_id, organizer_id },
+    });
+
+    if (!offer) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'You do not have permission to cancel this offer',
+      );
+    }
+
+    if (offer.status === EVenueOfferStatus.CANCELLED) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'This offer is already cancelled',
+      );
+    }
+
+    return prisma.venueOffer.update({
+      where: { id: offer_id },
+      data: { status: EVenueOfferStatus.CANCELLED, cancelled_at: new Date() },
     });
   },
 };
