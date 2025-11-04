@@ -26,11 +26,10 @@ model User {
   is_stripe_connected Boolean @default(false)
   //! end
 
-  experience   String?
-  genre        String?
-  availability DateTime[] @default([])
-  price        String?
-
+  experience               String?
+  genre                    String?
+  availability             DateTime[]   @default([])
+  price                    String?
   venue_type               String?
   capacity                 Int?
   agent_artists            String[]     @default([])
@@ -38,13 +37,16 @@ model User {
   artist_agents            String[]     @default([])
   artist_pending_agents    String[]     @default([])
   organizer_active_artists AgentOffer[] @relation("ActiveAgentOffers")
-  organizer_venues         String[]     @default([])
-  seen_messages            Message[]    @relation("SeenMessages")
-  messages                 Message[]
-  chats                    Chat[]       @relation("UserChats")
-  agent_offers_agents      AgentOffer[] @relation("AgentOffersAgent")
-  agent_offers_artists     AgentOffer[] @relation("AgentOffersArtist")
-  agent_offers_organizers  AgentOffer[] @relation("AgentOffersOrganizer")
+  organizer_active_venues  VenueOffer[] @relation("ActiveVenueOffers")
+
+  seen_messages           Message[]    @relation("SeenMessages")
+  messages                Message[]
+  chats                   Chat[]       @relation("UserChats")
+  agent_offers_agents     AgentOffer[] @relation("AgentOffersAgent")
+  agent_offers_artists    AgentOffer[] @relation("AgentOffersArtist")
+  agent_offers_organizers AgentOffer[] @relation("AgentOffersOrganizer")
+  venue_offers_organizers VenueOffer[] @relation("VenueOffersOrganizer")
+  venue_offers_venues     VenueOffer[] @relation("VenueOffersVenue")
 
   @@map("users")
 }

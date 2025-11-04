@@ -19,4 +19,19 @@ export const VenueControllers = {
       data,
     };
   }),
+
+  /**
+   * Create new agent offer
+   */
+  createOffer: catchAsync(async ({ body, user: venue }) => {
+    const data = await VenueServices.createOffer({
+      ...body,
+      venue_id: venue.id,
+    });
+
+    return {
+      message: 'Offer created successfully!',
+      data,
+    };
+  }),
 };

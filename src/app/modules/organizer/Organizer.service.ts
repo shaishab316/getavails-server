@@ -1,15 +1,22 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EAgentOfferStatus, Prisma, prisma } from '../../../utils/db';
+import {
+  EAgentOfferStatus,
+  EUserRole,
+  Prisma,
+  prisma,
+} from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { agentOfferSearchableFields } from '../agent/Agent.constant';
 import type {
   TAcceptAgentOfferArgs,
   TAcceptAgentOfferMetadata,
   TGetAgentOffersForOrganizerArgs,
+  TGetVenueOffersForOrganizerArgs,
 } from './Organizer.interface';
 import { stripe } from '../payment/Payment.utils';
 import config from '../../../config';
+import { userOmit, userSearchableFields } from '../user/User.constant';
 
 /**
  * All organizer related services
@@ -121,6 +128,65 @@ export const OrganizerServices = {
     return {
       url,
       amount,
+    };
+  },
+
+  /**
+   * Get venue offers
+   */
+  async getVenueOffers({
+    limit,
+    page,
+    organizer_id,
+    status,
+    search,
+  }: TGetVenueOffersForOrganizerArgs) {
+    const where: Prisma.VenueOfferWhereInput = {
+      status,
+      organizer_id,
+    };
+
+    //? Search agent using searchable fields
+    if (search) {
+      where.venue = Object.fromEntries(
+        userSearchableFields.map(field => [
+          field,
+          {
+            contains: search,
+            mode: 'insensitive',
+          },
+        ]),
+      );
+    }
+
+    const offers = await prisma.venueOffer.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      include: {
+        venue: {
+          omit: userOmit[EUserRole.VENUE],
+        },
+      },
+      omit: {
+        organizer_id: true,
+        venue_id: true,
+      },
+    });
+
+    const total = await prisma.venueOffer.count({ where });
+
+    return {
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      } satisfies TPagination,
+      offers,
     };
   },
 };

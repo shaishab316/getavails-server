@@ -1,0 +1,29 @@
+model VenueOffer {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  status       EVenueOfferStatus @default(PENDING)
+  approved_at  DateTime?
+  cancelled_at DateTime?
+
+  amount       Float
+  start_date   DateTime
+  end_date     DateTime
+  address      String
+  venue_id     String
+  organizer_id String
+
+  venue             User   @relation("VenueOffersVenue", fields: [venue_id], references: [id])
+  organizer         User   @relation("VenueOffersOrganizer", fields: [organizer_id], references: [id])
+  active_organizers User[] @relation("ActiveVenueOffers")
+
+  @@map("venue_offers")
+}
+
+enum EVenueOfferStatus {
+  PENDING
+  APPROVED
+  CANCELLED
+  TIMEOUT
+}

@@ -7,6 +7,7 @@ import { AgentValidations } from '../agent/Agent.validation';
 import { AgentControllers } from '../agent/Agent.controller';
 
 const organizer = Router();
+//? agent offers routes
 {
   organizer.get(
     '/agent-offers',
@@ -24,6 +25,14 @@ const organizer = Router();
     '/accept-agent-offer',
     purifyRequest(OrganizerValidations.acceptAgentOffer),
     OrganizerControllers.acceptAgentOffer,
+  );
+}
+//? venue offers routes
+{
+  organizer.get(
+    '/venue-offers',
+    purifyRequest(QueryValidations.list, OrganizerValidations.getVenueOffers),
+    OrganizerControllers.getVenueOffers,
   );
 }
 

@@ -1,5 +1,5 @@
 import z from 'zod';
-import { EAgentOfferStatus } from '../../../../prisma';
+import { EAgentOfferStatus, EVenueOfferStatus } from '../../../../prisma';
 import { exists } from '../../../utils/db/exists';
 
 /**
@@ -24,6 +24,15 @@ export const OrganizerValidations = {
         error: ({ input }) => `Agent offer not found with id: ${input}`,
         path: ['offer_id'],
       }),
+    }),
+  }),
+
+  /**
+   * Validation schema for get venue offers
+   */
+  getVenueOffers: z.object({
+    query: z.object({
+      status: z.enum(EVenueOfferStatus).default(EVenueOfferStatus.PENDING),
     }),
   }),
 };

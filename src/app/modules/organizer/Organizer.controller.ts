@@ -38,4 +38,20 @@ export const OrganizerControllers = {
       },
     };
   }),
+
+  /**
+   * Get venue offers
+   */
+  getVenueOffers: catchAsync(async ({ query, user: organizer }) => {
+    const { meta, offers } = await OrganizerServices.getVenueOffers({
+      ...query,
+      organizer_id: organizer.id,
+    });
+
+    return {
+      message: 'Venue offers retrieved successfully!',
+      meta,
+      data: offers,
+    };
+  }),
 };

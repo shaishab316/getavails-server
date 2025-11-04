@@ -1,6 +1,11 @@
 import { EUserRole, Prisma, User as TUser } from '../../../utils/db';
 
-export const userSearchableFields = ['name', 'email'] satisfies (keyof TUser)[];
+export const userSearchableFields = [
+  'name',
+  'email',
+  'id',
+  'location',
+] satisfies (keyof TUser)[];
 
 const selfOmit = {
   password: true,
@@ -30,22 +35,20 @@ export const userUserOmit = {
   agent_pending_artists: true,
   artist_agents: true,
   artist_pending_agents: true,
-  organizer_venues: true,
   venue_type: true,
   capacity: true,
 } satisfies Prisma.UserOmit;
 
 export const userVenueOmit = {
   ...selfOmit,
+  gender: true,
   experience: true,
   genre: true,
   availability: true,
-  price: true,
   agent_artists: true,
   agent_pending_artists: true,
   artist_agents: true,
   artist_pending_agents: true,
-  organizer_venues: true,
 } satisfies Prisma.UserOmit;
 
 export const userAgentOmit = {
@@ -53,7 +56,6 @@ export const userAgentOmit = {
   genre: true,
   artist_agents: true,
   artist_pending_agents: true,
-  organizer_venues: true,
   venue_type: true,
   capacity: true,
 } satisfies Prisma.UserOmit;
@@ -63,7 +65,6 @@ export const userArtistOmit = {
   experience: true,
   agent_artists: true,
   agent_pending_artists: true,
-  organizer_venues: true,
   venue_type: true,
   capacity: true,
 } satisfies Prisma.UserOmit;

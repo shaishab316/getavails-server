@@ -11,6 +11,14 @@ export type TGetAgentOffersForOrganizerArgs = TList &
   };
 
 /**
+ * @type: Validation for get venue offers
+ */
+export type TGetVenueOffersForOrganizerArgs = TList &
+  z.infer<typeof OrganizerValidations.getVenueOffers>['query'] & {
+    organizer_id: string;
+  };
+
+/**
  * @type: Validation for accept agent offer
  */
 export type TAcceptAgentOfferArgs = z.infer<
