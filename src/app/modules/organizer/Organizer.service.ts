@@ -1,11 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import {
-  EAgentOfferStatus,
-  EUserRole,
-  Prisma,
-  prisma,
-} from '../../../utils/db';
+import { EAgentOfferStatus, Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { agentOfferSearchableFields } from '../agent/Agent.constant';
 import type {
@@ -168,7 +163,7 @@ export const OrganizerServices = {
       },
       include: {
         venue: {
-          omit: userOmit[EUserRole.VENUE],
+          omit: userOmit.VENUE,
         },
       },
       omit: {

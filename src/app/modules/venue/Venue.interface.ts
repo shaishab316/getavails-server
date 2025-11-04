@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import type { VenueValidations } from './Venue.validation';
+import { TList } from '../query/Query.interface';
 
 /**
  * Type for update venue
@@ -24,3 +25,11 @@ export type TCancelVenueOfferArgs = z.infer<
   venue_id?: string;
   organizer_id?: string;
 };
+
+/**
+ * @type: for get venue offers
+ */
+export type TGetVenueOffersArgs = TList &
+  z.infer<typeof VenueValidations.getMyOffers>['query'] & {
+    venue_id: string;
+  };

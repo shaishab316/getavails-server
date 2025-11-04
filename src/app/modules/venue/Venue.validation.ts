@@ -1,8 +1,9 @@
 import z from 'zod';
 import type { TModelZod } from '../../../types/zod';
-import type {
-  User as TUser,
-  VenueOffer as TVenueOffer,
+import {
+  EVenueOfferStatus,
+  type User as TUser,
+  type VenueOffer as TVenueOffer,
 } from '../../../../prisma';
 import { exists } from '../../../utils/db/exists';
 
@@ -49,6 +50,15 @@ export const VenueValidations = {
         error: ({ input }) => `Offer not found with id: ${input}`,
         path: ['offer_id'],
       }),
+    }),
+  }),
+
+  /**
+   * Validation schema for get agent offers
+   */
+  getMyOffers: z.object({
+    query: z.object({
+      status: z.enum(EVenueOfferStatus).default(EVenueOfferStatus.PENDING),
     }),
   }),
 };

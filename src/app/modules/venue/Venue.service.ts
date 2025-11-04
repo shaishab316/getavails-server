@@ -1,12 +1,14 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EVenueOfferStatus, prisma } from '../../../utils/db';
-import { userOmit } from '../user/User.constant';
+import { EVenueOfferStatus, Prisma, prisma } from '../../../utils/db';
+import { userOmit, userSearchableFields } from '../user/User.constant';
 import type {
   TCancelVenueOfferArgs,
+  TGetVenueOffersArgs,
   TUpdateVenueArgs,
   TVenueCreateOfferArgs,
 } from './Venue.interface';
+import { TPagination } from '../../../utils/server/serveResponse';
 
 /**
  * All venue related services
@@ -68,5 +70,65 @@ export const VenueServices = {
       where: { id: offer_id },
       data: { status: EVenueOfferStatus.CANCELLED, cancelled_at: new Date() },
     });
+  },
+
+  /**
+   * Get all agent offers
+   */
+  async getMyOffers({
+    limit,
+    page,
+    status,
+    venue_id,
+    search,
+  }: TGetVenueOffersArgs) {
+    const where: Prisma.VenueOfferWhereInput = {
+      venue_id,
+      status,
+    };
+
+    //? Search agent using searchable fields
+    if (search) {
+      where.organizer = Object.fromEntries(
+        userSearchableFields.map(field => [
+          field,
+          {
+            contains: search,
+            mode: 'insensitive',
+          },
+        ]),
+      );
+    }
+
+    const offers = await prisma.venueOffer.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      include: {
+        organizer: {
+          //? exclude unnecessary fields
+          omit: userOmit.ORGANIZER,
+        },
+      },
+      omit: {
+        venue_id: true,
+        organizer_id: true,
+      },
+    });
+
+    const total = await prisma.venueOffer.count({ where });
+
+    return {
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      } satisfies TPagination,
+      offers,
+    };
   },
 };

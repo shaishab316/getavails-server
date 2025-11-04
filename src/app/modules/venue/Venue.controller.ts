@@ -55,4 +55,17 @@ export const VenueControllers = {
       message: 'Offer cancelled successfully!',
     };
   }),
+
+  getMyOffers: catchAsync(async ({ query, user }) => {
+    const { meta, offers } = await VenueServices.getMyOffers({
+      ...query,
+      venue_id: user.id,
+    });
+
+    return {
+      message: 'Venue offers retrieved successfully!',
+      meta,
+      data: offers,
+    };
+  }),
 };

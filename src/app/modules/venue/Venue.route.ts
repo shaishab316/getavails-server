@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { VenueValidations } from './Venue.validation';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { VenueControllers } from './Venue.controller';
+import { QueryValidations } from '../query/Query.validation';
 
 const venue = Router();
 {
@@ -30,6 +31,15 @@ const venue = Router();
     '/cancel-offer',
     purifyRequest(VenueValidations.cancelOffer),
     VenueControllers.cancelOffer,
+  );
+
+  /**
+   * Get my offers
+   */
+  venue.get(
+    '/my-offers',
+    purifyRequest(QueryValidations.list, VenueValidations.getMyOffers),
+    VenueControllers.getMyOffers,
   );
 }
 
