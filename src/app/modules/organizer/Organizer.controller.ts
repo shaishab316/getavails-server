@@ -88,4 +88,20 @@ export const OrganizerControllers = {
       data: venues,
     };
   }),
+
+  /**
+   * Get active artists
+   */
+  getActiveArtists: catchAsync(async ({ query, user: organizer }) => {
+    const { meta, artists } = await OrganizerServices.getActiveArtists({
+      ...query,
+      organizer_id: organizer.id,
+    });
+
+    return {
+      message: 'Active artists retrieved successfully!',
+      meta,
+      data: artists,
+    };
+  }),
 };

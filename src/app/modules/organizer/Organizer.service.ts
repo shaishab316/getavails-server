@@ -8,6 +8,7 @@ import type {
   TAcceptAgentOfferMetadata,
   TAcceptVenueOfferArgs,
   TAcceptVenueOfferMetadata,
+  TGetActiveArtists,
   TGetActiveVenues,
   TGetAgentOffersForOrganizerArgs,
   TGetVenueOffersForOrganizerArgs,
@@ -302,9 +303,9 @@ export const OrganizerServices = {
     const venues = organizers.flatMap(organizer =>
       organizer.organizer_active_venues.map(
         ({ end_date, start_date, venue }) => ({
-          ...venue,
           start_date,
           end_date,
+          ...venue, //? should be last for avoid overriding
         }),
       ),
     );
@@ -321,6 +322,80 @@ export const OrganizerServices = {
         } satisfies TPagination,
       },
       venues,
+    };
+  },
+
+  /**
+   * Get active artists
+   */
+  async getActiveArtists({
+    limit,
+    page,
+    search,
+    organizer_id,
+  }: TGetActiveArtists) {
+    const where: Prisma.UserWhereInput = {
+      id: organizer_id,
+    };
+
+    //? Search venue using searchable fields
+    if (search) {
+      where.organizer_active_artists = {
+        some: {
+          artist: {
+            OR: userSearchableFields.map(field => ({
+              [field]: {
+                contains: search,
+                mode: 'insensitive',
+              },
+            })),
+          },
+        },
+      };
+    }
+
+    const organizers = await prisma.user.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      select: {
+        organizer_active_artists: {
+          select: {
+            start_date: true,
+            end_date: true,
+            address: true,
+            artist: { omit: userOmit.ARTIST },
+            agent: { omit: userOmit.AGENT },
+          },
+        },
+      },
+    });
+
+    const total = await prisma.user.count({ where });
+
+    //? formate venues data
+    const artists = organizers.flatMap(organizer =>
+      organizer.organizer_active_artists.map(
+        ({ end_date, start_date, artist, address, agent }) => ({
+          start_date,
+          end_date,
+          address,
+          agent,
+          ...artist, //? should be last for avoid overriding
+        }),
+      ),
+    );
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      artists,
     };
   },
 };

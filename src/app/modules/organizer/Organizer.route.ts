@@ -12,6 +12,15 @@ const organizer = Router();
 //? agent offers routes
 {
   /**
+   * Get active venues
+   */
+  organizer.get(
+    '/active-venues',
+    purifyRequest(QueryValidations.list),
+    OrganizerControllers.getActiveVenues,
+  );
+
+  /**
    * Get agent offers
    */
   organizer.get(
@@ -37,18 +46,18 @@ const organizer = Router();
     purifyRequest(OrganizerValidations.acceptAgentOffer),
     OrganizerControllers.acceptAgentOffer,
   );
-
-  /**
-   * Get active venues
-   */
-  organizer.get(
-    '/active-venues',
-    purifyRequest(QueryValidations.list),
-    OrganizerControllers.getActiveVenues,
-  );
 }
 //? venue offers routes
 {
+  /**
+   * Get active artists
+   */
+  organizer.get(
+    '/active-artists',
+    purifyRequest(QueryValidations.list),
+    OrganizerControllers.getActiveArtists,
+  );
+
   /**
    * Get venue offers
    */

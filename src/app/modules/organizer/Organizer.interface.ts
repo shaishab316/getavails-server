@@ -60,3 +60,10 @@ export type TAcceptVenueOfferMetadata = {
 export type TGetActiveVenues = TList & {
   organizer_id: string;
 };
+
+/**
+ * @type: Validation for get active artists
+ */
+export type TGetActiveArtists = TList & {
+  organizer_id: string;
+};
