@@ -47,8 +47,7 @@ model User {
   agent_offers_organizers AgentOffer[] @relation("AgentOffersOrganizer")
   venue_offers_organizers VenueOffer[] @relation("VenueOffersOrganizer")
   venue_offers_venues     VenueOffer[] @relation("VenueOffersVenue")
-  artist_events           Event[]      @relation("EventArtist")
-  organizer_events        Event[]      @relation("EventOrganizer")
+  organizer_events        Event[]
 
   @@map("users")
 }

@@ -7,8 +7,12 @@ import { AgentValidations } from '../agent/Agent.validation';
 import { AgentControllers } from '../agent/Agent.controller';
 import { VenueValidations } from '../venue/Venue.validation';
 import { VenueControllers } from '../venue/Venue.controller';
+import { injectRoutes } from '../../../utils/router/injectRouter';
+import { EventRoutes } from '../event/Event.route';
 
-const organizer = Router();
+const organizer = injectRoutes(Router(), {
+  '/events': [EventRoutes.organizer],
+});
 //? agent offers routes
 {
   /**

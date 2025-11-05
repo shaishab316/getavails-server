@@ -1,7 +1,6 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
-import { EEventStatus, EUserRole, Event as TEvent } from '../../../../prisma';
-import { exists } from '../../../utils/db/exists';
+import { EEventStatus, Event as TEvent } from '../../../../prisma';
 
 export const EventValidations = {
   createEvent: z.object({
@@ -20,10 +19,11 @@ export const EventValidations = {
         message: 'Location is required',
       }),
       ticket_price: z.coerce.number({ error: 'Ticket price is required' }),
-      capacity: z.coerce.number().optional(),
-      artist_id: z.string().refine(exists('user', { role: EUserRole.ARTIST }), {
-        error: ({ input }) => `Artist not found with id: ${input}`,
-      }),
+      capacity: z.coerce.number().min(1, 'Capacity must be at least 1'),
+      artist_names: z
+        .array(z.string())
+        .nonempty('At least one artist is required'),
+      published_at: z.iso.datetime().optional(),
     } satisfies TModelZod<TEvent>),
   }),
 };
