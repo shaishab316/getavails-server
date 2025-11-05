@@ -3,6 +3,7 @@ import { exists } from '../../../utils/db/exists';
 import type { TModelZod } from '../../../types/zod';
 import {
   EAgentOfferStatus,
+  EUserRole,
   AgentOffer as TAgentOffer,
 } from '../../../../prisma';
 
@@ -15,14 +16,10 @@ export const AgentValidations = {
    */
   inviteArtist: z.object({
     body: z.object({
-      artist_id: z.string().refine(
-        //? ensure that the artist exists, if it does not exist, throw an error
-        exists('user'),
-        {
-          error: ({ input }) => `Artist not found with id: ${input}`,
-          path: ['artist_id'],
-        },
-      ),
+      artist_id: z.string().refine(exists('user', { role: EUserRole.ARTIST }), {
+        error: ({ input }) => `Artist not found with id: ${input}`,
+        path: ['artist_id'],
+      }),
     }),
   }),
 
@@ -31,14 +28,10 @@ export const AgentValidations = {
    */
   deleteArtist: z.object({
     body: z.object({
-      artist_id: z.string().refine(
-        //? ensure that the artist exists, if it does not exist, throw an error
-        exists('user'),
-        {
-          error: ({ input }) => `Artist not found with id: ${input}`,
-          path: ['artist_id'],
-        },
-      ),
+      artist_id: z.string().refine(exists('user', { role: EUserRole.ARTIST }), {
+        error: ({ input }) => `Artist not found with id: ${input}`,
+        path: ['artist_id'],
+      }),
     }),
   }),
 
@@ -47,14 +40,10 @@ export const AgentValidations = {
    */
   processAgentRequest: z.object({
     body: z.object({
-      artist_id: z.string().refine(
-        //? ensure that the artist exists, if it does not exist, throw an error
-        exists('user'),
-        {
-          error: ({ input }) => `Artist not found with id: ${input}`,
-          path: ['artist_id'],
-        },
-      ),
+      artist_id: z.string().refine(exists('user', { role: EUserRole.ARTIST }), {
+        error: ({ input }) => `Artist not found with id: ${input}`,
+        path: ['artist_id'],
+      }),
     }),
   }),
 
@@ -66,15 +55,17 @@ export const AgentValidations = {
       amount: z.coerce.number({ error: 'Amount is required' }),
       start_date: z.iso.datetime({ error: 'Start date is required' }),
       end_date: z.iso.datetime().optional(),
-      artist_id: z.string().refine(exists('user'), {
+      artist_id: z.string().refine(exists('user', { role: EUserRole.ARTIST }), {
         error: ({ input }) => `Artist not found with id: ${input}`,
         path: ['artist_id'],
       }),
-      organizer_id: z.string().refine(exists('user'), {
-        error: ({ input }) => `Organizer not found with id: ${input}`,
-        path: ['organizer_id'],
-      }),
-      address: z.string({ error: 'Address is required' }),
+      organizer_id: z
+        .string()
+        .refine(exists('user', { role: EUserRole.ORGANIZER }), {
+          error: ({ input }) => `Organizer not found with id: ${input}`,
+          path: ['organizer_id'],
+        }),
+      location: z.string({ error: 'Location is required' }),
     } satisfies TModelZod<TAgentOffer>),
   }),
 

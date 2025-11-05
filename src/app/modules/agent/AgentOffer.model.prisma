@@ -13,7 +13,7 @@ model AgentOffer {
   agent_id     String
   artist_id    String
   organizer_id String
-  address      String
+  location     String
 
   agent             User   @relation("AgentOffersAgent", fields: [agent_id], references: [id])
   artist            User   @relation("AgentOffersArtist", fields: [artist_id], references: [id])

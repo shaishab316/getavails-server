@@ -363,7 +363,7 @@ export const OrganizerServices = {
           select: {
             start_date: true,
             end_date: true,
-            address: true,
+            location: true,
             artist: { omit: userOmit.ARTIST },
             agent: { omit: userOmit.AGENT },
           },
@@ -376,10 +376,10 @@ export const OrganizerServices = {
     //? formate venues data
     const artists = organizers.flatMap(organizer =>
       organizer.organizer_active_artists.map(
-        ({ end_date, start_date, artist, address, agent }) => ({
+        ({ end_date, start_date, artist, location, agent }) => ({
           start_date,
           end_date,
-          address,
+          booking_location: location,
           agent,
           ...artist, //? should be last for avoid overriding
         }),

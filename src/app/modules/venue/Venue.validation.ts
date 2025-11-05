@@ -1,6 +1,7 @@
 import z from 'zod';
 import type { TModelZod } from '../../../types/zod';
 import {
+  EUserRole,
   EVenueOfferStatus,
   type User as TUser,
   type VenueOffer as TVenueOffer,
@@ -33,10 +34,12 @@ export const VenueValidations = {
       amount: z.coerce.number({ error: 'Amount is required' }),
       start_date: z.iso.datetime({ error: 'Start date is required' }),
       end_date: z.iso.datetime().optional(),
-      organizer_id: z.string().refine(exists('user'), {
-        error: ({ input }) => `Organizer not found with id: ${input}`,
-        path: ['organizer_id'],
-      }),
+      organizer_id: z
+        .string()
+        .refine(exists('user', { role: EUserRole.ORGANIZER }), {
+          error: ({ input }) => `Organizer not found with id: ${input}`,
+          path: ['organizer_id'],
+        }),
     } satisfies TModelZod<TVenueOffer>),
   }),
 
