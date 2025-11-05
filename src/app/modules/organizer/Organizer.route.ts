@@ -37,6 +37,15 @@ const organizer = Router();
     purifyRequest(OrganizerValidations.acceptAgentOffer),
     OrganizerControllers.acceptAgentOffer,
   );
+
+  /**
+   * Get active venues
+   */
+  organizer.get(
+    '/active-venues',
+    purifyRequest(QueryValidations.list),
+    OrganizerControllers.getActiveVenues,
+  );
 }
 //? venue offers routes
 {

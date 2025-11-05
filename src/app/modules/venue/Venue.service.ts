@@ -123,11 +123,13 @@ export const VenueServices = {
 
     return {
       meta: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      } satisfies TPagination,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
       offers,
     };
   },

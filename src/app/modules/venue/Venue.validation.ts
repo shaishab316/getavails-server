@@ -37,7 +37,6 @@ export const VenueValidations = {
         error: ({ input }) => `Organizer not found with id: ${input}`,
         path: ['organizer_id'],
       }),
-      address: z.string({ error: 'Address is required' }),
     } satisfies TModelZod<TVenueOffer>),
   }),
 

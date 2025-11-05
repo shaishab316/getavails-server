@@ -5,6 +5,7 @@ export const userSearchableFields = [
   'email',
   'id',
   'location',
+  'genre',
 ] satisfies (keyof TUser)[];
 
 const selfOmit = {

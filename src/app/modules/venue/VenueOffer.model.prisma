@@ -10,7 +10,6 @@ model VenueOffer {
   amount       Float
   start_date   DateTime
   end_date     DateTime
-  address      String
   venue_id     String
   organizer_id String
 

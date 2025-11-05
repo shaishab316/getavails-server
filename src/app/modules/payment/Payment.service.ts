@@ -1,6 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import { EAgentOfferStatus, prisma } from '../../../utils/db';
-import type { TAcceptAgentOfferMetadata } from '../organizer/Organizer.interface';
+import type {
+  TAcceptAgentOfferMetadata,
+  TAcceptVenueOfferMetadata,
+} from '../organizer/Organizer.interface';
 import ServerError from '../../../errors/ServerError';
 import { TWithdrawArgs } from './Payment.interface';
 import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
@@ -99,7 +102,7 @@ export const PaymentServices = {
    * @event venue_offer
    */
   async venue_offer(session: Stripe.Checkout.Session) {
-    const metadata = session.metadata as TAcceptAgentOfferMetadata;
+    const metadata = session.metadata as TAcceptVenueOfferMetadata;
 
     const offer = await prisma.venueOffer.findFirst({
       where: { id: metadata.offer_id },

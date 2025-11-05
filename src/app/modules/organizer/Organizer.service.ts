@@ -8,6 +8,7 @@ import type {
   TAcceptAgentOfferMetadata,
   TAcceptVenueOfferArgs,
   TAcceptVenueOfferMetadata,
+  TGetActiveVenues,
   TGetAgentOffersForOrganizerArgs,
   TGetVenueOffersForOrganizerArgs,
 } from './Organizer.interface';
@@ -57,11 +58,13 @@ export const OrganizerServices = {
 
     return {
       meta: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      } satisfies TPagination,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
       offers,
     };
   },
@@ -178,11 +181,13 @@ export const OrganizerServices = {
 
     return {
       meta: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      } satisfies TPagination,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
       offers,
     };
   },
@@ -246,6 +251,76 @@ export const OrganizerServices = {
     return {
       url,
       amount,
+    };
+  },
+
+  /**
+   * Get active venues
+   */
+  async getActiveVenues({
+    limit,
+    page,
+    search,
+    organizer_id,
+  }: TGetActiveVenues) {
+    const where: Prisma.UserWhereInput = {
+      id: organizer_id,
+    };
+
+    //? Search venue using searchable fields
+    if (search) {
+      where.organizer_active_venues = {
+        some: {
+          venue: {
+            OR: userSearchableFields.map(field => ({
+              [field]: {
+                contains: search,
+                mode: 'insensitive',
+              },
+            })),
+          },
+        },
+      };
+    }
+
+    const organizers = await prisma.user.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      select: {
+        organizer_active_venues: {
+          select: {
+            venue: { omit: userOmit.VENUE },
+            start_date: true,
+            end_date: true,
+          },
+        },
+      },
+    });
+
+    //? formate venues data
+    const venues = organizers.flatMap(organizer =>
+      organizer.organizer_active_venues.map(
+        ({ end_date, start_date, venue }) => ({
+          ...venue,
+          start_date,
+          end_date,
+        }),
+      ),
+    );
+
+    const total = await prisma.user.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      venues,
     };
   },
 };

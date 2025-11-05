@@ -55,6 +55,9 @@ export const OrganizerControllers = {
     };
   }),
 
+  /**
+   * Accept venue offer
+   */
   acceptVenueOffer: catchAsync(async ({ body, user: organizer }) => {
     const { amount, url } = await OrganizerServices.acceptVenueOffer({
       offer_id: body.offer_id,
@@ -67,6 +70,22 @@ export const OrganizerControllers = {
         amount,
         url,
       },
+    };
+  }),
+
+  /**
+   * Get active venues
+   */
+  getActiveVenues: catchAsync(async ({ query, user: organizer }) => {
+    const { meta, venues } = await OrganizerServices.getActiveVenues({
+      ...query,
+      organizer_id: organizer.id,
+    });
+
+    return {
+      message: 'Active venues retrieved successfully!',
+      meta,
+      data: venues,
     };
   }),
 };
