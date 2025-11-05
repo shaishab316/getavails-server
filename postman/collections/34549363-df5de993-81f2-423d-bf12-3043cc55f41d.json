@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// user login\r\n{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent3@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist2@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
+							"raw": "// user login\r\n// {\r\n//     \"email\": \"shaishab316@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1230,7 +1230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"artist@gmail.com\",\r\n    \"otp\": \"564091\"\r\n}",
+							"raw": "{\r\n    \"email\": \"shaishab316@gmail.com\",\r\n    \"otp\": \"564091\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2182,82 +2182,455 @@
 			"id": "34549363-d21abc1d-c96d-4dd5-a710-68617808af85"
 		},
 		{
-			"name": "USER",
+			"name": "Profile",
 			"item": [
 				{
-					"name": "Profile",
-					"item": [
+					"name": "user-profile",
+					"id": "34549363-4a3808bc-7d90-4b67-a055-7d2657a9d7b5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": [
 						{
-							"name": "profile-edit",
-							"id": "34549363-8e85ad71-5e28-42e1-b6e8-ec6284ca8fdc",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{user_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PATCH",
+							"id": "34549363-1abb2fc4-a872-4a60-b759-2f6ef4d05a30",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "avatar",
-											"type": "file",
-											"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
-											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
-										},
-										{
-											"key": "name",
-											"value": "Shaishab Chandra Shil",
-											"type": "text",
-											"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399"
-										},
-										{
-											"key": "location",
-											"value": "Bangladesh",
-											"type": "text",
-											"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
-										},
-										{
-											"key": "gender",
-											"value": "MALE",
-											"type": "text",
-											"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
-										},
-										{
-											"key": "role",
-											"value": "USER",
-											"type": "text",
-											"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663"
-										}
-									]
-								},
 								"url": {
-									"raw": "{{base_url}}/profile/edit",
+									"raw": "{{base_url}}/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "394"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18a-Lbo871tSyqO7dAB7mNly9mqrYP4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 03 Nov 2025 09:33:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Profile retrieved successfully!\",\n    \"data\": {\n        \"id\": \"us-1\",\n        \"created_at\": \"2025-11-02T12:02:22.155Z\",\n        \"updated_at\": \"2025-11-03T09:30:07.648Z\",\n        \"role\": \"USER\",\n        \"email\": \"shaishab316@gmail.com\",\n        \"is_verified\": false,\n        \"is_active\": false,\n        \"is_admin\": false,\n        \"avatar\": \"/images/placeholder.png\",\n        \"name\": \"Getavails User\",\n        \"gender\": \"OTHER\",\n        \"balance\": 0,\n        \"is_stripe_connected\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profile-edit",
+					"id": "34549363-8e85ad71-5e28-42e1-b6e8-ec6284ca8fdc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
+									"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+								},
+								{
+									"key": "name",
+									"value": "Shaishab Chandra Shil",
+									"type": "text",
+									"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399"
+								},
+								{
+									"key": "location",
+									"value": "Bangladesh",
+									"type": "text",
+									"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
+								},
+								{
+									"key": "gender",
+									"value": "MALE",
+									"type": "text",
+									"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
+								},
+								{
+									"key": "role",
+									"value": "USER",
+									"type": "text",
+									"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/profile/edit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "connect-stripe",
+					"id": "34549363-a20f297b-75fa-4344-97fe-06f47871405d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile/connect-stripe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"connect-stripe"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-cd2d0306-33be-4931-af50-7db1fb11489f",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/profile/connect-stripe",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"profile",
-										"edit"
+										"connect-stripe"
 									]
 								}
 							},
-							"response": []
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "174"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ae-m/y/qawlXf1kc49vmpPgdN1+7aA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 03 Nov 2025 09:28:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Stripe connect link created successfully!\",\n    \"data\": {\n        \"url\": \"https://connect.stripe.com/setup/e/acct_1SOzzLIkPpT59Y6o/S0gC1F8fOQhD\"\n    }\n}"
 						}
-					],
-					"id": "34549363-5058103a-3e5f-43a1-994b-54902d19234e"
+					]
+				},
+				{
+					"name": "withdraw-money",
+					"id": "34549363-4545877a-f339-4e05-b18d-c96813b53e22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 840\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/withdraw",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"withdraw"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-43be4a85-7afe-40a1-96a5-f2e1fafd885a",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/payments/withdraw",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments",
+										"withdraw"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-Sgu3JnFm+pFS9qhg9mIaMI6akpw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 03 Nov 2025 10:24:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Withdraw request sent successfully\",\n    \"data\": {\n        \"available_balance\": 70\n    }\n}"
+						},
+						{
+							"id": "34549363-049c6fb6-32d4-40f0-9339-245a852992b0",
+							"name": "error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": 70\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/payments/withdraw",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"payments",
+										"withdraw"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1042"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"412-q4dhQc6Jj9tRafYonB14sZU4Ghg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 03 Nov 2025 10:27:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"You don't have enough balance\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"You don't have enough balance\"\n        }\n    ],\n    \"stack\": \"ServerError: You don't have enough balance\\n    at Object.withdraw (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\payment\\\\Payment.service.ts:66:13)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\payment\\\\Payment.controller.ts:65:27)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:28)\\n    at Layer.handleRequest (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at next (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\node_modules\\\\router\\\\lib\\\\route.js:157:13)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\purifyRequest.ts:46:7)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
 				}
 			],
+			"id": "34549363-5058103a-3e5f-43a1-994b-54902d19234e"
+		},
+		{
+			"name": "USER",
+			"item": [],
 			"id": "34549363-f17e0b3e-90fa-4b04-a43e-e40e29d6d192"
 		},
 		{
@@ -3996,7 +4369,335 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "34549363-82aa7960-79dc-46bb-9ddf-0278fa736935",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"Gulshan\",\r\n    \"amount\": 500,\r\n    \"artist_id\": \"ar-1\",\r\n    \"organizer_id\": \"or-1\",\r\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\r\n    \"end_date\": \"2025-11-03T06:03:52.203Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/create-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"create-offer"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "434"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b2-hrnChSCc7AuAmkipCzo1dbPlxMc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:16:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 201,\n    \"message\": \"Offer created successfully!\",\n    \"data\": {\n        \"id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\",\n        \"created_at\": \"2025-11-02T06:16:36.300Z\",\n        \"updated_at\": \"2025-11-02T06:16:36.300Z\",\n        \"status\": \"PENDING\",\n        \"approved_at\": null,\n        \"cancelled_at\": null,\n        \"amount\": 500,\n        \"start_date\": \"2025-11-02T06:03:52.203Z\",\n        \"end_date\": \"2025-11-03T06:03:52.203Z\",\n        \"agent_id\": \"ag-1\",\n        \"artist_id\": \"ar-1\",\n        \"organizer_id\": \"or-1\",\n        \"address\": \"Gulshan\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "my-offers",
+					"id": "34549363-c9a19b1c-2621-4b1c-9970-d7ae396d5b74",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/my-offers?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"my-offers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-92f0fb28-cc15-4769-9658-d12bb132c3f2",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agent/my-offers?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"my-offers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "862"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35e-QpHTGQyoUaCiAyL6L48GehSuqjI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:33:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offers retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\",\n            \"created_at\": \"2025-11-02T06:16:36.300Z\",\n            \"updated_at\": \"2025-11-02T06:16:36.300Z\",\n            \"status\": \"PENDING\",\n            \"approved_at\": null,\n            \"cancelled_at\": null,\n            \"amount\": 500,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"agent_id\": \"ag-1\",\n            \"artist_id\": \"ar-1\",\n            \"organizer_id\": \"or-1\",\n            \"address\": \"Gulshan\"\n        },\n        {\n            \"id\": \"f6dab977-7d5f-46d7-93b0-d7b4b57b6adf\",\n            \"created_at\": \"2025-11-02T06:04:25.972Z\",\n            \"updated_at\": \"2025-11-02T06:04:25.972Z\",\n            \"status\": \"PENDING\",\n            \"approved_at\": null,\n            \"cancelled_at\": null,\n            \"amount\": 500,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"agent_id\": \"ag-1\",\n            \"artist_id\": \"ar-1\",\n            \"organizer_id\": \"or-1\",\n            \"address\": \"Gulshan\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "cancel-offer",
+					"id": "34549363-64557a23-38a3-4ee9-b480-5b8858ad116a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/cancel-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"cancel-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-0d440b24-d84f-4165-a39c-b0eca237a984",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/cancel-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"cancel-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4b-WO+cq0Gtem3xw1zxF1ka1lobYLI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:56:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offer cancelled successfully!\"\n}"
+						}
+					]
 				}
 			],
 			"id": "34549363-21b464fe-f807-4bb3-850c-2a46d5368712"
@@ -4229,9 +4930,1446 @@
 							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue updated successfully!\",\n    \"data\": {\n        \"id\": \"ve-1\",\n        \"role\": \"VENUE\",\n        \"avatar\": \"/images/placeholder.png\",\n        \"name\": \"Venue\",\n        \"gender\": \"OTHER\",\n        \"location\": \"bangladesh\",\n        \"venue_type\": \"pop\",\n        \"capacity\": 20\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "create-offer",
+					"id": "34549363-360f197a-512c-449d-9b9b-72f4ef551a88",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"Dhaka\",\r\n    \"amount\": 700,\r\n    \"organizer_id\": \"or-1\",\r\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\r\n    \"end_date\": \"2025-11-03T06:03:52.203Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/venue/create-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"venue",
+								"create-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-3a8e26e5-c5ac-480e-9530-40f8b02d4e04",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"Dhaka\",\r\n    \"amount\": 700,\r\n    \"organizer_id\": \"or-1\",\r\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\r\n    \"end_date\": \"2025-11-03T06:03:52.203Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/venue/create-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"venue",
+										"create-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "413"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"19d-K2KO1fN0b9ETKXSYlH8cMIjUCIg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 05:25:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offer created successfully!\",\n    \"data\": {\n        \"id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\",\n        \"created_at\": \"2025-11-04T05:25:40.757Z\",\n        \"updated_at\": \"2025-11-04T05:25:40.757Z\",\n        \"status\": \"PENDING\",\n        \"approved_at\": null,\n        \"cancelled_at\": null,\n        \"amount\": 700,\n        \"start_date\": \"2025-11-02T06:03:52.203Z\",\n        \"end_date\": \"2025-11-03T06:03:52.203Z\",\n        \"address\": \"Dhaka\",\n        \"venue_id\": \"ve-1\",\n        \"organizer_id\": \"or-1\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "cancel-offer",
+					"id": "34549363-ac3e9925-f52e-4fc7-9818-bb345b7cc694",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"fa007c60-c280-48c3-8edb-19bfbbd5e99f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/venue/cancel-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"venue",
+								"cancel-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-348d2285-fcc1-4c43-bc5b-beab9cc131ac",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"fa007c60-c280-48c3-8edb-19bfbbd5e99f\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/venue/cancel-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"venue",
+										"cancel-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4b-WO+cq0Gtem3xw1zxF1ka1lobYLI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 08:07:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offer cancelled successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "my-offers",
+					"id": "34549363-edac2141-a85e-4dd5-9a3e-88b95af430af",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/venue/my-offers?page=1&limit=10&status=CANCELLED",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"venue",
+								"my-offers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "CANCELLED",
+									"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-176000f9-93bc-44b2-9425-cc2364843a68",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/venue/my-offers?page=1&limit=10&status=CANCELLED",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"venue",
+										"my-offers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "CANCELLED",
+											"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1087"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"43f-/6ctkAmXVRelTg6AfczSS3p3s0w\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 10:24:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent offers retrieved successfully!\",\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 2,\n        \"totalPages\": 1\n    },\n    \"data\": [\n        {\n            \"id\": \"fa007c60-c280-48c3-8edb-19bfbbd5e99f\",\n            \"created_at\": \"2025-11-04T08:07:13.606Z\",\n            \"updated_at\": \"2025-11-04T08:07:47.575Z\",\n            \"status\": \"CANCELLED\",\n            \"approved_at\": null,\n            \"cancelled_at\": \"2025-11-04T08:07:47.575Z\",\n            \"amount\": 700,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"address\": \"Dhaka\",\n            \"organizer\": {\n                \"id\": \"or-1\",\n                \"role\": \"ORGANIZER\",\n                \"avatar\": \"/images/placeholder.png\",\n                \"name\": \"Organizer\",\n                \"gender\": \"OTHER\",\n                \"location\": \"Bangladesh\",\n                \"genre\": \"Pop\"\n            }\n        },\n        {\n            \"id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\",\n            \"created_at\": \"2025-11-04T05:25:40.757Z\",\n            \"updated_at\": \"2025-11-04T10:00:50.863Z\",\n            \"status\": \"CANCELLED\",\n            \"approved_at\": null,\n            \"cancelled_at\": \"2025-11-04T10:00:50.861Z\",\n            \"amount\": 700,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"address\": \"Dhaka\",\n            \"organizer\": {\n                \"id\": \"or-1\",\n                \"role\": \"ORGANIZER\",\n                \"avatar\": \"/images/placeholder.png\",\n                \"name\": \"Organizer\",\n                \"gender\": \"OTHER\",\n                \"location\": \"Bangladesh\",\n                \"genre\": \"Pop\"\n            }\n        }\n    ]\n}"
+						}
+					]
 				}
 			],
 			"id": "34549363-b5833648-dde8-4459-b425-3e5b099d01da"
+		},
+		{
+			"name": "ORGANIZER",
+			"item": [
+				{
+					"name": "active-venues",
+					"id": "34549363-1af15b99-9b84-47fd-bede-465942177597",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/active-venues?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"active-venues"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-0a3239af-39b4-486d-949f-f509bd3bb28c",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/active-venues?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"active-venues"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "615"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"267-n5c1Bu89Cp0cp8oRmsiI5rRUJx8\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Nov 2025 06:52:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Active venues retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ve-1\",\n            \"role\": \"VENUE\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Venue\",\n            \"location\": \"Bangladesh\",\n            \"price\": null,\n            \"venue_type\": \"New\",\n            \"capacity\": 30,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\"\n        },\n        {\n            \"id\": \"ve-1\",\n            \"role\": \"VENUE\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Venue\",\n            \"location\": \"Bangladesh\",\n            \"price\": null,\n            \"venue_type\": \"New\",\n            \"capacity\": 30,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "agent-offers",
+					"id": "34549363-befda85d-6c6b-4ccb-927e-6ae055d575d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/agent-offers?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"agent-offers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "CANCELLED",
+									"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-b903bd1d-23bf-44fe-8d7a-5c631d546b06",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/agent-offers?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"agent-offers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "499"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f3-5Wb/NlhiyXmakxiCCej8A26Npu0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:08:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent offers retrieved successfully!\",\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"totalPages\": 1\n    },\n    \"data\": [\n        {\n            \"id\": \"f6dab977-7d5f-46d7-93b0-d7b4b57b6adf\",\n            \"created_at\": \"2025-11-02T06:04:25.972Z\",\n            \"updated_at\": \"2025-11-02T06:04:25.972Z\",\n            \"status\": \"PENDING\",\n            \"approved_at\": null,\n            \"cancelled_at\": null,\n            \"amount\": 500,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"agent_id\": \"ag-1\",\n            \"artist_id\": \"ar-1\",\n            \"organizer_id\": \"or-1\",\n            \"address\": \"Gulshan\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "cancel-agent-offer",
+					"id": "34549363-0e192a1b-62a9-4128-b017-c77ead12d3af",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizer/cancel-agent-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"cancel-agent-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-e4e5a8d3-19b7-42f1-8c98-6bbdae14d15a",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"3bafb080-3afb-411c-9ffe-2f049829ae56\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/organizer/cancel-agent-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"cancel-agent-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4b-WO+cq0Gtem3xw1zxF1ka1lobYLI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:59:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offer cancelled successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "accept-agent-offer",
+					"id": "34549363-eda14963-b264-4324-b600-46b327c26d82",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"fdd7660e-7e24-4f9c-a809-2511e6428f0a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizer/accept-agent-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"accept-agent-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-61334a84-2723-4bc2-bac3-52e7b2a2ea75",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"2db624ae-15e2-4932-91c7-b4505da387e4\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/organizer/accept-agent-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"accept-agent-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "546"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"222-Onoq/3ap6lA3e0KJmkU1o9itGlU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 03 Nov 2025 04:19:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent offer accepted successfully!\",\n    \"data\": {\n        \"amount\": 500,\n        \"url\": \"https://checkout.stripe.com/c/pay/cs_test_a1buWSGAHTKBHqLyblfmzGsR32bHrSCk77SQK4mlqSJxRICgOQKvUbCmGR#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0VUtyaExMZkRuTmpKVWdpamNVd2hWPFx8f3dKYE8xS01tbnd%2FUF9DVUNzUE00UV1gQmI8V288SlM9NTBcY3NVUDZoMXFIPX90UnNPYUBcXGxvPH9dS3IzNTVOT3dtXVQ3RicpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "active-artists",
+					"id": "34549363-8d394103-5007-4189-85a2-030149b90c98",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/active-artists?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"active-artists"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-56f05b31-b689-42d0-99a4-3a1813ea6588",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/active-artists?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"active-artists"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "734"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2de-dY6+UDpv46Z7GlOR20bJ/4bAgvE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Nov 2025 08:15:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Active artists retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ar-1\",\n            \"role\": \"ARTIST\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Artist\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"genre\": \"Pop\",\n            \"availability\": [],\n            \"price\": \"$50 hours\",\n            \"artist_agents\": [\n                \"ag-1\"\n            ],\n            \"artist_pending_agents\": [],\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"address\": \"Gulshan\",\n            \"agent\": {\n                \"id\": \"ag-1\",\n                \"role\": \"AGENT\",\n                \"avatar\": \"/images/placeholder.png\",\n                \"name\": \"Agent\",\n                \"gender\": \"OTHER\",\n                \"location\": \"Bangladesh\",\n                \"experience\": \"1 years\",\n                \"availability\": [],\n                \"price\": \"$12 hours\",\n                \"agent_artists\": [\n                    \"ar-1\",\n                    \"ar-2\"\n                ],\n                \"agent_pending_artists\": []\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "venue-offers",
+					"id": "34549363-470a570a-cb23-4cd0-8404-aae8df7c4ac9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/venue-offers?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"venue-offers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "CANCELLED",
+									"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-9695029f-5c03-4744-8531-485b31deec30",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/venue-offers?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"venue-offers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "CANCELLED",
+											"description": "PENDING\nAPPROVED\nCANCELLED\nTIMEOUT",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "595"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"253-+WpKZQLMIpcTVn32wJxYJcFghG0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 06:37:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue offers retrieved successfully!\",\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"totalPages\": 1\n    },\n    \"data\": [\n        {\n            \"id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\",\n            \"created_at\": \"2025-11-04T05:25:40.757Z\",\n            \"updated_at\": \"2025-11-04T05:25:40.757Z\",\n            \"status\": \"PENDING\",\n            \"approved_at\": null,\n            \"cancelled_at\": null,\n            \"amount\": 700,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"address\": \"Dhaka\",\n            \"venue\": {\n                \"id\": \"ve-1\",\n                \"role\": \"VENUE\",\n                \"avatar\": \"/images/placeholder.png\",\n                \"name\": \"Venue\",\n                \"location\": \"Bangladesh\",\n                \"price\": null,\n                \"venue_type\": \"New\",\n                \"capacity\": 30\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "cancel-agent-offer",
+					"id": "34549363-b5c45be2-5342-4bbe-82e2-f5763ddf4c74",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizer/cancel-venue-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"cancel-venue-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-115fdc32-a5b0-4203-99de-6d8b39982ec1",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/organizer/cancel-venue-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"cancel-venue-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4b-WO+cq0Gtem3xw1zxF1ka1lobYLI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 10:00:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Offer cancelled successfully!\"\n}"
+						},
+						{
+							"id": "34549363-03579510-de91-42ab-b466-0793b2c29c75",
+							"name": "error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"42cb7832-d1ca-4992-9b2e-c9aedaad01da\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/organizer/cancel-venue-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"cancel-venue-offer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "585"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"249-dOhUFD6Ce2TnSxMrhWjbz+wOKl4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Nov 2025 10:05:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"This offer is already cancelled\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"This offer is already cancelled\"\n        }\n    ],\n    \"stack\": \"ServerError: This offer is already cancelled\\n    at Object.cancelOffer (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\venue\\\\Venue.service.ts:61:13)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\venue\\\\Venue.controller.ts:52:5)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "accept-venue-offer",
+					"id": "34549363-d4b05806-cb53-4347-89ac-11641c33e37b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offer_id\": \"73e1a65d-b23e-43c9-9786-bfc2c7cc709b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizer/accept-venue-offer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"accept-venue-offer"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-6ad46a4b-075c-4ff0-ab9b-06b0f43a1088",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offer_id\": \"73e1a65d-b23e-43c9-9786-bfc2c7cc709b\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/organizer/accept-venue-offer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"accept-venue-offer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "561"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"231-XQXOLHqOjVUdbGA5ZpWjfzoAKx4\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Nov 2025 03:59:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue offer accepted link generated successfully!\",\n    \"data\": {\n        \"amount\": 700,\n        \"url\": \"https://checkout.stripe.com/c/pay/cs_test_a1ckZwiKBgHLmszBKYN7XbaYlBj2N84KIzHdbp652fZOa7LoQgp0HEGfii#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0VUtyaExMZkRuTmpKVWdpamNVd2hWPFx8f3dKYE8xS01tbnd%2FUF9DVUNzUE00UV1gQmI8V288SlM9NTBcY3NVUDZoMXFIPX90UnNPYUBcXGxvPH9dS3IzNTVOT3dtXVQ3RicpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-69fd2fcc-86f1-481b-990a-8ba23233866b"
 		}
 	]
 }
