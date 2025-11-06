@@ -16,7 +16,12 @@ export const TicketServices = {
   async purchaseTicket({ quantity, event_id, user_id }: TPurchaseTicket) {
     const event = (await prisma.event.findUnique({
       where: { id: event_id },
-      select: { available_capacity: true, ticket_price: true },
+      select: {
+        available_capacity: true,
+        ticket_price: true,
+        title: true,
+        description: true,
+      },
     }))!;
 
     //? ensure that tickets are available
@@ -66,9 +71,9 @@ export const TicketServices = {
       purpose: 'ticket_purchase',
       event_id,
       user_id,
-      ticket_price: event.ticket_price,
-      quantity,
-      ticket_ids: [].join(','),
+      ticket_price: event.ticket_price.toString(),
+      quantity: quantity.toString(),
+      ticket_ids: ticketsData.map(({ id }) => id).join(','),
     };
 
     const { url } = await stripe.checkout.sessions.create({
@@ -78,7 +83,11 @@ export const TicketServices = {
         {
           price_data: {
             currency: config.payment.currency,
-            product_data: { name: event_id, metadata },
+            product_data: {
+              name: `${event.title} Tickets (${quantity})`,
+              description: event.description.slice(0, 100),
+              metadata,
+            },
             unit_amount: Math.ceil(event.ticket_price * 100),
           },
           quantity,

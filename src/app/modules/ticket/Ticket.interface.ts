@@ -15,8 +15,8 @@ export type TPurchaseTicket = z.infer<
  */
 export type TTicketMetadata = {
   purpose: 'ticket_purchase';
-  ticket_price: number;
-  quantity: number;
+  ticket_price: string;
+  quantity: string;
   event_id: string;
   user_id: string;
   ticket_ids: string;

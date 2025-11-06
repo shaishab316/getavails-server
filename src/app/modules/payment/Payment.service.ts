@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { EAgentOfferStatus, prisma } from '../../../utils/db';
+import { EAgentOfferStatus, ETicketStatus, prisma } from '../../../utils/db';
 import type {
   TAcceptAgentOfferMetadata,
   TAcceptVenueOfferMetadata,
@@ -10,6 +10,7 @@ import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQue
 import withdrawQueue from '../../../utils/mq/withdrawQueue';
 import Stripe from 'stripe';
 import { stripe } from './Payment.utils';
+import { TTicketMetadata } from '../ticket/Ticket.interface';
 
 /**
  * Payment Services
@@ -196,5 +197,19 @@ export const PaymentServices = {
     }
 
     await withdrawQueue.add({ amount, user });
+  },
+
+  /**
+   * Ticket purchase
+   *
+   * @event ticket_purchase
+   */
+  async ticket_purchase(session: Stripe.Checkout.Session) {
+    const { ticket_ids } = session.metadata as TTicketMetadata;
+
+    await prisma.ticket.updateMany({
+      where: { id: { in: ticket_ids.split(',') } },
+      data: { status: ETicketStatus.PAID, expires_at: null },
+    });
   },
 };
