@@ -48,6 +48,7 @@ model User {
   venue_offers_organizers VenueOffer[] @relation("VenueOffersOrganizer")
   venue_offers_venues     VenueOffer[] @relation("VenueOffersVenue")
   organizer_events        Event[]
+  tickets                 Ticket[]
 
   @@map("users")
 }
