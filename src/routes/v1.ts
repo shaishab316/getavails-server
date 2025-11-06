@@ -12,6 +12,7 @@ import { MessageRoutes } from '../app/modules/message/Message.route';
 import { OrganizerRoutes } from '../app/modules/organizer/Organizer.route';
 import { PaymentRoutes } from '../app/modules/payment/Payment.route';
 import { TicketRoutes } from '../app/modules/ticket/Ticket.route';
+import { EventRoutes } from '../app/modules/event/Event.route';
 
 export default injectRoutes(Router(), {
   // no auth required
@@ -22,6 +23,7 @@ export default injectRoutes(Router(), {
 
   // all user can access
   '/profile': [auth.default, UserRoutes.all],
+  '/events': [auth.all, EventRoutes.all],
   '/tickets': [auth.all, TicketRoutes.all],
   '/inbox': [auth.all, ChatRoutes.all],
   '/messages': [auth.all, MessageRoutes.all],

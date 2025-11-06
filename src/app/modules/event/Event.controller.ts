@@ -19,4 +19,20 @@ export const EventControllers = {
       data: event,
     };
   }),
+
+  /**
+   * Get my upcoming events
+   */
+  getMyUpcomingEvent: catchAsync(async ({ query, user }) => {
+    const { events, meta } = await EventServices.getMyUpcomingEvent({
+      ...query,
+      user_id: user.id,
+    });
+
+    return {
+      message: 'Events retrieved successfully!',
+      meta,
+      data: events,
+    };
+  }),
 };

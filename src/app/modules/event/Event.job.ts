@@ -20,7 +20,7 @@ export function eventJobs() {
       await prisma.event.updateMany({
         where: {
           status: EEventStatus.UPCOMING,
-          start_date: {
+          published_at: {
             lte: new Date(),
           },
         },

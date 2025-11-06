@@ -4,7 +4,7 @@ model Event {
   updated_at   DateTime @updatedAt
   published_at DateTime @default(now())
 
-  status             EEventStatus @default(UPCOMING)
+  status             EEventStatus @default(PUBLISHED)
   title              String
   description        String
   images             String[]     @default([])

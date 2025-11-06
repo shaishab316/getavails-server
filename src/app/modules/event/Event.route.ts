@@ -3,6 +3,7 @@ import { EventControllers } from './Event.controller';
 import purifyRequest from '../../middlewares/purifyRequest';
 import { EventValidations } from './Event.validation';
 import capture from '../../middlewares/capture';
+import { QueryValidations } from '../query/Query.validation';
 
 const organizer = Router();
 {
@@ -23,6 +24,18 @@ const organizer = Router();
   );
 }
 
+const all = Router();
+{
+  /**
+   * Get all upcoming events
+   */
+  all.get(
+    '/upcoming-events',
+    purifyRequest(QueryValidations.list),
+    EventControllers.getMyUpcomingEvent,
+  );
+}
+
 export const EventRoutes = {
   /**
    * Only organizer can access
@@ -30,4 +43,11 @@ export const EventRoutes = {
    * @url : (base_url)/organizer/events/
    */
   organizer,
+
+  /**
+   * All can access
+   *
+   * @url : (base_url)/events/
+   */
+  all,
 };
