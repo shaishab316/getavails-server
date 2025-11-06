@@ -206,4 +206,4 @@ const config = {
   },
 };
 
-export default config;
+export default config as Readonly<typeof config>;

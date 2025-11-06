@@ -42,7 +42,7 @@ export const TicketServices = {
       { length: quantity },
       (_, i) =>
         ({
-          id: `ti${event_id.split('-')[1]}-${(lastTicket ? +lastTicket.id.split('-')[1] + 1 + i : 1).toString().padStart(8, '0')}`,
+          id: `ti${event_id.split('-')[1]}-${(lastTicket ? +lastTicket.id.split('-')[1] + 1 + i : 1 + i).toString().padStart(8, '0')}`,
           event_id,
           user_id,
           price: event?.ticket_price,

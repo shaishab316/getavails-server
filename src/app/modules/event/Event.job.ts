@@ -10,7 +10,7 @@ import chalk from 'chalk';
  * @returns unsubscribe function
  */
 export function eventJobs() {
-  console.log(chalk.green('Event jobs started'));
+  console.log(chalk.green('✔ Event jobs started'));
 
   //? every day at 7am
   const publishingJob = cron.schedule('0 7 * * *', async () => {
@@ -41,6 +41,6 @@ export function eventJobs() {
   //? return unsubscribe function
   return () => {
     publishingJob.destroy();
-    console.log(chalk.green('Event jobs stopped'));
+    console.log(chalk.cyan('Event jobs stopped'));
   };
 }

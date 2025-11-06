@@ -1,23 +1,16 @@
+process.stdout.write('\x1Bc'); //? clear console
 import startServer from './utils/server/startServer';
 import { SocketServices } from './app/modules/socket/Socket.service';
 import { eventJobs } from './app/modules/event/Event.job';
+import { ticketExpirationJob } from './app/modules/ticket/Ticket.job';
 
+/**
+ * Start server with plugins
+ */
 startServer().then(server => {
-  //? add server plugins
-
-  //? socket plugins
-  const socketCleanup = SocketServices.init(server);
-
-  //? event jobs
-  const eventJobsCleanup = eventJobs();
-
-  //? cleanup on process close
-  ['SIGINT', 'SIGTERM'].forEach(signal =>
-    process.once(signal, async () => {
-      socketCleanup();
-      eventJobsCleanup();
-
-      server.close(() => process.exit(0));
-    }),
+  server.addPlugins(
+    SocketServices.init(server),
+    eventJobs(),
+    ticketExpirationJob(),
   );
 });
