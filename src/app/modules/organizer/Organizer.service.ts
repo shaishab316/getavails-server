@@ -76,6 +76,15 @@ export const OrganizerServices = {
   async acceptAgentOffer({ offer_id, organizer_id }: TAcceptAgentOfferArgs) {
     const offer = await prisma.agentOffer.findFirst({
       where: { id: offer_id, organizer_id },
+      select: {
+        artist: {
+          select: {
+            name: true,
+          },
+        },
+        status: true,
+        amount: true,
+      },
     });
 
     if (!offer) {
@@ -108,7 +117,10 @@ export const OrganizerServices = {
         {
           price_data: {
             currency: config.payment.currency,
-            product_data: { name: offer_id, metadata },
+            product_data: {
+              name: `Booking for ${offer.artist.name}`,
+              metadata,
+            },
             unit_amount: Math.ceil(amount * 100),
           },
           quantity: 1,
@@ -199,6 +211,15 @@ export const OrganizerServices = {
   async acceptVenueOffer({ offer_id, organizer_id }: TAcceptVenueOfferArgs) {
     const offer = await prisma.venueOffer.findFirst({
       where: { id: offer_id, organizer_id },
+      select: {
+        venue: {
+          select: {
+            name: true,
+          },
+        },
+        status: true,
+        amount: true,
+      },
     });
 
     if (!offer) {
@@ -231,7 +252,7 @@ export const OrganizerServices = {
         {
           price_data: {
             currency: config.payment.currency,
-            product_data: { name: offer_id, metadata },
+            product_data: { name: `Booking for ${offer.venue.name}`, metadata },
             unit_amount: Math.ceil(amount * 100),
           },
           quantity: 1,
