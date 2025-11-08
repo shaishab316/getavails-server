@@ -6,6 +6,9 @@ import { AgentValidations } from './Agent.validation';
 
 const free = Router();
 {
+  /**
+   * Get agent list
+   */
   free.get(
     '/',
     purifyRequest(QueryValidations.list),
@@ -15,48 +18,81 @@ const free = Router();
 
 const agent = Router();
 {
+  /**
+   * Get my artist list
+   */
   agent.get(
     '/artists',
     purifyRequest(QueryValidations.list),
     AgentControllers.getMyArtistList,
   );
 
+  /**
+   * Get artist request list
+   */
+  agent.get(
+    '/artist-requests',
+    purifyRequest(QueryValidations.list),
+    AgentControllers.getArtistRequestList,
+  );
+
+  /**
+   * Invite an artist for an agent
+   */
   agent.post(
     '/invite-artist',
     purifyRequest(AgentValidations.inviteArtist),
     AgentControllers.inviteArtist,
   );
 
+  /**
+   * approve an artist request
+   */
   agent.post(
     '/approve-artist',
     purifyRequest(AgentValidations.processAgentRequest),
     AgentControllers.processAgentRequest(true),
   );
 
+  /**
+   * reject an artist request
+   */
   agent.post(
     '/reject-artist',
     purifyRequest(AgentValidations.processAgentRequest),
     AgentControllers.processAgentRequest(false),
   );
 
+  /**
+   * delete an artist
+   */
   agent.delete(
     '/delete-artist',
     purifyRequest(AgentValidations.deleteArtist),
     AgentControllers.deleteArtist,
   );
 
+  /**
+   * create an offer
+   */
   agent.post(
     '/create-offer',
     purifyRequest(AgentValidations.createOffer),
     AgentControllers.createOffer,
   );
 
+  /**
+   * get my offers
+   */
   agent.get(
     '/my-offers',
     purifyRequest(QueryValidations.list, AgentValidations.getMyOffers),
     AgentControllers.getMyOffers,
   );
 
+  /**
+   * cancel an offer
+   */
   agent.post(
     '/cancel-offer',
     purifyRequest(AgentValidations.cancelOffer),

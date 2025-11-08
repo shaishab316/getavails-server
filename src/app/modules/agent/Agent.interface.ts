@@ -53,3 +53,8 @@ export type TCancelAgentOfferArgs = z.infer<
   agent_id?: string;
   organizer_id?: string;
 };
+
+/**
+ * @type: for get agent artist list
+ */
+export type TGetAgentArtistList = TList & { artist_ids: string[] };

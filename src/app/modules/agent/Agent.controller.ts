@@ -62,8 +62,11 @@ export const AgentControllers = {
   /**
    * Retrieve all artist list for a specific agent
    */
-  getMyArtistList: catchAsync(async ({ query, user }) => {
-    const { meta, artists } = await AgentServices.getMyArtistList(user, query);
+  getMyArtistList: catchAsync(async ({ query, user: agent }) => {
+    const { meta, artists } = await AgentServices.getAgentArtistList({
+      ...query,
+      artist_ids: agent.agent_artists,
+    });
 
     return {
       message: 'Artists retrieved successfully!',
@@ -73,16 +76,32 @@ export const AgentControllers = {
   }),
 
   /**
+   * Retrieve all artist request list for a specific agent
+   */
+  getArtistRequestList: catchAsync(async ({ query, user: agent }) => {
+    const { meta, artists } = await AgentServices.getAgentArtistList({
+      ...query,
+      artist_ids: agent.agent_pending_artists,
+    });
+
+    return {
+      message: 'Artists request retrieved successfully!',
+      meta,
+      data: artists,
+    };
+  }),
+
+  /**
    * Delete artist from agent list
    */
-  deleteArtist: catchAsync(async ({ body, user }) => {
+  deleteArtist: catchAsync(async ({ body, user: agent }) => {
     //? ensure that the artist exists
-    if (!user.agent_artists.includes(body.artist_id)) {
+    if (!agent.agent_artists.includes(body.artist_id)) {
       throw new ServerError(StatusCodes.NOT_FOUND, 'Artist not found');
     }
 
     await AgentServices.deleteArtist({
-      agent: user,
+      agent: agent,
       artist_id: body.artist_id,
     });
 

@@ -6,6 +6,9 @@ import { ArtistValidations } from './Artist.validation';
 
 const free = Router();
 {
+  /**
+   * Get artist list
+   */
   free.get(
     '/',
     purifyRequest(QueryValidations.list),
@@ -15,30 +18,54 @@ const free = Router();
 
 const artist = Router();
 {
+  /**
+   * Get my agent list
+   */
   artist.get(
     '/agents',
     purifyRequest(QueryValidations.list),
     ArtistControllers.getMyAgentList,
   );
 
+  /**
+   * Get agent request list
+   */
+  artist.get(
+    '/agent-requests',
+    purifyRequest(QueryValidations.list),
+    ArtistControllers.getAgentRequestList,
+  );
+
+  /**
+   * Invite an agent for an artist
+   */
   artist.post(
     '/invite-agent',
     purifyRequest(ArtistValidations.inviteAgent),
     ArtistControllers.inviteAgent,
   );
 
+  /**
+   * approve an agent request
+   */
   artist.post(
     '/approve-agent',
     purifyRequest(ArtistValidations.processArtistRequest),
     ArtistControllers.processArtistRequest(true),
   );
 
+  /**
+   * reject an agent request
+   */
   artist.post(
     '/reject-agent',
     purifyRequest(ArtistValidations.processArtistRequest),
     ArtistControllers.processArtistRequest(false),
   );
 
+  /**
+   * Delete agent from artist list
+   */
   artist.delete(
     '/delete-agent',
     purifyRequest(ArtistValidations.deleteAgent),

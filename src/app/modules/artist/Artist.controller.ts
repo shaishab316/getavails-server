@@ -62,13 +62,29 @@ export const ArtistControllers = {
    * Retrieve all artist list for a specific artist
    */
   getMyAgentList: catchAsync(async ({ user: artist, query }) => {
-    const { meta, agents } = await ArtistServices.getMyAgentList(
-      artist.artist_agents,
-      query,
-    );
+    const { meta, agents } = await ArtistServices.getAgentList({
+      ...query,
+      agent_ids: artist.artist_agents,
+    });
 
     return {
       message: 'Agents retrieved successfully!',
+      meta,
+      data: agents,
+    };
+  }),
+
+  /**
+   * Retrieve all artist request list for a specific artist
+   */
+  getAgentRequestList: catchAsync(async ({ user: artist, query }) => {
+    const { meta, agents } = await ArtistServices.getAgentList({
+      ...query,
+      agent_ids: artist.artist_pending_agents,
+    });
+
+    return {
+      message: 'Agents request retrieved successfully!',
       meta,
       data: agents,
     };

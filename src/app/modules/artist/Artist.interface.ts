@@ -1,6 +1,7 @@
 import type { z } from 'zod';
 import type { ArtistValidations } from './Artist.validation';
 import type { User as TUser } from '../../../../prisma';
+import { TList } from '../query/Query.interface';
 
 /**
  * @type: Invite agent for artist
@@ -22,3 +23,10 @@ export type TDeleteAgent = z.infer<
 export type TProcessArtistRequest = z.infer<
   typeof ArtistValidations.processArtistRequest
 >['body'] & { artist: TUser; is_approved: boolean };
+
+/**
+ * @type: Get artist list
+ */
+export type TGetAgentList = TList & {
+  agent_ids: string[];
+};
