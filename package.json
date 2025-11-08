@@ -4,8 +4,8 @@
     "repository": "https://github.com/shaishab316/express-it.git"
   },
   "name": "getavails",
-  "version": "1.0.1",
-  "description": "A driver management platform for getavails-like services",
+  "version": "1.9.0",
+  "description": "A comprehensive event management system with multi-role support including artists, agents, venues, and organizers. Features real-time chat, Stripe payments, booking management, and detailed analytics dashboards.",
   "main": "dist/server.js",
   "author": {
     "name": "Shaishab Chandra Shil",
