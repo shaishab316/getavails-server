@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// user login\r\n// {\r\n//     \"email\": \"shaishab316@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }",
+							"raw": "// user login\r\n// {\r\n//     \"email\": \"shaishab316@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// agent login\r\n// {\r\n//     \"email\": \"agent@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n// venue login\r\n// {\r\n//     \"email\": \"venue@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// artist login\r\n// {\r\n//     \"email\": \"artist@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// organizer login\r\n// {\r\n//     \"email\": \"organizer@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n\r\n// admin login\r\n// {\r\n//     \"email\": \"admin@getavails-server.com\",\r\n//     \"password\": \"e7e44b0b\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2350,7 +2350,105 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "34549363-83b00161-db1d-496a-a4e4-a7996d355e58",
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
+											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+										},
+										{
+											"key": "name",
+											"value": "Shaishab Chandra Shil",
+											"type": "text",
+											"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399"
+										},
+										{
+											"key": "location",
+											"value": "Bangladesh",
+											"type": "text",
+											"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
+										},
+										{
+											"key": "gender",
+											"value": "MALE",
+											"type": "text",
+											"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
+										},
+										{
+											"key": "role",
+											"value": "USER",
+											"type": "text",
+											"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"edit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"198-1Ein+bKE0Cp1j/k99ZG4m+LnGKI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 06:39:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Profile updated successfully!\",\n    \"data\": {\n        \"id\": \"us-1\",\n        \"created_at\": \"2025-11-06T05:30:04.210Z\",\n        \"updated_at\": \"2025-11-08T06:39:26.554Z\",\n        \"role\": \"USER\",\n        \"email\": \"shaishab316@gmail.com\",\n        \"is_verified\": true,\n        \"is_active\": true,\n        \"is_admin\": false,\n        \"avatar\": \"/images/shaishab-1762583966549.png\",\n        \"name\": \"Shaishab Chandra Shil\",\n        \"gender\": \"MALE\",\n        \"balance\": 0,\n        \"is_stripe_connected\": false\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "connect-stripe",
@@ -3009,6 +3107,101 @@
 			"name": "ARTIST",
 			"item": [
 				{
+					"name": "overview",
+					"id": "34549363-73110c9d-52e9-4bf1-b3d5-e5e766da4132",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artist/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-f8dcebc7-af27-43b4-bcc5-6da7322c0452",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/artist/overview",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "573"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23d-5aFcOJImBx2irs6m2sg9dw8wLw0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 08:29:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artist overview retrieved successfully!\",\n    \"data\": {\n        \"total_agents\": 1,\n        \"totalRevenue\": 400,\n        \"totalBookings\": 1,\n        \"monthlyBookingStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"bookingCount\": 1\n            },\n            {\n                \"month\": \"Dec\",\n                \"bookingCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "get-agent-list",
 					"id": "34549363-8a51036e-6b7d-4dcb-91c1-14a694e3cd86",
 					"protocolProfileBehavior": {
@@ -3215,6 +3408,133 @@
 							"cookie": [],
 							"responseTime": null,
 							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agents retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ag-1\",\n            \"role\": \"AGENT\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Agent\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"experience\": \"1 years\",\n            \"availability\": [],\n            \"price\": \"$12 hours\",\n            \"agent_artists\": [\n                \"ar-1\"\n            ],\n            \"agent_pending_artists\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "agent-requests",
+					"id": "34549363-6650fe94-8457-4ab2-be79-468bac18a943",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{artist_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artist/agent-requests?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"agent-requests"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-f4e511ed-6049-484c-b3e2-6a4b12eefef0",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/artist/agent-requests?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"artist",
+										"agent-requests"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "389"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"185-Boxcd35WPs6vbJV6D/pxiXPV4iw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 06:13:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agents request retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ag-1\",\n            \"role\": \"AGENT\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Agent\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"experience\": \"1 years\",\n            \"availability\": [],\n            \"price\": \"$12 hours\",\n            \"agent_artists\": [],\n            \"agent_pending_artists\": []\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -3936,6 +4256,103 @@
 			"name": "AGENT",
 			"item": [
 				{
+					"name": "overview",
+					"id": "34549363-b9de6416-d468-4480-8a76-7c5eaac2061f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-10cb99f7-2721-4f4a-b741-3b0a16090767",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agent/overview",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "593"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"251-pCibXNuplDy9nKYPlH6wszhp1pc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 08:32:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Agent overview retrieved successfully!\",\n    \"data\": {\n        \"total_artists\": 1,\n        \"artist_requests\": 0,\n        \"totalRevenue\": 100,\n        \"totalBookings\": 1,\n        \"monthlyBookingStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"bookingCount\": 1\n            },\n            {\n                \"month\": \"Dec\",\n                \"bookingCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "get all artist",
 					"id": "34549363-f07645b4-0d09-42eb-80a0-b438389d8107",
 					"protocolProfileBehavior": {
@@ -4173,6 +4590,131 @@
 							"cookie": [],
 							"responseTime": null,
 							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artists retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ar-1\",\n            \"role\": \"ARTIST\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Artist\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"genre\": \"Pop\",\n            \"availability\": [\n                \"2025-10-27T08:38:18.237Z\"\n            ],\n            \"price\": \"$50 hours\",\n            \"artist_agents\": [\n                \"ag-1\",\n                \"ag-1\"\n            ],\n            \"artist_pending_agents\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "artist-requests",
+					"id": "34549363-4f71e953-d6cf-43da-a14d-c670f8da233b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/artist-requests?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"artist-requests"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-f56c87a9-495f-4995-bbf9-b4d42755e079",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agent/artist-requests?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"artist-requests"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "383"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17f-gYYa7bqftJGlVWKohmY12VMTZXs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 06:14:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Artists request retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ar-1\",\n            \"role\": \"ARTIST\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Artist\",\n            \"gender\": \"OTHER\",\n            \"location\": \"Bangladesh\",\n            \"genre\": \"Pop\",\n            \"availability\": [],\n            \"price\": \"$50 hours\",\n            \"artist_agents\": [],\n            \"artist_pending_agents\": []\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -5079,6 +5621,101 @@
 			"name": "VENUE",
 			"item": [
 				{
+					"name": "overview",
+					"id": "34549363-4bf9b212-9c08-447f-88cd-898a19bb0ac5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{venue_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/venue/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"venue",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-3bc24949-c69b-4f67-8f28-a2390c7e2c1f",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/venue/overview",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"venue",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "555"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22b-zUbT3B8PJ5LXGAx5nTjQU2/h20A\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 08:19:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Venue overview retrieved successfully!\",\n    \"data\": {\n        \"totalRevenue\": 700,\n        \"totalBookings\": 1,\n        \"monthlyBookingStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"bookingCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"bookingCount\": 1\n            },\n            {\n                \"month\": \"Dec\",\n                \"bookingCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "update-availability",
 					"id": "34549363-10067dcf-d9ba-469d-975e-9e77cfd83c0c",
 					"protocolProfileBehavior": {
@@ -5677,6 +6314,103 @@
 		{
 			"name": "ORGANIZER",
 			"item": [
+				{
+					"name": "overview",
+					"id": "34549363-58885d26-1d28-4a5c-a8bc-a829409a6120",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-d340c8b8-1bf6-4089-b6bd-5cd960b67e0e",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/overview",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "540"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21c-t3I3p5NnxFQKrBVuN2p/eHhpqx4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 08:10:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Organizer overview retrieved successfully!\",\n    \"data\": {\n        \"totalRevenue\": 1440,\n        \"totalBookedTickets\": 12,\n        \"monthlyEventStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"eventCount\": 3\n            },\n            {\n                \"month\": \"Dec\",\n                \"eventCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
 				{
 					"name": "active-artists",
 					"id": "34549363-8d394103-5007-4189-85a2-030149b90c98",
@@ -6742,6 +7476,109 @@
 					]
 				},
 				{
+					"name": "events",
+					"id": "34549363-bd38afcc-7937-4a32-a437-b506f6fce1ab",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{organizer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/organizer/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizer",
+								"events"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-57f1fa30-cdf5-493e-867b-b09403abba0f",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/organizer/events",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"organizer",
+										"events"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1264"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4f0-aAj1noArI1HQ24C3/3iIf/nUPG8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 04:29:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Events retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ev-1\",\n            \"created_at\": \"2025-11-06T05:28:01.581Z\",\n            \"updated_at\": \"2025-11-06T11:18:13.501Z\",\n            \"published_at\": \"2025-11-02T06:03:52.203Z\",\n            \"status\": \"UPCOMING\",\n            \"title\": \"Shaishab hero\",\n            \"description\": \"hello description\",\n            \"images\": [\n                \"/images/event2-1762406881574.jpg\",\n                \"/images/event1-1762406881574.jpg\"\n            ],\n            \"location\": \"Dhaka\",\n            \"ticket_price\": 120,\n            \"start_date\": \"2025-12-02T06:03:52.203Z\",\n            \"end_date\": \"2025-12-03T06:03:52.203Z\",\n            \"artist_names\": [\n                \"Shaishab\",\n                \"Satter\"\n            ],\n            \"organizer_id\": \"or-1\",\n            \"capacity\": 100,\n            \"available_capacity\": 39,\n            \"can_buy_tickets\": true,\n            \"total_ticket_sold\": 61\n        },\n        {\n            \"id\": \"ev-2\",\n            \"created_at\": \"2025-11-07T21:56:38.018Z\",\n            \"updated_at\": \"2025-11-07T21:56:38.018Z\",\n            \"published_at\": \"2025-11-02T06:03:52.203Z\",\n            \"status\": \"UPCOMING\",\n            \"title\": \"Shaishab hero\",\n            \"description\": \"hello description\",\n            \"images\": [\n                \"/images/event2-1762552598013.jpg\",\n                \"/images/event1-1762552598014.jpg\"\n            ],\n            \"location\": \"Dhaka\",\n            \"ticket_price\": 120,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"artist_names\": [\n                \"Shaishab\",\n                \"Satter\"\n            ],\n            \"organizer_id\": \"or-1\",\n            \"capacity\": 100,\n            \"available_capacity\": 100,\n            \"can_buy_tickets\": true,\n            \"total_ticket_sold\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
 					"name": "create-event",
 					"id": "34549363-7cb4c20e-1d8b-4d72-a3b7-7240d24a0fe6",
 					"protocolProfileBehavior": {
@@ -6879,8 +7716,8 @@
 					]
 				},
 				{
-					"name": "events",
-					"id": "34549363-bd38afcc-7937-4a32-a437-b506f6fce1ab",
+					"name": "update-event",
+					"id": "34549363-cd42f8e7-f780-41b9-a563-d1aa479d4132",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6895,40 +7732,87 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n    \"event_id\": \"ev-3\",\n    \"artist_names\": [\n        \"Shaishab\",\n        \"Satter\"\n    ],\n    \"capacity\": 100,\n    \"title\": \"Shaishab hero\",\n    \"description\": \"hello description\",\n    \"location\": \"Dhaka\",\n    \"ticket_price\": 1200,\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\n    \"end_date\": \"2025-11-03T06:03:52.203Z\",\n    \"published_at\": \"2025-11-02T06:03:52.203Z\",\n    \"status\": \"UPCOMING\"\n}",
+									"type": "text",
+									"uuid": "61b78e1c-a872-4223-b3de-63741b19e163"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"uuid": "0f70cd7c-6ea7-4ba9-80fc-c1813508ff19",
+									"src": [
+										"postman-cloud:///1f0ba39b-b91c-4480-8deb-f8ec7298a435",
+										"postman-cloud:///1f0ba39b-b85d-4da0-a7ec-d67406ffff19"
+									]
+								}
+							]
+						},
 						"url": {
-							"raw": "{{base_url}}/organizer/events",
+							"raw": "{{base_url}}/organizer/events/update-event",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"organizer",
-								"events"
+								"events",
+								"update-event"
 							]
 						}
 					},
 					"response": [
 						{
-							"id": "34549363-57f1fa30-cdf5-493e-867b-b09403abba0f",
+							"id": "34549363-40cba241-3b68-46d2-91eb-43df323cb930",
 							"name": "success",
 							"originalRequest": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "data",
+											"value": "{\n    \"event_id\": \"ev-3\",\n    \"artist_names\": [\n        \"Shaishab\",\n        \"Satter\"\n    ],\n    \"capacity\": 100,\n    \"title\": \"Shaishab hero\",\n    \"description\": \"hello description\",\n    \"location\": \"Dhaka\",\n    \"ticket_price\": 1200,\n    \"start_date\": \"2025-11-02T06:03:52.203Z\",\n    \"end_date\": \"2025-11-03T06:03:52.203Z\",\n    \"published_at\": \"2025-11-02T06:03:52.203Z\",\n    \"status\": \"UPCOMING\"\n}",
+											"type": "text",
+											"uuid": "61b78e1c-a872-4223-b3de-63741b19e163"
+										},
+										{
+											"key": "images",
+											"type": "file",
+											"uuid": "0f70cd7c-6ea7-4ba9-80fc-c1813508ff19",
+											"src": [
+												"postman-cloud:///1f0ba39b-b91c-4480-8deb-f8ec7298a435",
+												"postman-cloud:///1f0ba39b-b85d-4da0-a7ec-d67406ffff19"
+											]
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{base_url}}/organizer/events",
+									"raw": "{{base_url}}/organizer/events/update-event",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"organizer",
-										"events"
+										"events",
+										"update-event"
 									]
 								}
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "json",
+							"_postman_previewlanguage": null,
 							"header": [
 								{
 									"key": "X-Powered-By",
@@ -6944,21 +7828,19 @@
 								},
 								{
 									"key": "Content-Type",
-									"value": "application/json",
-									"description": "",
-									"type": "text"
+									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "1264"
+									"value": "614"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"4f0-aAj1noArI1HQ24C3/3iIf/nUPG8\""
+									"value": "W/\"266-7JUd2SvviEDM55ZdWB6QTONMOXE\""
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 08 Nov 2025 04:29:00 GMT"
+									"value": "Sat, 08 Nov 2025 06:24:07 GMT"
 								},
 								{
 									"key": "Connection",
@@ -6969,20 +7851,115 @@
 									"value": "timeout=5"
 								}
 							],
-							"cookie": [
-								{
-									"expires": "Invalid Date",
-									"domain": "",
-									"path": ""
-								}
-							],
+							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Events retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"ev-1\",\n            \"created_at\": \"2025-11-06T05:28:01.581Z\",\n            \"updated_at\": \"2025-11-06T11:18:13.501Z\",\n            \"published_at\": \"2025-11-02T06:03:52.203Z\",\n            \"status\": \"UPCOMING\",\n            \"title\": \"Shaishab hero\",\n            \"description\": \"hello description\",\n            \"images\": [\n                \"/images/event2-1762406881574.jpg\",\n                \"/images/event1-1762406881574.jpg\"\n            ],\n            \"location\": \"Dhaka\",\n            \"ticket_price\": 120,\n            \"start_date\": \"2025-12-02T06:03:52.203Z\",\n            \"end_date\": \"2025-12-03T06:03:52.203Z\",\n            \"artist_names\": [\n                \"Shaishab\",\n                \"Satter\"\n            ],\n            \"organizer_id\": \"or-1\",\n            \"capacity\": 100,\n            \"available_capacity\": 39,\n            \"can_buy_tickets\": true,\n            \"total_ticket_sold\": 61\n        },\n        {\n            \"id\": \"ev-2\",\n            \"created_at\": \"2025-11-07T21:56:38.018Z\",\n            \"updated_at\": \"2025-11-07T21:56:38.018Z\",\n            \"published_at\": \"2025-11-02T06:03:52.203Z\",\n            \"status\": \"UPCOMING\",\n            \"title\": \"Shaishab hero\",\n            \"description\": \"hello description\",\n            \"images\": [\n                \"/images/event2-1762552598013.jpg\",\n                \"/images/event1-1762552598014.jpg\"\n            ],\n            \"location\": \"Dhaka\",\n            \"ticket_price\": 120,\n            \"start_date\": \"2025-11-02T06:03:52.203Z\",\n            \"end_date\": \"2025-11-03T06:03:52.203Z\",\n            \"artist_names\": [\n                \"Shaishab\",\n                \"Satter\"\n            ],\n            \"organizer_id\": \"or-1\",\n            \"capacity\": 100,\n            \"available_capacity\": 100,\n            \"can_buy_tickets\": true,\n            \"total_ticket_sold\": 0\n        }\n    ]\n}"
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Event updated successfully!\",\n    \"data\": {\n        \"id\": \"ev-3\",\n        \"created_at\": \"2025-11-08T06:22:44.136Z\",\n        \"updated_at\": \"2025-11-08T06:24:07.326Z\",\n        \"published_at\": \"2025-11-02T06:03:52.203Z\",\n        \"status\": \"UPCOMING\",\n        \"title\": \"Shaishab hero\",\n        \"description\": \"hello description\",\n        \"images\": [\n            \"/images/event2-1762583047319.jpg\",\n            \"/images/event1-1762583047319.jpg\"\n        ],\n        \"location\": \"Dhaka\",\n        \"ticket_price\": 1200,\n        \"start_date\": \"2025-11-02T06:03:52.203Z\",\n        \"end_date\": \"2025-11-03T06:03:52.203Z\",\n        \"artist_names\": [\n            \"Shaishab\",\n            \"Satter\"\n        ],\n        \"organizer_id\": \"or-1\",\n        \"capacity\": 100,\n        \"available_capacity\": 100,\n        \"can_buy_tickets\": true\n    }\n}"
 						}
 					]
 				}
 			],
 			"id": "34549363-69fd2fcc-86f1-481b-990a-8ba23233866b"
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "overview",
+					"id": "34549363-9bac90d6-e502-478a-8fab-44acf7972f4d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-468f7666-c364-4b3d-96b0-cbe3fd6348e6",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/overview",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "553"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"229-pCRPejMYM6vSJvKw2I9gzqTNs28\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 09:21:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Admin overview retrieved successfully!\",\n    \"data\": {\n        \"totalUsers\": 7,\n        \"totalActiveUsers\": 7,\n        \"totalCompletedEvents\": 0,\n        \"monthlyEventStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"eventCount\": 3\n            },\n            {\n                \"month\": \"Dec\",\n                \"eventCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-bf0ccff2-5ab3-4270-99a9-c1e4f57d5e4c"
 		}
 	]
 }
