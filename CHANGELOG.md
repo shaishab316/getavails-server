@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/shaishab316/getavails-server/compare/v1.8.0...v1.9.0) (2025-11-08)
+
+
+### Features
+
+* Add API endpoint for organizer overview ([e2588fd](https://github.com/shaishab316/getavails-server/commit/e2588fde7836f02e55779bc76664fe79aaf57333))
+* Add monthly revenue statistics to dashboards & API overviews ([c588d00](https://github.com/shaishab316/getavails-server/commit/c588d00e622d594183ec70e50fbc81ef28637b2b))
+* Add overview endpoint for agents and artists ([f029d83](https://github.com/shaishab316/getavails-server/commit/f029d83274cbd247930855f1b186f8e16728b0ce))
+* added postman collection ([5f4aa26](https://github.com/shaishab316/getavails-server/commit/5f4aa2634d7056bc35fe71a0cdf67a70cc75a96f))
+* Implement "Get Venue Overview" for venue owners ([b68a8e7](https://github.com/shaishab316/getavails-server/commit/b68a8e7885aaaadec3c25c43d273f2e9ae088191))
+* Implement admin overview with key statistics ([0b68a25](https://github.com/shaishab316/getavails-server/commit/0b68a25c2627dfd0bf9edb1adcfa501390143f49))
+
 # [1.8.0](https://github.com/shaishab316/getavails-server/compare/v1.7.0...v1.8.0) (2025-11-08)
 
 
