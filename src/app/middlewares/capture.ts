@@ -3,12 +3,13 @@ import { StatusCodes } from 'http-status-codes';
 import multer, { FileFilterCallback, StorageEngine } from 'multer';
 import ServerError from '../../errors/ServerError';
 import catchAsync from './catchAsync';
-import { errorLogger, logger } from '../../utils/logger';
+import { errorLogger } from '../../utils/logger';
 import chalk from 'chalk';
 import { json } from '../../utils/transform/json';
 import path from 'path';
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
+import ora from 'ora';
 
 export const fileValidators = {
   images: {
@@ -72,6 +73,8 @@ const capture = (fields: UploadFields) =>
   catchAsync(async (req, res, next) => {
     req.tempFiles ??= [];
 
+    const spinner = ora(chalk.yellow('Uploading files...')).start();
+
     try {
       await new Promise<void>((resolve, reject) =>
         upload(fields)(req, res, (err: any) => (err ? reject(err) : resolve())),
@@ -97,8 +100,12 @@ const capture = (fields: UploadFields) =>
           req.body[field] = fields[field].default ?? null;
         }
       }
+
+      spinner.succeed(chalk.green('Files uploaded successfully'));
     } catch (error) {
-      errorLogger.error('File upload error:', error);
+      if (error instanceof Error) {
+        spinner.fail(chalk.red(`Error uploading files: ${error.message}`));
+      }
 
       // Set defaults on error
       for (const field of Object.keys(fields)) {
@@ -111,7 +118,7 @@ const capture = (fields: UploadFields) =>
           Object.assign(req.body, json(req.body.data));
           delete req.body.data;
         } catch (err) {
-          errorLogger.error('Failed to parse form data:', err);
+          errorLogger.error('Failed to parse JSON data:', err);
         }
       }
 
@@ -130,7 +137,9 @@ export const deleteFile = async (filename: string): Promise<boolean> => {
   const sanitizedFilename = path.basename(filename);
 
   try {
-    logger.info(chalk.yellow(`🗑️ Deleting file: '${sanitizedFilename}'`));
+    const spinner = ora(
+      chalk.yellow(`Deleting file '${sanitizedFilename}'...`),
+    ).start();
 
     // Use Promise.all to check all directories concurrently
     const deletePromises = fileTypes.map(async fileType => {
@@ -147,21 +156,18 @@ export const deleteFile = async (filename: string): Promise<boolean> => {
     const deletedFrom = results.filter(Boolean);
 
     if (deletedFrom.length > 0) {
-      logger.info(
+      spinner.succeed(
         chalk.green(
-          `✔ File '${sanitizedFilename}' deleted from ${deletedFrom.join(', ')}`,
+          `File '${sanitizedFilename}' deleted from ${deletedFrom.join(', ')}`,
         ),
       );
       return true;
     }
 
-    errorLogger.error(chalk.red(`❌ File '${sanitizedFilename}' not found!`));
+    spinner.fail(chalk.red(`File '${sanitizedFilename}' not found`));
     return false;
   } catch (error: any) {
-    errorLogger.error(
-      chalk.red(`❌ Failed to delete '${sanitizedFilename}'`),
-      error?.stack ?? error,
-    );
+    errorLogger.error(`Failed to delete file '${sanitizedFilename}':`, error);
     return false;
   }
 };
