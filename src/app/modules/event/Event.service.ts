@@ -1,4 +1,9 @@
-import { EEventStatus, type Prisma, prisma } from '../../../utils/db';
+import {
+  EEventStatus,
+  ETicketStatus,
+  type Prisma,
+  prisma,
+} from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
 import { eventSearchableField } from './Event.constant';
 import type {
@@ -39,17 +44,20 @@ export const EventServices = {
     search,
     user_id,
   }: TGetMyUpcomingEvent) {
-    const ticketWhere: Prisma.TicketWhereInput = {
-      user_id,
-      event: {
-        start_date: {
-          gte: new Date(),
+    const eventWhere: Prisma.EventWhereInput = {
+      start_date: {
+        gte: new Date(),
+      },
+      tickets: {
+        some: {
+          user_id,
+          status: ETicketStatus.PAID,
         },
       },
     };
 
     if (search) {
-      ticketWhere.event!.OR = eventSearchableField.map(field => ({
+      eventWhere.OR = eventSearchableField.map(field => ({
         [field]: {
           contains: search,
           mode: 'insensitive',
@@ -57,34 +65,28 @@ export const EventServices = {
       }));
     }
 
-    const tickets = await prisma.ticket.findMany({
-      where: ticketWhere,
+    const events = await prisma.event.findMany({
+      where: eventWhere,
       skip: (page - 1) * limit,
       take: limit,
-      orderBy: {
-        event: {
-          start_date: 'desc',
+      orderBy: { start_date: 'desc' },
+      include: {
+        organizer: {
+          select: {
+            name: true,
+            avatar: true,
+          },
         },
-      },
-      select: {
-        event: {
-          include: {
-            organizer: {
-              select: {
-                name: true,
-                avatar: true,
-              },
-            },
+        tickets: {
+          select: {
+            id: true,
           },
         },
       },
-      distinct: ['event_id'],
     });
 
-    const events = tickets.flatMap(({ event }) => event);
-
-    const total = await prisma.ticket.count({
-      where: ticketWhere,
+    const total = await prisma.event.count({
+      where: eventWhere,
     });
 
     return {
@@ -96,7 +98,10 @@ export const EventServices = {
           totalPages: Math.ceil(total / limit),
         } satisfies TPagination,
       },
-      events,
+      events: events.map(({ tickets, ...event }) => ({
+        ...event,
+        booked_tickets: tickets.map(ticket => ticket.id).sort(),
+      })),
     };
   },
 
