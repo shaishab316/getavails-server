@@ -104,4 +104,16 @@ export const OrganizerControllers = {
       data: artists,
     };
   }),
+
+  /**
+   * Get organizer overview
+   */
+  getOrganizerOverview: catchAsync(async ({ user: organizer }) => {
+    const overview = await OrganizerServices.getOrganizerOverview(organizer.id);
+
+    return {
+      message: 'Organizer overview retrieved successfully!',
+      data: overview,
+    };
+  }),
 };

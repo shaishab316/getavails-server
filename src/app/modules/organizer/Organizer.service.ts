@@ -1,7 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EAgentOfferStatus, Prisma, prisma } from '../../../utils/db';
-import { TPagination } from '../../../utils/server/serveResponse';
+import {
+  EAgentOfferStatus,
+  ETicketStatus,
+  type Prisma,
+  prisma,
+} from '../../../utils/db';
+import type { TPagination } from '../../../utils/server/serveResponse';
 import { agentOfferSearchableFields } from '../agent/Agent.constant';
 import type {
   TAcceptAgentOfferArgs,
@@ -16,6 +21,7 @@ import type {
 import { stripe } from '../payment/Payment.utils';
 import config from '../../../config';
 import { userOmit, userSearchableFields } from '../user/User.constant';
+import { months } from '../../../constants/month';
 
 /**
  * All organizer related services
@@ -417,6 +423,70 @@ export const OrganizerServices = {
         } satisfies TPagination,
       },
       artists,
+    };
+  },
+
+  /**
+   * Get organizer overview
+   */
+  async getOrganizerOverview(organizerId: string) {
+    const currentYear = new Date().getFullYear();
+    const yearStartDate = new Date(`${currentYear}-01-01`);
+    const yearEndDate = new Date(`${currentYear}-12-31T23:59:59`);
+
+    // Parallel execution for better performance
+    const [ticketRevenueSummary, eventCountsByMonth] = await Promise.all([
+      // Revenue and ticket aggregation
+      prisma.ticket.aggregate({
+        where: {
+          event: {
+            organizer_id: organizerId,
+          },
+          status: ETicketStatus.PAID,
+        },
+        _sum: {
+          price: true,
+        },
+        _count: {
+          id: true,
+        },
+      }),
+
+      // Monthly event counts using raw query (most efficient)
+      prisma.$queryRaw<{ month: number; count: bigint }[]>`
+        SELECT 
+          EXTRACT(MONTH FROM created_at)::int as month,
+          COUNT(*)::bigint as count
+        FROM events
+        WHERE organizer_id = ${organizerId}
+          AND created_at >= ${yearStartDate}
+          AND created_at <= ${yearEndDate}
+        GROUP BY EXTRACT(MONTH FROM created_at)
+        ORDER BY month
+      `,
+    ]);
+
+    const totalRevenue = ticketRevenueSummary._sum.price || 0;
+    const totalBookedTickets = ticketRevenueSummary._count.id || 0;
+
+    // Create a map for O(1) lookups
+    const monthToCountMap = new Map(
+      eventCountsByMonth.map(({ month, count }) => [month, Number(count)]),
+    );
+
+    // Generate all 12 months with counts and month names
+    const monthlyEventStatistics = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: months[index],
+        eventCount: monthToCountMap.get(monthNumber) || 0,
+      };
+    });
+
+    return {
+      totalRevenue,
+      totalBookedTickets,
+      monthlyEventStatistics,
     };
   },
 };
