@@ -1,3 +1,34 @@
+# [1.8.0](https://github.com/shaishab316/getavails-server/compare/v1.7.0...v1.8.0) (2025-11-08)
+
+
+### Features
+
+* Add event management for organizers with filtering ([fa459c0](https://github.com/shaishab316/getavails-server/commit/fa459c0d1a7dc734d43ba208c62e5906c3d8d25e))
+* Add extra parameter to exists validation for complex queries ([57b1a0c](https://github.com/shaishab316/getavails-server/commit/57b1a0ca3649c554014ec38680b196f5d28bed0a))
+* Add loading spinner to capture middleware and document User routes ([cb314af](https://github.com/shaishab316/getavails-server/commit/cb314af3910f696c145db36652d5047dca48269a))
+* Add organizer active venues retrieval and paginate venue offers ([a6cf878](https://github.com/shaishab316/getavails-server/commit/a6cf878620080bd7a3569a68de5681c80dc6e301))
+* Add route for organizers to cancel venue offers & type check ([012cf48](https://github.com/shaishab316/getavails-server/commit/012cf4823615944fc412ba443e9e6e911ff38a66))
+* Connect artist to organizer on agent offer payment ([fd298e7](https://github.com/shaishab316/getavails-server/commit/fd298e7532d338b6d227318cf9a8b84898b6ac99))
+* Enhance Stripe product description with offer details ([6e0cac8](https://github.com/shaishab316/getavails-server/commit/6e0cac89563a1d94e68b9b4fc21ad9742a2c6f5d))
+* Implement agent and artist representation management ([ba75969](https://github.com/shaishab316/getavails-server/commit/ba7596934728e49a00239d376be6edf4448594a1))
+* Implement event creation functionality ([f013ee2](https://github.com/shaishab316/getavails-server/commit/f013ee22d0d5c4279b8c1d6e8f16402996fb5412))
+* Implement event update functionality ([1bd638a](https://github.com/shaishab316/getavails-server/commit/1bd638a57a3397c5f505150a14a7a30ab50486d5))
+* Implement get active artists for organizers ([319fb9b](https://github.com/shaishab316/getavails-server/commit/319fb9b8f1f63a3f47304282c411d6d828b3907a))
+* Implement organizer venue offer acceptance and account withdrawal ([5c0244b](https://github.com/shaishab316/getavails-server/commit/5c0244bd637de248d2b947fa858199164d51baf6))
+* Implement ticket purchase and update ticket statuses ([afb76f4](https://github.com/shaishab316/getavails-server/commit/afb76f4979ac74a015b62f642b53de4af9e2e59e))
+* Implement ticket purchase functionality and event capacity updates ([a977ce7](https://github.com/shaishab316/getavails-server/commit/a977ce7a34b9ec00d292de1a996ebda26d36ccfa))
+* Implement user upcoming events retrieval ([f9b4c92](https://github.com/shaishab316/getavails-server/commit/f9b4c92f7b3e8c2a08d92acca82b38f70afa27ab))
+* Implement venue offer cancellation functionality ([7343bd2](https://github.com/shaishab316/getavails-server/commit/7343bd26e01fe71b28db922d953b9c406824f59c))
+* Implement venue offer functionality for organizers ([f7a3430](https://github.com/shaishab316/getavails-server/commit/f7a343000ea37bd83b020a92d2dd513039dbc937))
+* Implement venue offer retrieval ([1a4ddeb](https://github.com/shaishab316/getavails-server/commit/1a4ddeb407c8a2ccd027ed25a32d30e18ba99c79))
+* Implement venue_offer service for Stripe Checkout success ([7c0d080](https://github.com/shaishab316/getavails-server/commit/7c0d08064777ebc5163e18da2c7c5377243b077f))
+* Improve server lifecycle, ticket cleanup, and logging ([94c38cd](https://github.com/shaishab316/getavails-server/commit/94c38cd4268d80d292334a90fca80eb8c5be0a33))
+* Process checkout.session.completed events for payouts ([a34ce90](https://github.com/shaishab316/getavails-server/commit/a34ce90cce502435f26cd4c34794e3e5be4fb47a))
+* Refactor agent validation and introduce Event module ([3e94035](https://github.com/shaishab316/getavails-server/commit/3e94035cac720d217f7fb3e3c101aeba90dcfd74))
+* Rename event queries and add getAllEvents endpoint ([5f5c0c3](https://github.com/shaishab316/getavails-server/commit/5f5c0c36e78ff5ef913e4e0ee4e43b85f46b3df1))
+* Schedule event publishing and add CLI spinner ([ece6c1c](https://github.com/shaishab316/getavails-server/commit/ece6c1cbb41cc498f235d803cf962ad38aaa8b67))
+* Use Bull queue for asynchronous file deletion ([6880a8d](https://github.com/shaishab316/getavails-server/commit/6880a8dc0ff22b6761fef02f19e9b761bbde2bdf))
+
 # [1.7.0](https://github.com/shaishab316/getavails-server/compare/v1.6.0...v1.7.0) (2025-11-03)
 
 
