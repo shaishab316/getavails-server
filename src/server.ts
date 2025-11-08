@@ -1,7 +1,7 @@
 process.stdout.write('\x1Bc'); //? clear console
 import startServer from './utils/server/startServer';
 import { SocketServices } from './app/modules/socket/Socket.service';
-import { eventJobs } from './app/modules/event/Event.job';
+import { eventPublishingJob } from './app/modules/event/Event.job';
 import { ticketExpirationJob } from './app/modules/ticket/Ticket.job';
 
 /**
@@ -10,7 +10,7 @@ import { ticketExpirationJob } from './app/modules/ticket/Ticket.job';
 startServer().then(server => {
   server.addPlugins(
     SocketServices.init(server),
-    eventJobs(),
+    eventPublishingJob(),
     ticketExpirationJob(),
   );
 });

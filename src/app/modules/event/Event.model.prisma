@@ -27,5 +27,6 @@ model Event {
 enum EEventStatus {
   UPCOMING
   PUBLISHED
+  COMPLETED
   TIMEOUT
 }

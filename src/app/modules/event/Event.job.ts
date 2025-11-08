@@ -9,7 +9,7 @@ import chalk from 'chalk';
  *
  * @returns unsubscribe function
  */
-export function eventJobs() {
+export function eventPublishingJob() {
   console.log(chalk.green('✔ Event jobs started'));
 
   //? every day at 7am

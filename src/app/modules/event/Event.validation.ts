@@ -2,7 +2,13 @@ import z from 'zod';
 import { TModelZod } from '../../../types/zod';
 import { EEventStatus, Event as TEvent } from '../../../../prisma';
 
+/**
+ * Validation for event
+ */
 export const EventValidations = {
+  /**
+   * Validation schema for create event
+   */
   createEvent: z.object({
     body: z.object({
       status: z.enum(EEventStatus).optional(),
@@ -25,5 +31,14 @@ export const EventValidations = {
         .nonempty('At least one artist is required'),
       published_at: z.iso.datetime().optional(),
     } satisfies TModelZod<TEvent>),
+  }),
+
+  /**
+   * Validation schema for get organizer events
+   */
+  getOrganizerEvent: z.object({
+    query: z.object({
+      status: z.enum(['RUNNING', 'ENDED']).default('RUNNING'),
+    }),
   }),
 };

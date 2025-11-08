@@ -7,6 +7,12 @@ import { QueryValidations } from '../query/Query.validation';
 
 const organizer = Router();
 {
+  organizer.get(
+    '/',
+    purifyRequest(QueryValidations.list, EventValidations.getOrganizerEvent),
+    EventControllers.getOrganizerEvent,
+  );
+
   /**
    * Create new event
    */
@@ -32,7 +38,7 @@ const all = Router();
   all.get(
     '/upcoming-events',
     purifyRequest(QueryValidations.list),
-    EventControllers.getMyUpcomingEvent,
+    EventControllers.getUserUpcomingEvent,
   );
 }
 

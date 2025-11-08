@@ -1,7 +1,11 @@
-import { Prisma, prisma } from '../../../utils/db';
-import { TPagination } from '../../../utils/server/serveResponse';
+import { EEventStatus, type Prisma, prisma } from '../../../utils/db';
+import type { TPagination } from '../../../utils/server/serveResponse';
 import { eventSearchableField } from './Event.constant';
-import { TCreateEvent, TGetMyUpcomingEvent } from './Event.interface';
+import type {
+  TCreateEvent,
+  TGetMyUpcomingEvent,
+  TGetOrganizerEvent,
+} from './Event.interface';
 
 /**
  * Event services
@@ -29,7 +33,7 @@ export const EventServices = {
   /**
    * Get my upcoming events
    */
-  async getMyUpcomingEvent({
+  async getUserUpcomingEvent({
     limit,
     page,
     search,
@@ -93,6 +97,61 @@ export const EventServices = {
         } satisfies TPagination,
       },
       events,
+    };
+  },
+
+  /**
+   * Get organizer events
+   */
+  async getOrganizerEvent({
+    limit,
+    organizer_id,
+    page,
+    status,
+    search,
+  }: TGetOrganizerEvent) {
+    const where: Prisma.EventWhereInput = {
+      organizer_id,
+      status:
+        status === 'RUNNING'
+          ? { notIn: [EEventStatus.COMPLETED, EEventStatus.TIMEOUT] }
+          : { in: [EEventStatus.COMPLETED, EEventStatus.TIMEOUT] },
+    };
+
+    //? Search agent using searchable fields
+    if (search) {
+      where.OR = eventSearchableField.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const events = await prisma.event.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        start_date: 'desc',
+      },
+    });
+
+    const total = await prisma.event.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      events: events.map(event => ({
+        ...event,
+        total_ticket_sold: event.capacity - event.available_capacity,
+      })),
     };
   },
 };

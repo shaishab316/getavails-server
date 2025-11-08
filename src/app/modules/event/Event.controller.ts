@@ -23,10 +23,26 @@ export const EventControllers = {
   /**
    * Get my upcoming events
    */
-  getMyUpcomingEvent: catchAsync(async ({ query, user }) => {
-    const { events, meta } = await EventServices.getMyUpcomingEvent({
+  getUserUpcomingEvent: catchAsync(async ({ query, user }) => {
+    const { events, meta } = await EventServices.getUserUpcomingEvent({
       ...query,
       user_id: user.id,
+    });
+
+    return {
+      message: 'Events retrieved successfully!',
+      meta,
+      data: events,
+    };
+  }),
+
+  /**
+   * Get organizer events
+   */
+  getOrganizerEvent: catchAsync(async ({ query, user: organizer }) => {
+    const { events, meta } = await EventServices.getOrganizerEvent({
+      ...query,
+      organizer_id: organizer.id,
     });
 
     return {

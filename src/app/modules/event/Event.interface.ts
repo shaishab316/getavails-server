@@ -15,3 +15,13 @@ export type TCreateEvent = z.infer<
 export type TGetMyUpcomingEvent = TList & {
   user_id: string;
 };
+
+/**
+ * @type: Validation for get organizer event
+ */
+export type TGetOrganizerEvent = z.infer<
+  typeof EventValidations.getOrganizerEvent
+>['query'] &
+  TList & {
+    organizer_id: string;
+  };
