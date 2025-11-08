@@ -1,6 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EUserRole, Prisma, prisma } from '../../../utils/db';
+import {
+  EAgentOfferStatus,
+  EUserRole,
+  Prisma,
+  prisma,
+} from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
@@ -12,6 +17,7 @@ import type {
 } from './Artist.interface';
 import { userOmit } from '../user/User.constant';
 import { agentSearchableFields } from '../agent/Agent.constant';
+import { months } from '../../../constants/month';
 
 /**
  * All artist related services
@@ -240,5 +246,71 @@ export const ArtistServices = {
         select: { id: true }, //? skip body
       });
     });
+  },
+
+  /**
+   * Retrieve artist overview
+   */
+  async getArtistOverview(artist_id: string) {
+    const currentYear = new Date().getFullYear();
+    const yearStartDate = new Date(`${currentYear}-01-01`);
+    const yearEndDate = new Date(`${currentYear}-12-31T23:59:59`);
+
+    const ARTIST_COMMISSION = 0.8; // 80%
+
+    // Parallel execution for better performance
+    const [agentOfferSummary, bookingCountsByMonth] = await Promise.all([
+      // Revenue and booking aggregation
+      prisma.agentOffer.aggregate({
+        where: {
+          artist_id,
+          status: EAgentOfferStatus.APPROVED,
+        },
+        _sum: {
+          amount: true,
+        },
+        _count: {
+          id: true,
+        },
+      }),
+
+      // Monthly booking counts using raw query (most efficient)
+      prisma.$queryRaw<Array<{ month: number; count: bigint }>>`
+        SELECT 
+          EXTRACT(MONTH FROM approved_at)::int as month,
+          COUNT(*)::bigint as count
+        FROM agent_offers
+        WHERE artist_id = ${artist_id}
+          AND status = 'APPROVED'
+          AND approved_at >= ${yearStartDate}
+          AND approved_at <= ${yearEndDate}
+        GROUP BY EXTRACT(MONTH FROM approved_at)
+        ORDER BY month
+      `,
+    ]);
+
+    const totalAmount = agentOfferSummary._sum.amount || 0;
+    const totalRevenue = totalAmount * ARTIST_COMMISSION; // Artist gets 80%
+    const totalBookings = agentOfferSummary._count.id || 0;
+
+    // Create a map for O(1) lookups
+    const monthToCountMap = new Map(
+      bookingCountsByMonth.map(({ month, count }) => [month, Number(count)]),
+    );
+
+    // Generate all 12 months with counts and month names
+    const monthlyBookingStatistics = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: months[index],
+        bookingCount: monthToCountMap.get(monthNumber) || 0,
+      };
+    });
+
+    return {
+      totalRevenue,
+      totalBookings,
+      monthlyBookingStatistics,
+    };
   },
 };

@@ -108,4 +108,20 @@ export const ArtistControllers = {
       message: 'Agent deleted successfully!',
     };
   }),
+
+  /**
+   * Retrieve artist overview
+   */
+  getArtistOverview: catchAsync(async ({ user: artist }) => {
+    const overview = await ArtistServices.getArtistOverview(artist.id);
+
+    return {
+      message: 'Artist overview retrieved successfully!',
+      data: {
+        total_agents: artist.artist_agents.length,
+        agent_requests: artist.artist_pending_agents.length,
+        ...overview,
+      },
+    };
+  }),
 };

@@ -161,4 +161,20 @@ export const AgentControllers = {
       message: 'Offer cancelled successfully!',
     };
   }),
+
+  /**
+   * Retrieve agent overview
+   */
+  getAgentOverview: catchAsync(async ({ user: agent }) => {
+    const agentOverview = await AgentServices.getAgentOverview(agent.id);
+
+    return {
+      message: 'Agent overview retrieved successfully!',
+      data: {
+        total_artists: agent.agent_artists.length,
+        artist_requests: agent.agent_pending_artists.length,
+        ...agentOverview,
+      },
+    };
+  }),
 };
