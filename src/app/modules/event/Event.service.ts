@@ -5,6 +5,7 @@ import {
   prisma,
 } from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
+import { TList } from '../query/Query.interface';
 import { eventSearchableField } from './Event.constant';
 import type {
   TCreateEvent,
@@ -38,7 +39,7 @@ export const EventServices = {
   /**
    * Get my upcoming events
    */
-  async getUserUpcomingEvent({
+  async getUserUpcomingEvents({
     limit,
     page,
     search,
@@ -108,7 +109,7 @@ export const EventServices = {
   /**
    * Get organizer events
    */
-  async getOrganizerEvent({
+  async getOrganizerEvents({
     limit,
     organizer_id,
     page,
@@ -157,6 +158,57 @@ export const EventServices = {
         ...event,
         total_ticket_sold: event.capacity - event.available_capacity,
       })),
+    };
+  },
+
+  /**
+   * Get all events
+   */
+  async getAllEvents({ limit, page, search }: TList) {
+    const where: Prisma.EventWhereInput = {
+      start_date: { gte: new Date() },
+      status: EEventStatus.PUBLISHED,
+      can_buy_tickets: true,
+      available_capacity: { gt: 0 },
+    };
+
+    //? Search agent using searchable fields
+    if (search) {
+      where.OR = eventSearchableField.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const events = await prisma.event.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      include: {
+        organizer: {
+          select: {
+            name: true,
+            avatar: true,
+          },
+        },
+      },
+      orderBy: { start_date: 'desc' },
+    });
+
+    const total = await prisma.event.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      events,
     };
   },
 };

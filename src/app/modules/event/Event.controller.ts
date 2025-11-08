@@ -23,8 +23,8 @@ export const EventControllers = {
   /**
    * Get my upcoming events
    */
-  getUserUpcomingEvent: catchAsync(async ({ query, user }) => {
-    const { events, meta } = await EventServices.getUserUpcomingEvent({
+  getUserUpcomingEvents: catchAsync(async ({ query, user }) => {
+    const { events, meta } = await EventServices.getUserUpcomingEvents({
       ...query,
       user_id: user.id,
     });
@@ -39,11 +39,21 @@ export const EventControllers = {
   /**
    * Get organizer events
    */
-  getOrganizerEvent: catchAsync(async ({ query, user: organizer }) => {
-    const { events, meta } = await EventServices.getOrganizerEvent({
+  getOrganizerEvents: catchAsync(async ({ query, user: organizer }) => {
+    const { events, meta } = await EventServices.getOrganizerEvents({
       ...query,
       organizer_id: organizer.id,
     });
+
+    return {
+      message: 'Events retrieved successfully!',
+      meta,
+      data: events,
+    };
+  }),
+
+  getAllEvents: catchAsync(async ({ query }) => {
+    const { events, meta } = await EventServices.getAllEvents(query);
 
     return {
       message: 'Events retrieved successfully!',

@@ -7,10 +7,13 @@ import { QueryValidations } from '../query/Query.validation';
 
 const organizer = Router();
 {
+  /**
+   * get organizer events
+   */
   organizer.get(
     '/',
     purifyRequest(QueryValidations.list, EventValidations.getOrganizerEvent),
-    EventControllers.getOrganizerEvent,
+    EventControllers.getOrganizerEvents,
   );
 
   /**
@@ -33,12 +36,21 @@ const organizer = Router();
 const all = Router();
 {
   /**
+   * get all available events for users
+   */
+  all.get(
+    '/',
+    purifyRequest(QueryValidations.list),
+    EventControllers.getAllEvents,
+  );
+
+  /**
    * Get all upcoming events
    */
   all.get(
     '/upcoming-events',
     purifyRequest(QueryValidations.list),
-    EventControllers.getUserUpcomingEvent,
+    EventControllers.getUserUpcomingEvents,
   );
 }
 
