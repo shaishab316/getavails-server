@@ -5,7 +5,7 @@ import {
 } from './User.constant';
 import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
-import { deleteFile } from '../../middlewares/capture';
+import deleteFilesQueue from '../../../utils/mq/deleteFilesQueue';
 import type { TUpdateAvailability, TUserEdit } from './User.interface';
 import ServerError from '../../../errors/ServerError';
 import { StatusCodes } from 'http-status-codes';
@@ -115,7 +115,7 @@ export const UserServices = {
   async updateUser({ user, body }: { user: Partial<TUser>; body: TUserEdit }) {
     const data: Prisma.UserUpdateInput = body;
 
-    if (body.avatar && user.avatar) await deleteFile(user.avatar);
+    if (body.avatar && user.avatar) await deleteFilesQueue.add([user.avatar]);
 
     if (body.role && body.role !== user.role)
       data.id = await this.getNextUserId({ role: body.role });
@@ -195,7 +195,7 @@ export const UserServices = {
   async deleteAccount(userId: string) {
     const user = await prisma.user.findUnique({ where: { id: userId } });
 
-    if (user?.avatar) await deleteFile(user.avatar);
+    if (user?.avatar) await deleteFilesQueue.add([user.avatar]);
 
     return prisma.user.delete({ where: { id: userId } });
   },

@@ -123,6 +123,8 @@ export default capture;
 
 /**
  * Delete file from local disk (optimized with async)
+ *
+ * @deprecated use {@link deleteFilesQueue}
  */
 export const deleteFile = async (filename: string): Promise<boolean> => {
   const sanitizedFilename = path.basename(filename);
@@ -166,6 +168,8 @@ export const deleteFile = async (filename: string): Promise<boolean> => {
 
 /**
  * Delete multiple files concurrently
+ *
+ * @deprecated use {@link deleteFilesQueue}
  */
 export const deleteFiles = async (filenames: string[]): Promise<boolean[]> => {
   return Promise.all(filenames.map(deleteFile));

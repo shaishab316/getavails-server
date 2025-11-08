@@ -5,7 +5,7 @@ import {
   prisma,
 } from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
-import { deleteFiles } from '../../middlewares/capture';
+import deleteFilesQueue from '../../../utils/mq/deleteFilesQueue';
 import { TList } from '../query/Query.interface';
 import { eventSearchableField } from './Event.constant';
 import type {
@@ -48,7 +48,7 @@ export const EventServices = {
     }))!;
 
     if (payload.images && event.images.length) {
-      await deleteFiles(event.images);
+      await deleteFilesQueue.add(event.images);
     }
 
     return prisma.event.update({

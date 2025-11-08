@@ -15,19 +15,23 @@ import {
   handlePrismaRequestError,
   handlePrismaValidationError,
 } from '../../errors/handlePrismaErrors';
-import { deleteFiles } from './capture';
+import deleteFilesQueue from '../../utils/mq/deleteFilesQueue';
 
+/**
+ * Default error handler
+ */
 export const defaultError: TErrorHandler = {
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
   message: 'Something went wrong',
   errorMessages: [],
 };
+
 /**
  * Global error handler middleware
  */
 const globalErrorHandler: ErrorRequestHandler = async (error, req, res, _) => {
   /** delete uploaded files */
-  if (req.tempFiles) await deleteFiles(req.tempFiles);
+  if (req.tempFiles) await deleteFilesQueue.add(req.tempFiles);
 
   if (config.server.isDevelopment)
     console.log(chalk.red('🚨 globalErrorHandler ~~ '), error);
