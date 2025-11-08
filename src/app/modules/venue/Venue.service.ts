@@ -9,6 +9,7 @@ import type {
   TVenueCreateOfferArgs,
 } from './Venue.interface';
 import { TPagination } from '../../../utils/server/serveResponse';
+import { months } from '../../../constants/month';
 
 /**
  * All venue related services
@@ -131,6 +132,69 @@ export const VenueServices = {
         } satisfies TPagination,
       },
       offers,
+    };
+  },
+
+  /**
+   * Get venue overview
+   */
+  async getVenueOverview(venue_id: string) {
+    const currentYear = new Date().getFullYear();
+    const yearStartDate = new Date(`${currentYear}-01-01`);
+    const yearEndDate = new Date(`${currentYear}-12-31T23:59:59`);
+
+    // Parallel execution for better performance
+    const [venueOfferSummary, bookingCountsByMonth] = await Promise.all([
+      // Revenue and booking aggregation
+      prisma.venueOffer.aggregate({
+        where: {
+          venue_id: venue_id,
+          status: EVenueOfferStatus.APPROVED,
+        },
+        _sum: {
+          amount: true,
+        },
+        _count: {
+          id: true,
+        },
+      }),
+
+      // Monthly booking counts using raw query (most efficient)
+      prisma.$queryRaw<Array<{ month: number; count: bigint }>>`
+        SELECT 
+          EXTRACT(MONTH FROM approved_at)::int as month,
+          COUNT(*)::bigint as count
+        FROM venue_offers
+        WHERE venue_id = ${venue_id}
+          AND status = 'APPROVED'
+          AND approved_at >= ${yearStartDate}
+          AND approved_at <= ${yearEndDate}
+        GROUP BY EXTRACT(MONTH FROM approved_at)
+        ORDER BY month
+      `,
+    ]);
+
+    const totalRevenue = venueOfferSummary._sum.amount || 0;
+    const totalBookings = venueOfferSummary._count.id || 0;
+
+    // Create a map for O(1) lookups
+    const monthToCountMap = new Map(
+      bookingCountsByMonth.map(({ month, count }) => [month, Number(count)]),
+    );
+
+    // Generate all 12 months with counts and month names
+    const monthlyBookingStatistics = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: months[index],
+        bookingCount: monthToCountMap.get(monthNumber) || 0,
+      };
+    });
+
+    return {
+      totalRevenue,
+      totalBookings,
+      monthlyBookingStatistics,
     };
   },
 };

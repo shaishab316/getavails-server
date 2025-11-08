@@ -56,6 +56,9 @@ export const VenueControllers = {
     };
   }),
 
+  /**
+   * Get my offers
+   */
   getMyOffers: catchAsync(async ({ query, user }) => {
     const { meta, offers } = await VenueServices.getMyOffers({
       ...query,
@@ -66,6 +69,18 @@ export const VenueControllers = {
       message: 'Venue offers retrieved successfully!',
       meta,
       data: offers,
+    };
+  }),
+
+  /**
+   * Get venue overview
+   */
+  getVenueOverview: catchAsync(async ({ user: venue }) => {
+    const overview = await VenueServices.getVenueOverview(venue.id);
+
+    return {
+      message: 'Venue overview retrieved successfully!',
+      data: overview,
     };
   }),
 };
