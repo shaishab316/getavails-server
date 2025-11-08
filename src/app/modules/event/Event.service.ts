@@ -24,7 +24,7 @@ export const EventServices = {
    */
   async createEvent(payload: TCreateEvent) {
     const lastEvent = await prisma.event.findFirst({
-      orderBy: { id: 'desc' },
+      orderBy: { created_at: 'desc' },
       select: { id: true },
     });
 

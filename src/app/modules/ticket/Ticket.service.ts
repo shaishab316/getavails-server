@@ -34,7 +34,7 @@ export const TicketServices = {
 
     const lastTicket = await prisma.ticket.findFirst({
       where: { event_id },
-      orderBy: { id: 'desc' },
+      orderBy: { created_at: 'desc' },
       select: { id: true },
     });
 

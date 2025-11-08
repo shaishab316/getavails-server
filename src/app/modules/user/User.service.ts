@@ -33,7 +33,7 @@ export const UserServices = {
 
     const user = await prisma.user.findFirst({
       where,
-      orderBy: { id: 'desc' },
+      orderBy: { created_at: 'desc' },
       select: { id: true },
     });
 
