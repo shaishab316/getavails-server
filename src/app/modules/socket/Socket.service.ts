@@ -1,4 +1,4 @@
-import { Server } from 'http';
+/* eslint-disable no-console */
 import { Server as IOServer, Namespace } from 'socket.io';
 import config from '../../../config';
 import { SocketRoutes } from './Socket.route';
@@ -6,6 +6,8 @@ import auth from './Socket.middleware';
 import { TAuthenticatedSocket } from './Socket.interface';
 import { errorLogger, logger } from '../../../utils/logger';
 import chalk from 'chalk';
+import ora from 'ora';
+import { TServer } from '../../../types/utils.types';
 
 type OnlineMap = Record<string, Set<string>>;
 
@@ -28,21 +30,25 @@ export const SocketServices = {
    *
    * @returns cleanup function
    */
-  init(server: Server): () => void {
+  init(server: TServer) {
+    const spinner = ora(
+      chalk.yellow('Initializing socket services...'),
+    ).start();
+
     //? Do nothing if already initialized, make it singleton
-    if (io) return this.cleanup;
+    if (io) {
+      spinner.succeed(chalk.green('Socket services already initialized'));
+      return this.cleanup;
+    }
 
     io = new IOServer(server, {
       cors: { origin: config.server.allowed_origins },
     });
 
-    logger.info(chalk.green('🚀 Socket services initialized successfully'));
+    spinner.text = chalk.yellow('Initializing namespaces...');
 
     //? Disable default namespace
     io.of('/').on('connection', socket => socket.disconnect(true));
-
-    //? Attach cleanup on server close
-    server.on('close', this.cleanup);
 
     //? Initialize each namespace
     SocketRoutes.forEach((handler, namespace) => {
@@ -88,6 +94,8 @@ export const SocketServices = {
       });
     });
 
+    spinner.succeed(chalk.green('Socket services initialized'));
+
     return this.cleanup;
   },
 
@@ -116,9 +124,10 @@ export const SocketServices = {
    * Cleanup socket services
    */
   cleanup() {
-    if (!io) return;
     Object.keys(onlineUsers).forEach(ns => onlineUsers[ns].clear());
-    io.close(() => logger.info('Socket.IO server closed.'));
-    io = null;
+    io?.close(() => {
+      console.log(chalk.cyan('Socket services closed'));
+      io = null;
+    });
   },
 };

@@ -5,7 +5,6 @@ import {
   EUserRole,
   Prisma,
   prisma,
-  User as TUser,
 } from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
@@ -18,6 +17,7 @@ import type {
   TCancelAgentOfferArgs,
   TCreateAgentOfferArgs,
   TDeleteArtist,
+  TGetAgentArtistList,
   TGetAgentOffersArgs,
   TInviteArtist,
   TProcessAgentRequest,
@@ -168,15 +168,16 @@ export const AgentServices = {
   /**
    * Retrieve all artist list for a specific agent
    *
-   * @param {TUser['agent_artists']} agent_artists
-   * @param {TList} { limit, page, search }
+   * @param {TGetAgentArtistList} { limit, page, search, artist_ids }
    */
-  async getMyArtistList(
-    { agent_artists }: TUser,
-    { limit, page, search }: TList,
-  ) {
+  async getAgentArtistList({
+    limit,
+    page,
+    search,
+    artist_ids,
+  }: TGetAgentArtistList) {
     const artistWhere: Prisma.UserWhereInput = {
-      id: { in: agent_artists },
+      id: { in: artist_ids },
       role: EUserRole.ARTIST,
     };
 
@@ -343,6 +344,13 @@ export const AgentServices = {
       throw new ServerError(
         StatusCodes.FORBIDDEN,
         'You do not have permission to cancel this offer',
+      );
+    }
+
+    if (offer.status === EAgentOfferStatus.CANCELLED) {
+      throw new ServerError(
+        StatusCodes.FORBIDDEN,
+        'This offer is already cancelled',
       );
     }
 

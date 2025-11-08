@@ -1,10 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
-import { EAgentOfferStatus, prisma } from '../../../utils/db';
-import type { TAcceptAgentOfferMetadata } from '../organizer/Organizer.interface';
+import { EAgentOfferStatus, ETicketStatus, prisma } from '../../../utils/db';
+import type {
+  TAcceptAgentOfferMetadata,
+  TAcceptVenueOfferMetadata,
+} from '../organizer/Organizer.interface';
 import ServerError from '../../../errors/ServerError';
 import { TWithdrawArgs } from './Payment.interface';
 import stripeAccountConnectQueue from '../../../utils/mq/stripeAccountConnectQueue';
 import withdrawQueue from '../../../utils/mq/withdrawQueue';
+import Stripe from 'stripe';
+import { stripe } from './Payment.utils';
+import { TTicketMetadata } from '../ticket/Ticket.interface';
 
 /**
  * Payment Services
@@ -15,10 +21,17 @@ export const PaymentServices = {
    *
    * @event agent_offer
    */
-  async agent_offer(metadata: TAcceptAgentOfferMetadata) {
+  async agent_offer(session: Stripe.Checkout.Session) {
+    const metadata = session.metadata as TAcceptAgentOfferMetadata;
+
     const offer = await prisma.agentOffer.findFirst({
       where: { id: metadata.offer_id },
-      select: { agent_id: true, artist: true, status: true },
+      select: {
+        agent_id: true,
+        artist_id: true,
+        organizer_id: true,
+        status: true,
+      },
     });
 
     if (!offer) {
@@ -28,15 +41,31 @@ export const PaymentServices = {
     //? if offer is already approved
     if (offer.status === EAgentOfferStatus.APPROVED) return;
 
-    const amount = Number(metadata.amount);
+    // 🧾 Retrieve the PaymentIntent
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent as string,
+    );
 
-    const artistAmount = amount * 0.8; //? 80% to artist
-    const agentAmount = amount - artistAmount; //? 20% to agent
+    // 🧩 Retrieve the related Charge (since charges are not auto-included)
+    const charge = await stripe.charges.retrieve(
+      paymentIntent.latest_charge as string,
+    );
+
+    // 💸 Retrieve the Balance Transaction for the fee info
+    const { fee } = await stripe.balanceTransactions.retrieve(
+      charge.balance_transaction as string,
+    );
+
+    //? remove fee form amount
+    const amount = Number(metadata.amount) - fee / 100;
+
+    const artistAmount = Math.floor(amount * 80) / 100; //? 80% to artist
+    const agentAmount = Math.floor(amount * 20) / 100; //? 20% to agent
 
     await prisma.$transaction(async tx => {
       //? add money in artist wallet
       await tx.user.update({
-        where: { id: offer.artist.id },
+        where: { id: offer.artist_id },
         data: { balance: { increment: artistAmount } },
         select: { balance: true }, //? skip body
       });
@@ -48,8 +77,90 @@ export const PaymentServices = {
         select: { balance: true }, //? skip body
       });
 
+      //? add artist in organizer active artists
+      await tx.user.update({
+        where: { id: offer.organizer_id },
+        data: {
+          organizer_active_artists: {
+            connect: {
+              id: metadata.offer_id,
+            },
+          },
+        },
+      });
+
       //? update agent offer
       await tx.agentOffer.update({
+        where: { id: metadata.offer_id },
+        data: { status: EAgentOfferStatus.APPROVED, approved_at: new Date() },
+      });
+    });
+  },
+
+  /**
+   * Accept venue offer
+   *
+   * @event venue_offer
+   */
+  async venue_offer(session: Stripe.Checkout.Session) {
+    const metadata = session.metadata as TAcceptVenueOfferMetadata;
+
+    const offer = await prisma.venueOffer.findFirst({
+      where: { id: metadata.offer_id },
+      select: {
+        venue_id: true,
+        organizer_id: true,
+        status: true,
+      },
+    });
+
+    if (!offer) {
+      throw new ServerError(StatusCodes.NOT_FOUND, 'Agent Offer not found');
+    }
+
+    //? if offer is already approved
+    if (offer.status === EAgentOfferStatus.APPROVED) return;
+
+    // 🧾 Retrieve the PaymentIntent
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent as string,
+    );
+
+    // 🧩 Retrieve the related Charge (since charges are not auto-included)
+    const charge = await stripe.charges.retrieve(
+      paymentIntent.latest_charge as string,
+    );
+
+    // 💸 Retrieve the Balance Transaction for the fee info
+    const { fee } = await stripe.balanceTransactions.retrieve(
+      charge.balance_transaction as string,
+    );
+
+    //? remove fee form amount
+    const venueAmount = Number(metadata.amount) - fee / 100;
+
+    await prisma.$transaction(async tx => {
+      //? add money in venue wallet
+      await tx.user.update({
+        where: { id: offer.venue_id },
+        data: { balance: { increment: venueAmount } },
+        select: { balance: true }, //? skip body
+      });
+
+      //? add venue in organizer
+      await tx.user.update({
+        where: { id: offer.organizer_id },
+        data: {
+          organizer_active_venues: {
+            connect: {
+              id: metadata.offer_id,
+            },
+          },
+        },
+      });
+
+      //? update venue offer
+      await tx.venueOffer.update({
         where: { id: metadata.offer_id },
         data: { status: EAgentOfferStatus.APPROVED, approved_at: new Date() },
       });
@@ -86,5 +197,19 @@ export const PaymentServices = {
     }
 
     await withdrawQueue.add({ amount, user });
+  },
+
+  /**
+   * Ticket purchase
+   *
+   * @event ticket_purchase
+   */
+  async ticket_purchase(session: Stripe.Checkout.Session) {
+    const { ticket_ids } = session.metadata as TTicketMetadata;
+
+    await prisma.ticket.updateMany({
+      where: { id: { in: ticket_ids.split(',') } },
+      data: { status: ETicketStatus.PAID, expires_at: null },
+    });
   },
 };

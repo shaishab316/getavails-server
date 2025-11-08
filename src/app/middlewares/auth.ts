@@ -58,8 +58,11 @@ function commonValidator({ is_admin, is_verified, is_active }: TUser) {
   }
 }
 
+// Default auth
+auth.default = auth();
+
 // Base auth without role restrictions
-auth.all = auth();
+auth.all = auth({ validators: [commonValidator] });
 
 // Admin auth
 auth.admin = auth({

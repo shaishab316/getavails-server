@@ -13,11 +13,12 @@ model AgentOffer {
   agent_id     String
   artist_id    String
   organizer_id String
-  address      String
+  location     String
 
-  agent     User @relation("AgentOffersAgent", fields: [agent_id], references: [id])
-  artist    User @relation("AgentOffersArtist", fields: [artist_id], references: [id])
-  organizer User @relation("AgentOffersOrganizer", fields: [organizer_id], references: [id])
+  agent             User   @relation("AgentOffersAgent", fields: [agent_id], references: [id])
+  artist            User   @relation("AgentOffersArtist", fields: [artist_id], references: [id])
+  organizer         User   @relation("AgentOffersOrganizer", fields: [organizer_id], references: [id])
+  active_organizers User[] @relation("ActiveAgentOffers")
 
   @@map("agent_offers")
 }

@@ -1,0 +1,24 @@
+model Ticket {
+  id         String    @id
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  expires_at DateTime?
+
+  user_id  String
+  event_id String
+  price    Float
+
+  status ETicketStatus @default(PENDING)
+
+  user  User  @relation(fields: [user_id], references: [id])
+  event Event @relation(fields: [event_id], references: [id])
+
+  //? Do Transactions here
+
+  @@map("tickets")
+}
+
+enum ETicketStatus {
+  PENDING
+  PAID
+}

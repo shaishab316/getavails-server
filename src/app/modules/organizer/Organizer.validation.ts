@@ -1,5 +1,5 @@
 import z from 'zod';
-import { EAgentOfferStatus } from '../../../../prisma';
+import { EAgentOfferStatus, EVenueOfferStatus } from '../../../../prisma';
 import { exists } from '../../../utils/db/exists';
 
 /**
@@ -22,6 +22,27 @@ export const OrganizerValidations = {
     body: z.object({
       offer_id: z.string().refine(exists('agentOffer'), {
         error: ({ input }) => `Agent offer not found with id: ${input}`,
+        path: ['offer_id'],
+      }),
+    }),
+  }),
+
+  /**
+   * Validation schema for get venue offers
+   */
+  getVenueOffers: z.object({
+    query: z.object({
+      status: z.enum(EVenueOfferStatus).default(EVenueOfferStatus.PENDING),
+    }),
+  }),
+
+  /**
+   * Validation schema for accept venue offer
+   */
+  acceptVenueOffer: z.object({
+    body: z.object({
+      offer_id: z.string().refine(exists('venueOffer'), {
+        error: ({ input }) => `Venue offer not found with id: ${input}`,
         path: ['offer_id'],
       }),
     }),

@@ -1,0 +1,32 @@
+model Event {
+  id           String   @id
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  published_at DateTime @default(now())
+
+  status             EEventStatus @default(PUBLISHED)
+  title              String
+  description        String
+  images             String[]     @default([])
+  location           String
+  ticket_price       Float
+  start_date         DateTime
+  end_date           DateTime
+  artist_names       String[]
+  organizer_id       String
+  capacity           Int
+  available_capacity Int
+  can_buy_tickets    Boolean      @default(true)
+
+  organizer User     @relation(fields: [organizer_id], references: [id])
+  tickets   Ticket[]
+
+  @@map("events")
+}
+
+enum EEventStatus {
+  UPCOMING
+  PUBLISHED
+  COMPLETED
+  TIMEOUT
+}

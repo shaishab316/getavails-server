@@ -17,14 +17,16 @@ export const QueryValidations = {
    * @param _id The name of the param containing the document ID
    * @param model The prisma model for the document
    */
-  exists: (_id: string, model: TModels) =>
+  exists: (_id: string, model: TModels, extra = {} as Record<string, any>) =>
     z.object({
       params: z.object({
-        [_id]: z.string({ error: `${_id} is required` }).refine(exists(model), {
-          error: ({ input }) =>
-            `${capitalize(model)} not found with id: ${input}`,
-          path: [_id],
-        }),
+        [_id]: z
+          .string({ error: `${_id} is required` })
+          .refine(exists(model, extra), {
+            error: ({ input }) =>
+              `${capitalize(model)} not found with id: ${input}`,
+            path: [_id],
+          }),
       }),
     }),
 };

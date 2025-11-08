@@ -8,11 +8,11 @@ import type { TModels } from '../../types/db';
  * @returns (id: string) => Promise<TModel>
  */
 export const exists =
-  (model: TModels) =>
+  (model: TModels, extra = {} as Record<string, any>) =>
   async (id: string | null = null) => {
     if (id) {
-      return (prisma[model] as any).findUnique({
-        where: { id },
+      return (prisma[model] as any).findFirst({
+        where: { id, ...extra },
         select: { id: true }, //? skip body
       });
     }

@@ -25,9 +25,6 @@ export const PaymentControllers = {
         config.payment.stripe.web_hook_secret,
       );
 
-      //Todo: testing
-      console.log(event.type, event.data.object);
-
       const eventHandler =
         stripWebhookEventMap[event.type as TStripWebhookEvent];
 

@@ -1,6 +1,35 @@
 import type { z } from 'zod';
-import { VenueValidations } from './Venue.validation';
+import type { VenueValidations } from './Venue.validation';
+import { TList } from '../query/Query.interface';
 
-export type TUpdateVenue = z.infer<
+/**
+ * Type for update venue
+ */
+export type TUpdateVenueArgs = z.infer<
   typeof VenueValidations.updateVenue
 >['body'] & { venue_id: string };
+
+/**
+ * Type for create agent offer
+ */
+export type TVenueCreateOfferArgs = z.infer<
+  typeof VenueValidations.createOffer
+>['body'] & { venue_id: string; end_date: string };
+
+/**
+ * Type for cancel agent offer
+ */
+export type TCancelVenueOfferArgs = z.infer<
+  typeof VenueValidations.cancelOffer
+>['body'] & {
+  venue_id?: string;
+  organizer_id?: string;
+};
+
+/**
+ * @type: for get venue offers
+ */
+export type TGetVenueOffersArgs = TList &
+  z.infer<typeof VenueValidations.getMyOffers>['query'] & {
+    venue_id: string;
+  };

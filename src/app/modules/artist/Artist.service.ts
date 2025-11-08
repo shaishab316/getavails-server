@@ -1,11 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EUserRole, Prisma, prisma, User as TUser } from '../../../utils/db';
+import { EUserRole, Prisma, prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import type { TList } from '../query/Query.interface';
 import { artistSearchableFields } from './Artist.constant';
 import type {
   TDeleteAgent,
+  TGetAgentList,
   TInviteAgent,
   TProcessArtistRequest,
 } from './Artist.interface';
@@ -158,15 +159,11 @@ export const ArtistServices = {
   /**
    * Retrieve all agent list for a specific artist
    *
-   * @param {TUser['artist_agents']} artist_agents
-   * @param {TList} { limit, page, search }
+   * @param {TGetAgentList} { limit, page, search }
    */
-  async getMyAgentList(
-    artist_agents: TUser['artist_agents'],
-    { limit, page, search }: TList,
-  ) {
+  async getAgentList({ limit, page, search, agent_ids }: TGetAgentList) {
     const agentWhere: Prisma.UserWhereInput = {
-      id: { in: artist_agents },
+      id: { in: agent_ids },
       role: EUserRole.AGENT,
     };
 
