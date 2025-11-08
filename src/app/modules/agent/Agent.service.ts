@@ -372,23 +372,24 @@ export const AgentServices = {
     const AGENT_COMMISSION = 0.2; // 20%
 
     // Parallel execution for better performance
-    const [agentOfferSummary, bookingCountsByMonth] = await Promise.all([
-      // Revenue and booking aggregation
-      prisma.agentOffer.aggregate({
-        where: {
-          agent_id: agent_id,
-          status: EAgentOfferStatus.APPROVED,
-        },
-        _sum: {
-          amount: true,
-        },
-        _count: {
-          id: true,
-        },
-      }),
+    const [agentOfferSummary, bookingCountsByMonth, monthlyRevenueCounts] =
+      await Promise.all([
+        // Revenue and booking aggregation
+        prisma.agentOffer.aggregate({
+          where: {
+            agent_id: agent_id,
+            status: EAgentOfferStatus.APPROVED,
+          },
+          _sum: {
+            amount: true,
+          },
+          _count: {
+            id: true,
+          },
+        }),
 
-      // Monthly booking counts using raw query (most efficient)
-      prisma.$queryRaw<Array<{ month: number; count: bigint }>>`
+        // Monthly booking counts using raw query (most efficient)
+        prisma.$queryRaw<Array<{ month: number; count: bigint }>>`
         SELECT 
           EXTRACT(MONTH FROM approved_at)::int as month,
           COUNT(*)::bigint as count
@@ -400,23 +401,53 @@ export const AgentServices = {
         GROUP BY EXTRACT(MONTH FROM approved_at)
         ORDER BY month
       `,
-    ]);
+
+        // Monthly revenue from approved bookings (with agent commission)
+        prisma.$queryRaw<Array<{ month: number; revenue: number }>>`
+        SELECT 
+          EXTRACT(MONTH FROM approved_at)::int as month,
+          COALESCE(SUM(amount * ${AGENT_COMMISSION}), 0)::float as revenue
+        FROM agent_offers
+        WHERE agent_id = ${agent_id}
+          AND status = 'APPROVED'
+          AND approved_at >= ${yearStartDate}
+          AND approved_at <= ${yearEndDate}
+        GROUP BY EXTRACT(MONTH FROM approved_at)
+        ORDER BY month
+      `,
+      ]);
 
     const totalAmount = agentOfferSummary._sum.amount || 0;
     const totalRevenue = totalAmount * AGENT_COMMISSION; // Agent gets 20%
     const totalBookings = agentOfferSummary._count.id || 0;
 
-    // Create a map for O(1) lookups
-    const monthToCountMap = new Map(
+    // Create maps for O(1) lookups
+    const monthToBookingCountMap = new Map(
       bookingCountsByMonth.map(({ month, count }) => [month, Number(count)]),
     );
 
-    // Generate all 12 months with counts and month names
+    const monthToRevenueMap = new Map(
+      monthlyRevenueCounts.map(({ month, revenue }) => [
+        month,
+        Number(revenue),
+      ]),
+    );
+
+    // Generate all 12 months with booking counts
     const monthlyBookingStatistics = Array.from({ length: 12 }, (_, index) => {
       const monthNumber = index + 1;
       return {
         month: months[index],
-        bookingCount: monthToCountMap.get(monthNumber) || 0,
+        bookingCount: monthToBookingCountMap.get(monthNumber) || 0,
+      };
+    });
+
+    // Generate all 12 months with revenue
+    const monthlyRevenueStatistics = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: months[index],
+        revenue: monthToRevenueMap.get(monthNumber) || 0,
       };
     });
 
@@ -424,6 +455,7 @@ export const AgentServices = {
       totalRevenue,
       totalBookings,
       monthlyBookingStatistics,
+      monthlyRevenueStatistics,
     };
   },
 };

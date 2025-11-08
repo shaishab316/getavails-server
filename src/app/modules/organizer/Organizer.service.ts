@@ -429,49 +429,72 @@ export const OrganizerServices = {
   /**
    * Get organizer overview
    */
-  async getOrganizerOverview(organizerId: string) {
+  async getOrganizerOverview(organizer_id: string) {
     const currentYear = new Date().getFullYear();
     const yearStartDate = new Date(`${currentYear}-01-01`);
     const yearEndDate = new Date(`${currentYear}-12-31T23:59:59`);
 
     // Parallel execution for better performance
-    const [ticketRevenueSummary, eventCountsByMonth] = await Promise.all([
-      // Revenue and ticket aggregation
-      prisma.ticket.aggregate({
-        where: {
-          event: {
-            organizer_id: organizerId,
+    const [ticketRevenueSummary, eventCountsByMonth, monthlyRevenueCounts] =
+      await Promise.all([
+        // Revenue and ticket aggregation
+        prisma.ticket.aggregate({
+          where: {
+            event: {
+              organizer_id,
+            },
+            status: ETicketStatus.PAID,
           },
-          status: ETicketStatus.PAID,
-        },
-        _sum: {
-          price: true,
-        },
-        _count: {
-          id: true,
-        },
-      }),
+          _sum: {
+            price: true,
+          },
+          _count: {
+            id: true,
+          },
+        }),
 
-      // Monthly event counts using raw query (most efficient)
-      prisma.$queryRaw<{ month: number; count: bigint }[]>`
+        // Monthly event counts using raw query (most efficient)
+        prisma.$queryRaw<{ month: number; count: bigint }[]>`
         SELECT 
           EXTRACT(MONTH FROM created_at)::int as month,
           COUNT(*)::bigint as count
         FROM events
-        WHERE organizer_id = ${organizerId}
+        WHERE organizer_id = ${organizer_id}
           AND created_at >= ${yearStartDate}
           AND created_at <= ${yearEndDate}
         GROUP BY EXTRACT(MONTH FROM created_at)
         ORDER BY month
       `,
-    ]);
+
+        // Monthly revenue from paid tickets
+        prisma.$queryRaw<{ month: number; revenue: number }[]>`
+        SELECT 
+          EXTRACT(MONTH FROM t.created_at)::int as month,
+          COALESCE(SUM(t.price), 0)::float as revenue
+        FROM tickets t
+        INNER JOIN events e ON t.event_id = e.id
+        WHERE e.organizer_id = ${organizer_id}
+          AND t.status = 'PAID'
+          AND t.created_at >= ${yearStartDate}
+          AND t.created_at <= ${yearEndDate}
+        GROUP BY EXTRACT(MONTH FROM t.created_at)
+        ORDER BY month
+      `,
+      ]);
 
     const totalRevenue = ticketRevenueSummary._sum.price || 0;
     const totalBookedTickets = ticketRevenueSummary._count.id || 0;
 
-    // Create a map for O(1) lookups
-    const monthToCountMap = new Map(
+    // Create maps for O(1) lookups
+    const monthToEventCountMap = new Map(
       eventCountsByMonth.map(({ month, count }) => [month, Number(count)]),
+    );
+
+    const monthToRevenueMap = new Map(
+      monthlyRevenueCounts.map(({ month, revenue }) => [
+        month,
+        Number(revenue),
+      ]),
     );
 
     // Generate all 12 months with counts and month names
@@ -479,7 +502,16 @@ export const OrganizerServices = {
       const monthNumber = index + 1;
       return {
         month: months[index],
-        eventCount: monthToCountMap.get(monthNumber) || 0,
+        eventCount: monthToEventCountMap.get(monthNumber) || 0,
+      };
+    });
+
+    // Generate all 12 months with revenue
+    const monthlyRevenueStatistics = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: months[index],
+        revenue: monthToRevenueMap.get(monthNumber) || 0,
       };
     });
 
@@ -487,6 +519,7 @@ export const OrganizerServices = {
       totalRevenue,
       totalBookedTickets,
       monthlyEventStatistics,
+      monthlyRevenueStatistics,
     };
   },
 };
