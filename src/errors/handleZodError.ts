@@ -9,6 +9,7 @@ const handleZodError = ({ issues }: ZodError) => {
   }));
 
   return {
+    success: false,
     statusCode: StatusCodes.BAD_REQUEST,
     message: 'Request validation error',
     errorMessages,

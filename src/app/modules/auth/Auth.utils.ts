@@ -9,6 +9,7 @@ import { enum_decode } from '../../../utils/transform/enum';
 import { TToken, TTokenPayload } from '../../../types/auth.types';
 import rateLimit from 'express-rate-limit';
 import ms from 'ms';
+import { formatError } from '../../middlewares/globalErrorHandler';
 
 /**
  * Create a token
@@ -65,31 +66,55 @@ export const verifyPassword = async (password: string, hash: string) => {
 
 export const otpVerifyRateLimiter = rateLimit({
   windowMs: ms('15m'),
-  max: 50,
-  message:
-    'Too many requests for account verification. Try again in 15 minutes.',
+  max: 2,
+  message: formatError(
+    new ServerError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      'Too many attempts. Try again in 15 minutes.',
+    ),
+  ),
 });
 
 export const loginRateLimiter = rateLimit({
   windowMs: ms('10m'),
   max: 100,
-  message: 'Too many login attempts. Try again in 10 minutes.',
+  message: formatError(
+    new ServerError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      'Too many login attempts. Try again in 10 minutes.',
+    ),
+  ),
 });
 
 export const forgotPasswordRateLimiter = rateLimit({
   windowMs: ms('15m'),
   max: 50,
-  message: 'Too many forgot password attempts. Try again in 15 minutes.',
+  message: formatError(
+    new ServerError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      'Too many forgot password attempts. Try again in 15 minutes.',
+    ),
+  ),
 });
 
 export const registerRateLimiter = rateLimit({
   windowMs: ms('30m'),
   max: 100,
-  message: 'Too many registration attempts. Try again in 30 minutes.',
+  message: formatError(
+    new ServerError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      'Too many registration attempts. Try again in 30 minutes.',
+    ),
+  ),
 });
 
 export const changePasswordRateLimiter = rateLimit({
   windowMs: ms('15m'),
   max: 50,
-  message: 'Too many change password attempts. Try again in 15 minutes.',
+  message: formatError(
+    new ServerError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      'Too many change password attempts. Try again in 15 minutes.',
+    ),
+  ),
 });

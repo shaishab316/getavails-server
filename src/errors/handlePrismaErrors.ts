@@ -4,10 +4,11 @@ import {
   createErrorMessage,
   defaultError,
 } from '../app/middlewares/globalErrorHandler';
+import { TErrorHandler } from '../types/errors';
 
 export const handlePrismaRequestError = (
   error: Prisma.PrismaClientKnownRequestError,
-) => {
+): TErrorHandler => {
   if (error.code === 'P2002') {
     let fields = 'Unique field';
     if (Array.isArray(error.meta?.target)) {
@@ -17,6 +18,7 @@ export const handlePrismaRequestError = (
     }
 
     return {
+      success: false,
       statusCode: StatusCodes.CONFLICT,
       message: `${fields.replace(/^[^_]+_|_[^_]+$/g, '')} must be unique`,
       errorMessages: createErrorMessage(
@@ -27,6 +29,7 @@ export const handlePrismaRequestError = (
 
   if (error.code === 'P2025') {
     return {
+      success: false,
       statusCode: StatusCodes.NOT_FOUND,
       message: 'Record not found',
       errorMessages: createErrorMessage(error.message),
@@ -43,7 +46,8 @@ export const handlePrismaRequestError = (
 
 export const handlePrismaValidationError = (
   error: Prisma.PrismaClientValidationError,
-) => ({
+): TErrorHandler => ({
+  success: false,
   statusCode: StatusCodes.BAD_REQUEST,
   message: 'Validation error from Prisma',
   errorMessages: createErrorMessage(error.message),

@@ -21,6 +21,7 @@ import deleteFilesQueue from '../../utils/mq/deleteFilesQueue';
  * Default error handler
  */
 export const defaultError: TErrorHandler = {
+  success: false,
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
   message: 'Something went wrong',
   errorMessages: [],
@@ -62,6 +63,7 @@ export const formatError = (error: Error): TErrorHandler => {
     return handlePrismaValidationError(error);
   if (error instanceof ServerError)
     return {
+      success: false,
       statusCode: error.statusCode,
       message: error.message,
       errorMessages: createErrorMessage(error.message),

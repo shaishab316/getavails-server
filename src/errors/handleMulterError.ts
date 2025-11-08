@@ -4,6 +4,7 @@ import { createErrorMessage } from '../app/middlewares/globalErrorHandler';
 
 const handleMulterError = ({ code, message }: multer.MulterError) => {
   return {
+    success: false,
     statusCode: StatusCodes.BAD_REQUEST,
     message:
       (

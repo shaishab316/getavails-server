@@ -4,6 +4,7 @@ export type TErrorMessage = {
 };
 
 export type TErrorHandler = {
+  success: boolean;
   statusCode: number;
   message: string;
   errorMessages: TErrorMessage[];
