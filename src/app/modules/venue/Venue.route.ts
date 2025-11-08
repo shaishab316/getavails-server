@@ -7,6 +7,11 @@ import { QueryValidations } from '../query/Query.validation';
 const venue = Router();
 {
   /**
+   * Get venue overview
+   */
+  venue.get('/overview', VenueControllers.getVenueOverview);
+
+  /**
    * Update venue information
    */
   venue.patch(

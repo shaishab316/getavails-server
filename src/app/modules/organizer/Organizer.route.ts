@@ -90,6 +90,11 @@ const organizer = injectRoutes(Router(), {
   );
 }
 
+/**
+ * Get organizer overview
+ */
+organizer.get('/overview', OrganizerControllers.getOrganizerOverview);
+
 export const OrganizerRoutes = {
   /**
    * Organizer can access

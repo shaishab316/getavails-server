@@ -19,6 +19,11 @@ const free = Router();
 const agent = Router();
 {
   /**
+   * Get agent overview
+   */
+  agent.get('/overview', AgentControllers.getAgentOverview);
+
+  /**
    * Get my artist list
    */
   agent.get(
