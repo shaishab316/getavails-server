@@ -1,6 +1,7 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
 import { EEventStatus, Event as TEvent } from '../../../../prisma';
+import { exists } from '../../../utils/db/exists';
 
 /**
  * Validation for event
@@ -31,6 +32,29 @@ export const EventValidations = {
         .nonempty('At least one artist is required'),
       published_at: z.iso.datetime().optional(),
     } satisfies TModelZod<TEvent>),
+  }),
+
+  /**
+   * Validation schema for update event
+   */
+  updateEvent: z.object({
+    body: z.object({
+      event_id: z.string().refine(exists('event'), {
+        error: ({ input }) => `Event not found with id: ${input}`,
+        path: ['event_id'],
+      }),
+      status: z.enum(EEventStatus).optional(),
+      title: z.string().optional(),
+      images: z.array(z.string()).optional(),
+      description: z.string().optional(),
+      start_date: z.iso.datetime().optional(),
+      end_date: z.iso.datetime().optional(),
+      location: z.string().optional(),
+      ticket_price: z.coerce.number().optional(),
+      capacity: z.coerce.number().optional(),
+      artist_names: z.array(z.string()).optional(),
+      published_at: z.iso.datetime().optional(),
+    } satisfies TModelZod<TEvent, 'event_id'>),
   }),
 
   /**

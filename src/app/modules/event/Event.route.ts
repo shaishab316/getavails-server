@@ -31,6 +31,22 @@ const organizer = Router();
     purifyRequest(EventValidations.createEvent),
     EventControllers.createEvent,
   );
+
+  /**
+   * Update event
+   */
+  organizer.post(
+    '/update-event',
+    capture({
+      images: {
+        size: 15 * 1024 * 1024,
+        maxCount: 10,
+        fileType: 'images',
+      },
+    }),
+    purifyRequest(EventValidations.updateEvent),
+    EventControllers.updateEvent,
+  );
 }
 
 const all = Router();

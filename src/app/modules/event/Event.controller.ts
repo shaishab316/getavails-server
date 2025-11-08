@@ -21,6 +21,18 @@ export const EventControllers = {
   }),
 
   /**
+   * Update event
+   */
+  updateEvent: catchAsync(async ({ body }) => {
+    const event = await EventServices.updateEvent(body);
+
+    return {
+      message: 'Event updated successfully!',
+      data: event,
+    };
+  }),
+
+  /**
    * Get my upcoming events
    */
   getUserUpcomingEvents: catchAsync(async ({ query, user }) => {

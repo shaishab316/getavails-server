@@ -10,6 +10,11 @@ export type TCreateEvent = z.infer<
 >['body'] & { organizer_id: string };
 
 /**
+ * @type: Validation for update event
+ */
+export type TUpdateEvent = z.infer<typeof EventValidations.updateEvent>['body'];
+
+/**
  * @type: Validation for get my upcoming event
  */
 export type TGetMyUpcomingEvent = TList & {

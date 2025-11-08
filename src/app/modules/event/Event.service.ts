@@ -5,12 +5,14 @@ import {
   prisma,
 } from '../../../utils/db';
 import type { TPagination } from '../../../utils/server/serveResponse';
+import { deleteFiles } from '../../middlewares/capture';
 import { TList } from '../query/Query.interface';
 import { eventSearchableField } from './Event.constant';
 import type {
   TCreateEvent,
   TGetMyUpcomingEvent,
   TGetOrganizerEvent,
+  TUpdateEvent,
 } from './Event.interface';
 
 /**
@@ -33,6 +35,25 @@ export const EventServices = {
         end_date: payload.end_date ?? payload.start_date,
         available_capacity: payload.capacity,
       },
+    });
+  },
+
+  /**
+   * Update event
+   */
+  async updateEvent({ event_id, ...payload }: TUpdateEvent) {
+    const event = (await prisma.event.findUnique({
+      where: { id: event_id },
+      select: { images: true },
+    }))!;
+
+    if (payload.images && event.images.length) {
+      await deleteFiles(event.images);
+    }
+
+    return prisma.event.update({
+      where: { id: event_id },
+      data: payload,
     });
   },
 
