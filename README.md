@@ -11,6 +11,7 @@ A comprehensive event management system with multi-role support including artist
 ![Socket.io](https://img.shields.io/badge/socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
 ![Stripe](https://img.shields.io/badge/stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![dotenvx](https://img.shields.io/badge/dotenvx-00D9FF?style=for-the-badge&logo=dotenv&logoColor=white)
 
 ## 🌟 Key Features
 
@@ -163,9 +164,12 @@ npm install
 
 3. Configure environment variables:
 
+> This project uses [dotenvx](https://dotenvx.com) for secure environment variable
+
 ```bash
 cp .env.example .env
-# Edit .env with your configuration
+#or if you have right .env.keys file, then run:
+npm run env-decrypt
 ```
 
 4. Set up the database:

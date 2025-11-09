@@ -52,4 +52,4 @@ import type { TStripWebhookEvent } from '../src/app/modules/payment/Payment.inte
   } catch (error: any) {
     spinner.fail(chalk.red(`Webhook setup failed: ${error.message}`));
   }
-})();
+})().then(() => process.exit(0));
