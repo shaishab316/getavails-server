@@ -108,10 +108,13 @@ export const UserControllers = {
   profile: catchAsync(async ({ user }) => {
     return {
       message: 'Profile retrieved successfully!',
-      data: await prisma.user.findUnique({
-        where: { id: user.id },
-        omit: userSelfOmit[user.role],
-      }),
+      data: {
+        ...(await prisma.user.findUnique({
+          where: { id: user.id },
+          omit: userSelfOmit[user.role],
+        })),
+        role: user.role.toLowerCase(),
+      },
     };
   }),
 
