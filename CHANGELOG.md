@@ -1,3 +1,13 @@
+# [1.10.0](https://github.com/shaishab316/getavails-server/compare/v1.9.0...v1.10.0) (2025-11-11)
+
+
+### Features
+
+* Add GitHub Actions workflow for GitLab mirroring ([b5f03bb](https://github.com/shaishab316/getavails-server/commit/b5f03bb16bd0196934069053e6ffd0a2c4aa7780))
+* Include lowercase role in user profile endpoint response ([3d74fb0](https://github.com/shaishab316/getavails-server/commit/3d74fb0dd0c09d8ee86e04437ce632e71d0c4368))
+* Integrate dotenvx, update deps, and add .env file ([15e5039](https://github.com/shaishab316/getavails-server/commit/15e5039a2f659f6e094fd4da33c879a14e0a7a2b))
+* Standardize error responses with `success: false` ([4979d66](https://github.com/shaishab316/getavails-server/commit/4979d6609c9387c003c185e787ace961baf95fd1))
+
 # [1.10.0](https://github.com/shaishab316/getavails-server/compare/v1.9.0...v1.10.0) (2025-11-09)
 
 
