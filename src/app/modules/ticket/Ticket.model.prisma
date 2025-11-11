@@ -3,6 +3,7 @@ model Ticket {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   expires_at DateTime?
+  sl         Int
 
   user_id  String
   event_id String
