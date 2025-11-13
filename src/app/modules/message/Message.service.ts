@@ -94,6 +94,7 @@ export const MessageServices = {
    */
   async getChatMessages({
     chat_id,
+    user_id,
     limit,
     page,
     search,
@@ -122,10 +123,35 @@ export const MessageServices = {
         seen_by: {
           select: {
             avatar: true,
+            id: true,
           },
         },
       },
     });
+
+    // Mark unread messages as read
+    const unreadMessageIds = messages
+      .filter(
+        message =>
+          message.user_id !== user_id && // Not sent by current user
+          !message.seen_by.some(user => user.id === user_id), // Not already seen
+      )
+      .map(message => message.id);
+
+    if (unreadMessageIds.length > 0) {
+      await prisma.$transaction(
+        unreadMessageIds.map(messageId =>
+          prisma.message.update({
+            where: { id: messageId },
+            data: {
+              seen_by: {
+                connect: { id: user_id },
+              },
+            },
+          }),
+        ),
+      );
+    }
 
     const total = await prisma.message.count({ where: messageWhere });
 
@@ -141,6 +167,7 @@ export const MessageServices = {
       messages: messages.map(({ seen_by, ...message }) => ({
         ...message,
         seen_by: seen_by.map(user => user.avatar),
+        isOwner: message.user_id === user_id,
       })),
     };
   },

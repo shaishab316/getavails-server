@@ -79,7 +79,7 @@ export const ChatServices = {
           user_id: { not: user_id },
           seen_by: {
             none: {
-              id: user_id, //? user has not seen message
+              id: user_id,
             },
           },
         },
@@ -106,6 +106,20 @@ export const ChatServices = {
             user_id: true,
           },
         },
+        _count: {
+          select: {
+            messages: {
+              where: {
+                user_id: { not: user_id },
+                seen_by: {
+                  none: {
+                    id: user_id,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
@@ -120,7 +134,7 @@ export const ChatServices = {
           totalPages: Math.ceil(total / limit),
         } satisfies TPagination,
       },
-      chats: chats.map(({ id, users, messages }) => {
+      chats: chats.map(({ id, users, messages, _count }) => {
         const opponent = users.find(user => user.id !== user_id);
         const lastMessage = messages[0];
 
@@ -134,6 +148,7 @@ export const ChatServices = {
             ? !lastMessage.seen_by.some(sb => sb.id === user_id) &&
               lastMessage.user_id !== user_id
             : false,
+          unread_count: _count.messages,
         };
       }),
     };
