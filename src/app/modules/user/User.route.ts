@@ -94,6 +94,15 @@ const all = Router();
    * Connect stripe account
    */
   all.get('/connect-stripe', UserControllers.connectStripeAccount);
+
+  /**
+   * Get all users
+   */
+  all.get(
+    '/other-users',
+    purifyRequest(QueryValidations.list, UserValidations.getAllUser),
+    UserControllers.getAllUser,
+  );
 }
 
 export const UserRoutes = {

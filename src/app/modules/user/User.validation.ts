@@ -46,11 +46,7 @@ export const UserValidations = {
   getAllUser: z.object({
     query: z.object({
       search: z.string().trim().optional(),
-      role: z
-        .string()
-        .optional()
-        .transform(enum_encode)
-        .pipe(z.enum(EUserRole).optional()),
+      role: z.string().transform(enum_encode).pipe(z.enum(EUserRole)),
     }),
   }),
 
