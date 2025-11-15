@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug Express",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": ["run", "dev-f5"],
       "console": "integratedTerminal",
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,

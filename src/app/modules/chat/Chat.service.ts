@@ -140,6 +140,7 @@ export const ChatServices = {
 
         return {
           id,
+          user_id: opponent?.id ?? null,
           name: opponent?.name ?? null,
           avatar: opponent?.avatar ?? null,
           last_message: lastMessage?.text ?? null,

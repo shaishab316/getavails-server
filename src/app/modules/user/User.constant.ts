@@ -15,7 +15,7 @@ const selfOmit = {
 } satisfies Prisma.UserOmit;
 
 export const userDefaultOmit = {
-  // email: true, //? TODO: remove email from default omit
+  // email: true,
   is_verified: true,
   is_active: true,
   is_admin: true,
@@ -45,7 +45,7 @@ export const userVenueOmit = {
   gender: true,
   experience: true,
   genre: true,
-  availability: true,
+  // availability: true,
   agent_artists: true,
   agent_pending_artists: true,
   artist_agents: true,
