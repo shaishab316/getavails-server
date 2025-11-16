@@ -12,6 +12,8 @@ const selfOmit = {
   password: true,
   otp_id: true,
   stripe_account_id: true,
+  stripe_customer_id: true,
+  subscription_expires_at: true,
 } satisfies Prisma.UserOmit;
 
 export const userDefaultOmit = {

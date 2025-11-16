@@ -102,15 +102,15 @@ const config = {
         },
       ),
       success_callback: env(
-        'payment success callback url',
-        `http://localhost:${port}/payment/success-callback`,
+        'payment success url',
+        `http://localhost:${port}/payments/success-callback`,
         {
           regex: '^https?:\\/\\/.*$|^$',
         },
       ),
       cancel_callback: env(
-        'payment cancel callback url',
-        `http://localhost:${port}/payment/cancel-callback`,
+        'payment failure url',
+        `http://localhost:${port}/payments/cancel-callback`,
         {
           regex: '^https?:\\/\\/.*$|^$',
           down: 'Urls - end',

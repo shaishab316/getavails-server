@@ -44,7 +44,9 @@ const auth = ({
     next();
   });
 
-// Common validator function
+/**
+ * Common validator function
+ */
 function commonValidator({ is_admin, is_verified, is_active }: TUser) {
   if (is_admin) return;
 
@@ -55,6 +57,26 @@ function commonValidator({ is_admin, is_verified, is_active }: TUser) {
     );
   } else if (!is_active) {
     throw new ServerError(StatusCodes.FORBIDDEN, 'Your account is not active');
+  }
+}
+
+/**
+ * Payment validator function
+ */
+function paymentValidator({
+  role,
+  subscription_name,
+  subscription_expires_at,
+}: TUser) {
+  if (
+    !subscription_name ||
+    !subscription_expires_at ||
+    subscription_expires_at < new Date()
+  ) {
+    throw new ServerError(
+      StatusCodes.PAYMENT_REQUIRED,
+      `Your ${role.toLowerCase()} subscription has expired. Please renew to continue accessing this feature.`,
+    );
   }
 }
 
@@ -90,6 +112,7 @@ Object.values(EUserRole).forEach(role => {
             );
           }
         },
+        paymentValidator,
       ],
     }),
     enumerable: true,

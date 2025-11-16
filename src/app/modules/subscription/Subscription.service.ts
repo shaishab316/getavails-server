@@ -8,17 +8,17 @@ import {
   TStripWebhookEvent,
   TSubscriptionCreate,
   TSubscriptionEdit,
+  TUserSubscriptionMetadata,
 } from './Subscription.interface';
 import {
   stripWebhookEventMap,
   subscriptionIntervalMap,
 } from './Subscription.utils';
+import { Prisma, User as TUser } from '../../../../prisma';
 import {
-  Prisma,
-  Subscription as TSubscription,
-  User as TUser,
-} from '../../../../prisma';
-import { subscriptionSearchableFields as searchableFields } from './Subscription.constant';
+  subscriptionSearchableFields as searchableFields,
+  subscriptionOmit,
+} from './Subscription.constant';
 import { prisma } from '../../../utils/db';
 import { logger } from '../../../utils/logger';
 import env from '../../../utils/env';
@@ -268,6 +268,7 @@ export const SubscriptionServices = {
       where,
       skip: (page - 1) * limit,
       take: limit,
+      omit: subscriptionOmit,
     });
 
     const priceRange = await prisma.subscription.aggregate({
@@ -301,6 +302,7 @@ export const SubscriptionServices = {
   async getSubscriptionDetails(subscriptionId: string) {
     return prisma.subscription.findUnique({
       where: { id: subscriptionId },
+      omit: subscriptionOmit,
     });
   },
 
@@ -359,18 +361,15 @@ export const SubscriptionServices = {
       });
     }
 
-    const metadata = {
-      user: JSON.stringify({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-      } as TUser),
-      subscription: JSON.stringify({
-        name: subscription.name,
-        features: subscription.features,
-        subscription_interval: subscription.subscription_interval,
-      } as TSubscription),
+    const metadata: TUserSubscriptionMetadata = {
+      purpose: 'subscription',
+      user_id: user.id,
+      user_name: user.name,
+      user_email: user.email,
+      user_avatar: user.avatar,
+      subscription_name: subscription.name,
+      subscription_features: subscription.features.join(', '),
+      subscription_interval: subscription.subscription_interval,
     };
 
     return stripe.checkout.sessions.create({

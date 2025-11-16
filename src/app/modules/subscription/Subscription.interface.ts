@@ -3,6 +3,7 @@ import z from 'zod';
 import { SubscriptionValidations } from './Subscription.validation';
 import { TList } from '../query/Query.interface';
 import { stripWebhookEventMap } from './Subscription.utils';
+import { ESubscriptionInterval } from '../../../../prisma';
 
 export type TSubscriptionCreate = z.infer<
   typeof SubscriptionValidations.createSubscription
@@ -29,3 +30,14 @@ export enum EStripeSubscriptionInterval {
 }
 
 export type TStripWebhookEvent = keyof typeof stripWebhookEventMap;
+
+export type TUserSubscriptionMetadata = {
+  purpose: 'subscription';
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  user_avatar: string;
+  subscription_name: string;
+  subscription_features: string;
+  subscription_interval: ESubscriptionInterval;
+};

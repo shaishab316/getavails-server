@@ -31,25 +31,31 @@ export const SubscriptionControllers = {
     };
   }),
 
-  getAvailableSubscriptions: catchAsync(async ({ query }) => {
+  getAvailableSubscriptions: catchAsync(async ({ query, user }) => {
     const { meta, subscriptions } =
       await SubscriptionServices.getAvailableSubscriptions(query);
 
     return {
       message: 'Subscriptions retrieved successfully!',
       meta,
-      data: subscriptions,
+      data: subscriptions.map(subscription => ({
+        ...subscription,
+        isOwned: subscription.name === user?.subscription_name,
+      })),
     };
   }),
 
-  getSubscriptionDetails: catchAsync(async ({ params }) => {
-    const data = await SubscriptionServices.getSubscriptionDetails(
+  getSubscriptionDetails: catchAsync(async ({ params, user }) => {
+    const subscription = await SubscriptionServices.getSubscriptionDetails(
       params.subscriptionId,
     );
 
     return {
       message: 'Subscription retrieved successfully!',
-      data,
+      data: {
+        ...subscription,
+        isOwned: subscription?.name === user?.subscription_name,
+      },
     };
   }),
 
@@ -64,7 +70,7 @@ export const SubscriptionControllers = {
     }
 
     return {
-      statusCode: StatusCodes.MOVED_PERMANENTLY,
+      message: 'Subscription checkout url generated successfully!',
       data: { url, amount_total: amount_total && amount_total / 100 },
     };
   }),
