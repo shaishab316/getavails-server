@@ -14,8 +14,36 @@ import { PaymentRoutes } from '../app/modules/payment/Payment.route';
 import { TicketRoutes } from '../app/modules/ticket/Ticket.route';
 import { EventRoutes } from '../app/modules/event/Event.route';
 import { BlogRoutes } from '../app/modules/blog/Blog.route';
+import capture from '../app/middlewares/capture';
+import catchAsync from '../app/middlewares/catchAsync';
 
-export default injectRoutes(Router(), {
+const appRouter = Router();
+
+//? Media upload endpoint
+appRouter.post(
+  '/upload-media',
+  auth.all,
+  capture({
+    images: {
+      size: 15 * 1024 * 1024,
+      maxCount: 10,
+      fileType: 'images',
+    },
+    videos: {
+      size: 100 * 1024 * 1024,
+      maxCount: 10,
+      fileType: 'videos',
+    },
+  }),
+  catchAsync(({ body }) => {
+    return {
+      message: 'Media uploaded successfully!',
+      data: body,
+    };
+  }),
+);
+
+export default injectRoutes(appRouter, {
   // no auth required
   '/auth': [AuthRoutes.free],
   '/artists': [ArtistRoutes.free],
