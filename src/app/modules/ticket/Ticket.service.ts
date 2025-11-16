@@ -34,7 +34,7 @@ export const TicketServices = {
 
     const lastTicket = await prisma.ticket.findFirst({
       where: { event_id },
-      orderBy: { created_at: 'desc' },
+      orderBy: { sl: 'desc' },
       select: { id: true },
     });
 
@@ -47,6 +47,7 @@ export const TicketServices = {
           user_id,
           price: event?.ticket_price,
           expires_at: new Date(Date.now() + ms('5m')), //? expire in 5 minutes if not payment done
+          sl: lastTicket ? +lastTicket.id.split('-')[1] + 1 + i : 1 + i,
         }) satisfies Prisma.TicketCreateManyInput,
     );
 

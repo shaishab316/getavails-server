@@ -7,7 +7,7 @@ node_modules
 
 *.log
 uploads/*
-.vscode/*
+.vscode/settings.json
 api*.json
 postman/*
 

@@ -127,14 +127,11 @@ export const UserServices = {
     });
   },
 
-  async getAllUser({
-    page,
-    limit,
-    search,
-    omit,
-    ...where
-  }: Prisma.UserWhereInput & TList & { omit: Prisma.UserOmit }) {
-    where ??= {} as any;
+  /**
+   * Get all users with pagination and search
+   */
+  async getAllUser({ page, limit, search, role }: TList & { role: EUserRole }) {
+    const where: Prisma.UserWhereInput = { role };
 
     if (search)
       where.OR = searchFields.map(field => ({
@@ -146,7 +143,7 @@ export const UserServices = {
 
     const users = await prisma.user.findMany({
       where,
-      omit,
+      omit: userSelfOmit[role],
       skip: (page - 1) * limit,
       take: limit,
     });

@@ -8,23 +8,16 @@ export const MessageControllers = {
   /**
    * Get chat messages
    */
-  getChatMessages: catchAsync(async ({ query }) => {
-    const { messages, meta } = await MessageServices.getChatMessages(query);
+  getChatMessages: catchAsync(async ({ query, user }) => {
+    const { messages, meta } = await MessageServices.getChatMessages({
+      ...query,
+      user_id: user.id,
+    });
 
     return {
       message: 'Messages retrieved successfully!',
       meta,
       data: messages.reverse(),
-    };
-  }),
-
-  /**
-   * Upload media
-   */
-  uploadMedia: catchAsync(async ({ body }) => {
-    return {
-      message: 'Media uploaded successfully!',
-      data: body,
     };
   }),
 };

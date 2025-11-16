@@ -24,4 +24,4 @@ export type TCreateMessageArgs = z.infer<
 export type TGetChatMessagesArgs = z.infer<
   typeof MessageValidations.getChatMessages
 >['query'] &
-  TList;
+  TList & { user_id: string };
