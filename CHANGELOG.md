@@ -1,3 +1,15 @@
+# [1.11.0](https://github.com/shaishab316/getavails-server/compare/v1.10.0...v1.11.0) (2025-11-16)
+
+
+### Features
+
+* Add endpoint to retrieve users with pagination and search ([5fd59b5](https://github.com/shaishab316/getavails-server/commit/5fd59b558b7c0e088c1c4846bab903f65dd62fde))
+* Enable VSCode debugging and sequential ticket numbering ([599ee17](https://github.com/shaishab316/getavails-server/commit/599ee1799746d21d5263e64943d50d1448e48c7b))
+* Enhance dev workflow and server config, fix chat list, update user omit ([c675767](https://github.com/shaishab316/getavails-server/commit/c675767a2e65387249d26213b00e0e1df456a68a))
+* Implement Blog module with CRUD operations and free routes ([07a2f63](https://github.com/shaishab316/getavails-server/commit/07a2f63af4bfaec331c83c35bdf5474aa44c48fc))
+* Implement unread message counts and mark as read ([5b7db65](https://github.com/shaishab316/getavails-server/commit/5b7db65e8a973ee4fe0ba69a84db750bb58e7da7))
+* Move uploadMedia route to global scope for general access ([c28a74e](https://github.com/shaishab316/getavails-server/commit/c28a74ec85a2ef2634f06b27b38198c4d1f3c580))
+
 # [1.10.0](https://github.com/shaishab316/getavails-server/compare/v1.9.0...v1.10.0) (2025-11-11)
 
 
