@@ -1794,12 +1794,11 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/messages/upload-media",
+							"raw": "{{base_url}}/upload-media",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"messages",
 								"upload-media"
 							]
 						}
@@ -2768,6 +2767,387 @@
 				}
 			],
 			"id": "34549363-5058103a-3e5f-43a1-994b-54902d19234e"
+		},
+		{
+			"name": "subscription",
+			"item": [
+				{
+					"name": "all-subscriptions",
+					"id": "34549363-aeec513e-3ac6-4acf-b610-6d4c83ac867c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subscriptions?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-33219d97-4ede-4738-897d-3879e9483aad",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/subscriptions?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"subscriptions"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "622"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26e-qDWWreEoxDXoRUnazKGh7FwJ2P8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Nov 2025 09:31:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscriptions retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        },\n        \"priceRange\": {\n            \"min\": 29,\n            \"max\": 29\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n            \"created_at\": \"2025-11-16T09:28:39.359Z\",\n            \"updated_at\": \"2025-11-16T09:30:08.176Z\",\n            \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n            \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n            \"name\": \"Premium Plan x\",\n            \"features\": [\n                \"Unlimited access\",\n                \"Priority support\",\n                \"Advanced analytics\",\n                \"Custom integrations\"\n            ],\n            \"price\": 29,\n            \"isHot\": true,\n            \"subscribed_user_count\": 0,\n            \"subscription_interval\": \"MONTHLY\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "subscription-details",
+					"id": "34549363-1f9292b2-3223-4703-acb7-6a4af18fbdb0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subscriptions/:subscriptionId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions",
+								":subscriptionId"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "subscriptionId",
+									"value": "3c2c0e36-5fc0-4763-8456-929b20b6e41e"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-38e7b672-9b1a-49e3-9456-d92e8c9c85f2",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/subscriptions/:subscriptionId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"subscriptions",
+										":subscriptionId"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "subscriptionId",
+											"value": "62574554-c205-4551-8d0d-a255e43819ef"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "517"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"205-2xqkJFYsufUur74Ljx60bAj/vIw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Nov 2025 09:33:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscription retrieved successfully!\",\n    \"data\": {\n        \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n        \"created_at\": \"2025-11-16T09:28:39.359Z\",\n        \"updated_at\": \"2025-11-16T09:30:08.176Z\",\n        \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n        \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n        \"name\": \"Premium Plan x\",\n        \"features\": [\n            \"Unlimited access\",\n            \"Priority support\",\n            \"Advanced analytics\",\n            \"Custom integrations\"\n        ],\n        \"price\": 29,\n        \"isHot\": true,\n        \"subscribed_user_count\": 0,\n        \"subscription_interval\": \"MONTHLY\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "subscribe",
+					"id": "34549363-f8023a4d-f3f1-4891-a009-693cb6188427",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subscriptions/:subscriptionId/subscribe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions",
+								":subscriptionId",
+								"subscribe"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": null,
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "subscriptionId",
+									"value": "3c2c0e36-5fc0-4763-8456-929b20b6e41e"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-f77af9ed-98bd-43ac-a006-382699ac570b",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/subscriptions/:subscriptionId/subscribe",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"subscriptions",
+										":subscriptionId",
+										"subscribe"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "subscriptionId",
+											"value": "3c2c0e36-5fc0-4763-8456-929b20b6e41e"
+										}
+									]
+								}
+							},
+							"status": "Moved Permanently",
+							"code": 301,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "527"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20f-pHeu1eRrLw9j1LYGF45ry2Zll6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Nov 2025 09:38:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 301,\n    \"message\": \"Success\",\n    \"data\": {\n        \"url\": \"https://checkout.stripe.com/c/pay/cs_test_a192XEoD3bwa8ZnTWHcaCaADjCvW7W2C1Hrct6riugEwh0bxIiQTJvQcnj#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0VUtyaExMZkRuTmpKVWdpamNVd2hWPFx8f3dKYE8xS01tbnd%2FUF9DVUNzUE00UV1gQmI8V288SlM9NTBcY3NVUDZoMXFIPX90UnNPYUBcXGxvPH9dS3IzNTVOT3dtXVQ3RicpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl\",\n        \"amount_total\": 29.99\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-e6ce3bbc-557a-4faa-99f2-67156b2bb97d"
 		},
 		{
 			"name": "blogs",
@@ -8204,6 +8584,134 @@
 					"name": "blogs",
 					"item": [
 						{
+							"name": "upload-media",
+							"id": "34549363-d486a298-6f89-49e1-884c-1fc0dcb89dfe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "images",
+											"type": "file",
+											"uuid": "75e58890-4359-4ee5-9bbc-8fdbdfd2b4f3",
+											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+										},
+										{
+											"key": "videos",
+											"type": "file",
+											"uuid": "1b894a68-c785-49a7-aecc-8adb97a32a90",
+											"src": "/C:/Users/Incognito/Downloads/854164-hd_1920_1080_25fps-1758449915551.mp4"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/upload-media",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"upload-media"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-db1103a9-e56b-46c4-b230-fdd4f928eee3",
+									"name": "success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "images",
+													"type": "file",
+													"uuid": "75e58890-4359-4ee5-9bbc-8fdbdfd2b4f3",
+													"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+												},
+												{
+													"key": "videos",
+													"type": "file",
+													"uuid": "1b894a68-c785-49a7-aecc-8adb97a32a90",
+													"src": "/C:/Users/Incognito/Downloads/854164-hd_1920_1080_25fps-1758449915551.mp4"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{base_url}}/messages/upload-media",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"messages",
+												"upload-media"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "210"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"d2-bxX8nIvNqbRjaK7k+tTItWvtKUc\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 05:15:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Media uploaded successfully!\",\n    \"data\": {\n        \"images\": [\n            \"/images/shaishab-1761974120507.png\"\n        ],\n        \"videos\": [\n            \"/videos/854164-hd_1920_1080_25fps-1758449915551-1761974120508.mp4\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
 							"name": "create-blog",
 							"id": "34549363-e4a7aa15-bbce-4620-afa4-3c430976478e",
 							"protocolProfileBehavior": {
@@ -8726,6 +9234,607 @@
 						}
 					],
 					"id": "34549363-dc2cd7bb-37f5-4d96-bcdc-bc2d2c78d5a6"
+				},
+				{
+					"name": "subscription",
+					"item": [
+						{
+							"name": "all-subscriptions",
+							"id": "34549363-7a105d4d-769b-4b9e-a581-6973997baa72",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/subscriptions?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"subscriptions"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-252bd819-3670-4232-a974-313ab5a0e538",
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/subscriptions?page=1&limit=10",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"subscriptions"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": null,
+													"type": "text",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "622"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"26e-qDWWreEoxDXoRUnazKGh7FwJ2P8\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 09:31:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscriptions retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        },\n        \"priceRange\": {\n            \"min\": 29,\n            \"max\": 29\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n            \"created_at\": \"2025-11-16T09:28:39.359Z\",\n            \"updated_at\": \"2025-11-16T09:30:08.176Z\",\n            \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n            \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n            \"name\": \"Premium Plan x\",\n            \"features\": [\n                \"Unlimited access\",\n                \"Priority support\",\n                \"Advanced analytics\",\n                \"Custom integrations\"\n            ],\n            \"price\": 29,\n            \"isHot\": true,\n            \"subscribed_user_count\": 0,\n            \"subscription_interval\": \"MONTHLY\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "subscription-details",
+							"id": "34549363-c7d759e7-6885-4f6b-97e0-59723abb1a8b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/subscriptions/:subscriptionId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"subscriptions",
+										":subscriptionId"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "subscriptionId",
+											"value": "62574554-c205-4551-8d0d-a255e43819ef"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-e0fa4e34-7fb6-484f-89ea-2a862e66fb94",
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/subscriptions/:subscriptionId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"subscriptions",
+												":subscriptionId"
+											],
+											"query": [
+												{
+													"key": "search",
+													"value": null,
+													"type": "text",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "subscriptionId",
+													"value": "62574554-c205-4551-8d0d-a255e43819ef"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "517"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"205-2xqkJFYsufUur74Ljx60bAj/vIw\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 09:33:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscription retrieved successfully!\",\n    \"data\": {\n        \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n        \"created_at\": \"2025-11-16T09:28:39.359Z\",\n        \"updated_at\": \"2025-11-16T09:30:08.176Z\",\n        \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n        \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n        \"name\": \"Premium Plan x\",\n        \"features\": [\n            \"Unlimited access\",\n            \"Priority support\",\n            \"Advanced analytics\",\n            \"Custom integrations\"\n        ],\n        \"price\": 29,\n        \"isHot\": true,\n        \"subscribed_user_count\": 0,\n        \"subscription_interval\": \"MONTHLY\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "create-subscription",
+							"id": "34549363-f7d085fe-a007-4d93-bbf3-5f21283f22c2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Premium Plan\",\r\n  \"price\": 29.99,\r\n  \"subscription_interval\": \"monthly\",\r\n  \"features\": [\r\n    \"Unlimited access\",\r\n    \"Priority support\",\r\n    \"Advanced analytics\",\r\n    \"Custom integrations\"\r\n  ],\r\n  \"isHot\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"subscriptions"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-ed5bff51-177c-4857-bb84-1fe2314b8e7e",
+									"name": "success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"Premium Plan\",\r\n  \"price\": 29.99,\r\n  \"subscription_interval\": \"monthly\",\r\n  \"features\": [\r\n    \"Unlimited access\",\r\n    \"Priority support\",\r\n    \"Advanced analytics\",\r\n    \"Custom integrations\"\r\n  ],\r\n  \"isHot\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/subscriptions",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"subscriptions"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "513"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"201-oBc+AGMV65cn61Ej/GHthArjwIM\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 09:28:39 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 201,\n    \"message\": \"Subscription created successfully!\",\n    \"data\": {\n        \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n        \"created_at\": \"2025-11-16T09:28:39.359Z\",\n        \"updated_at\": \"2025-11-16T09:28:39.359Z\",\n        \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n        \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n        \"name\": \"Premium Plan\",\n        \"features\": [\n            \"Unlimited access\",\n            \"Priority support\",\n            \"Advanced analytics\",\n            \"Custom integrations\"\n        ],\n        \"price\": 29,\n        \"isHot\": true,\n        \"subscribed_user_count\": 0,\n        \"subscription_interval\": \"MONTHLY\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "update-subscription",
+							"id": "34549363-15920dc7-bb0e-4a69-ab27-79d520c32f9b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subscription_id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\r\n    \"name\": \"Premium Plan x\",\r\n    \"price\": 29.99,\r\n    \"subscription_interval\": \"monthly\",\r\n    \"features\": [\r\n        \"Unlimited access\",\r\n        \"Priority support\",\r\n        \"Advanced analytics\",\r\n        \"Custom integrations\"\r\n    ],\r\n    \"isHot\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"subscriptions"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-3a70a3c8-7007-4c75-bc92-f1db79f24124",
+									"name": "success",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"subscription_id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\r\n    \"name\": \"Premium Plan x\",\r\n    \"price\": 29.99,\r\n    \"subscription_interval\": \"monthly\",\r\n    \"features\": [\r\n        \"Unlimited access\",\r\n        \"Priority support\",\r\n        \"Advanced analytics\",\r\n        \"Custom integrations\"\r\n    ],\r\n    \"isHot\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/subscriptions",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"subscriptions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "515"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"203-D/xIqOw08HGBXQBquQYIYwr3xrE\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 09:30:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscription updated successfully!\",\n    \"data\": {\n        \"id\": \"62574554-c205-4551-8d0d-a255e43819ef\",\n        \"created_at\": \"2025-11-16T09:28:39.359Z\",\n        \"updated_at\": \"2025-11-16T09:30:08.176Z\",\n        \"stripe_subscription_id\": \"price_1SU2GBIcAkKoOPbldMyLCTkj\",\n        \"stripe_product_id\": \"prod_TQu4TYqhWZhS1O\",\n        \"name\": \"Premium Plan x\",\n        \"features\": [\n            \"Unlimited access\",\n            \"Priority support\",\n            \"Advanced analytics\",\n            \"Custom integrations\"\n        ],\n        \"price\": 29,\n        \"isHot\": true,\n        \"subscribed_user_count\": 0,\n        \"subscription_interval\": \"MONTHLY\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "delete-subscription",
+							"id": "34549363-691e3704-e9a4-459e-93a8-e3118cf95892",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subscription_id\": \"62574554-c205-4551-8d0d-a255e43819ef\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"subscriptions"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-70a99bb0-37f8-4c45-b734-be116deb4400",
+									"name": "success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"subscription_id\": \"62574554-c205-4551-8d0d-a255e43819ef\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/subscriptions",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"subscriptions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "80"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"50-dK2S0smN8uB9WjmCCOySx0cy3Dk\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 09:34:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Subscription deleted successfully!\"\n}"
+								}
+							]
+						}
+					],
+					"id": "34549363-7d0d5e6d-d64f-488a-9b08-e6e5548d0f85"
 				},
 				{
 					"name": "overview",
