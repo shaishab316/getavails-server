@@ -16,6 +16,8 @@ import { EventRoutes } from '../app/modules/event/Event.route';
 import { BlogRoutes } from '../app/modules/blog/Blog.route';
 import capture from '../app/middlewares/capture';
 import catchAsync from '../app/middlewares/catchAsync';
+import { SubscriptionRoutes } from '../app/modules/subscription/Subscription.route';
+import { TransactionRoutes } from '../app/modules/transaction/Transaction.route';
 
 const appRouter = Router();
 
@@ -55,6 +57,8 @@ export default injectRoutes(appRouter, {
   '/profile': [auth.default, UserRoutes.all],
   '/events': [auth.all, EventRoutes.all],
   '/tickets': [auth.all, TicketRoutes.all],
+  '/subscriptions': [auth.all, SubscriptionRoutes.all],
+  '/transactions': [auth.all, TransactionRoutes.all],
   '/inbox': [auth.all, ChatRoutes.all],
   '/messages': [auth.all, MessageRoutes.all],
 

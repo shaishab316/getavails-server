@@ -3,6 +3,7 @@ import startServer from './utils/server/startServer';
 import { SocketServices } from './app/modules/socket/Socket.service';
 import { eventPublishingJob } from './app/modules/event/Event.job';
 import { ticketExpirationJob } from './app/modules/ticket/Ticket.job';
+import { subscriptionExpireJob } from './app/modules/subscription/Subscription.job';
 
 /**
  * Start server with plugins
@@ -12,5 +13,6 @@ startServer().then(server => {
     SocketServices.init(server),
     eventPublishingJob(),
     ticketExpirationJob(),
+    subscriptionExpireJob(),
   );
 });

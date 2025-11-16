@@ -1,0 +1,29 @@
+model Subscription {
+  id                     String                @id @default(uuid())
+  created_at             DateTime              @default(now())
+  updated_at             DateTime              @updatedAt
+  stripe_subscription_id String                @unique
+  stripe_product_id      String                @unique
+  name                   String                @unique
+  features               String[]
+  price                  Int
+  isHot                  Boolean               @default(false)
+  subscribed_user_count  Int                   @default(0)
+  subscription_interval  ESubscriptionInterval
+
+  Transaction Transaction[]
+
+  @@map("subscriptions")
+}
+
+enum ESubscriptionInterval {
+  WEEKLY
+  HALF_MONTHLY
+  MONTHLY
+  TWO_MONTHLY
+  QUARTERLY
+  FOUR_MONTHLY
+  HALF_YEARLY
+  YEARLY
+  TWO_YEARLY
+}

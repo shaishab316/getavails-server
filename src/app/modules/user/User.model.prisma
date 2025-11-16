@@ -21,9 +21,12 @@ model User {
   //! end
 
   //! payment
-  balance             Float   @default(0)
-  stripe_account_id   String?
-  is_stripe_connected Boolean @default(false)
+  balance                 Float     @default(0)
+  stripe_customer_id      String?
+  stripe_account_id       String?
+  is_stripe_connected     Boolean   @default(false)
+  subscription_name       String?
+  subscription_expires_at DateTime?
   //! end
 
   experience               String?
@@ -39,17 +42,18 @@ model User {
   organizer_active_artists AgentOffer[] @relation("ActiveAgentOffers")
   organizer_active_venues  VenueOffer[] @relation("ActiveVenueOffers")
 
-  seen_messages           Message[]    @relation("SeenMessages")
+  seen_messages           Message[]     @relation("SeenMessages")
   messages                Message[]
-  chats                   Chat[]       @relation("UserChats")
-  agent_offers_agents     AgentOffer[] @relation("AgentOffersAgent")
-  agent_offers_artists    AgentOffer[] @relation("AgentOffersArtist")
-  agent_offers_organizers AgentOffer[] @relation("AgentOffersOrganizer")
-  venue_offers_organizers VenueOffer[] @relation("VenueOffersOrganizer")
-  venue_offers_venues     VenueOffer[] @relation("VenueOffersVenue")
+  chats                   Chat[]        @relation("UserChats")
+  agent_offers_agents     AgentOffer[]  @relation("AgentOffersAgent")
+  agent_offers_artists    AgentOffer[]  @relation("AgentOffersArtist")
+  agent_offers_organizers AgentOffer[]  @relation("AgentOffersOrganizer")
+  venue_offers_organizers VenueOffer[]  @relation("VenueOffersOrganizer")
+  venue_offers_venues     VenueOffer[]  @relation("VenueOffersVenue")
   organizer_events        Event[]
   tickets                 Ticket[]
   blogs                   Blog[]
+  transactions            Transaction[]
 
   @@map("users")
 }
