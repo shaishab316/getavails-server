@@ -93,21 +93,30 @@ const config = {
     href: env('href url', `http://localhost:${port}`, {
       regex: '^https?:\\/\\/.*$|^$',
     }),
-    payment_success: env(
-      'payment success url',
-      `data:text/html,<script>alert('Payment Successful!');</script>`,
-      {
-        regex: '.*',
-      },
-    ),
-    payment_failure: env(
-      'payment failure url',
-      `data:text/html,<script>alert('Payment Failed!');</script>`,
-      {
-        regex: '.*',
-        down: 'Database info - end',
-      },
-    ),
+    payment: {
+      webhook_endpoint: env(
+        'payment webhook endpoint',
+        `http://localhost:${port}/api/v1/payments/stripe/webhook`,
+        {
+          regex: '^https?:\\/\\/.*\\/payments\\/stripe\\/webhook$|^$',
+        },
+      ),
+      success_callback: env(
+        'payment success url',
+        `http://localhost:${port}/payments/success-callback`,
+        {
+          regex: '^https?:\\/\\/.*$|^$',
+        },
+      ),
+      cancel_callback: env(
+        'payment failure url',
+        `http://localhost:${port}/payments/cancel-callback`,
+        {
+          regex: '^https?:\\/\\/.*$|^$',
+          down: 'Urls - end',
+        },
+      ),
+    },
   },
 
   bcrypt_salt_rounds: env('bcrypt salt rounds', 10, {

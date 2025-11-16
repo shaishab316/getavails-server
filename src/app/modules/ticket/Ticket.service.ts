@@ -95,8 +95,8 @@ export const TicketServices = {
         },
       ],
       payment_method_types: config.payment.stripe.methods,
-      success_url: config.url.payment_success,
-      cancel_url: config.url.payment_failure,
+      success_url: config.url.payment.success_callback,
+      cancel_url: config.url.payment.cancel_callback,
     });
 
     if (!url) {

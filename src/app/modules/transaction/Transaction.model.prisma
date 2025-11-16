@@ -1,0 +1,14 @@
+model Transaction {
+  id                    String   @id @default(uuid())
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+  stripe_transaction_id String   @unique
+  user_id               String
+  amount                Float
+  subscription_name     String
+
+  subscription Subscription @relation(fields: [subscription_name], references: [name])
+  user         User         @relation(fields: [user_id], references: [id])
+
+  @@map("transactions")
+}
