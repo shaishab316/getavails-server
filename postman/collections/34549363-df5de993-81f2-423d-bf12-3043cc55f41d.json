@@ -1517,7 +1517,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{agent_token}}",
+									"value": "{{artist_token}}",
 									"type": "string"
 								}
 							]
@@ -1525,7 +1525,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/inbox?page=1&limit=10&unread=true",
+							"raw": "{{base_url}}/inbox",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1535,20 +1535,23 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "limit",
-									"value": "10"
+									"value": "10",
+									"disabled": true
 								},
 								{
 									"key": "search",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "unread",
-									"value": "true"
+									"value": "true",
+									"disabled": true
 								}
 							]
 						}
@@ -1631,7 +1634,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{user_token}}",
+									"value": "{{agent_token}}",
 									"type": "string"
 								}
 							]
@@ -1639,7 +1642,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/messages?chat_id=54d345a0-adbb-4576-be9e-bcfa82b50eb4&page=1&limit=10",
+							"raw": "{{base_url}}/messages?chat_id=c06683f0-ebc6-4d0c-95af-1f74d4fb4338&page=1&limit=10",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1649,7 +1652,7 @@
 							"query": [
 								{
 									"key": "chat_id",
-									"value": "54d345a0-adbb-4576-be9e-bcfa82b50eb4"
+									"value": "c06683f0-ebc6-4d0c-95af-1f74d4fb4338"
 								},
 								{
 									"key": "page",
@@ -1904,7 +1907,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": \"us-1\"\r\n}",
+							"raw": "{\r\n    \"user_id\": \"ar-2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2202,7 +2205,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{artist_token}}",
+									"value": "{{agent_token}}",
 									"type": "string"
 								}
 							]
@@ -2730,9 +2733,228 @@
 							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"You don't have enough balance\",\n    \"errorMessages\": [\n        {\n            \"path\": \"\",\n            \"message\": \"You don't have enough balance\"\n        }\n    ],\n    \"stack\": \"ServerError: You don't have enough balance\\n    at Object.withdraw (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\payment\\\\Payment.service.ts:66:13)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\modules\\\\payment\\\\Payment.controller.ts:65:27)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:28)\\n    at Layer.handleRequest (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at next (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\node_modules\\\\router\\\\lib\\\\route.js:157:13)\\n    at <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\purifyRequest.ts:46:7)\\n    at async <anonymous> (C:\\\\Users\\\\Incognito\\\\Projects\\\\getavails-server\\\\src\\\\app\\\\middlewares\\\\catchAsync.ts:26:22)\"\n}"
 						}
 					]
+				},
+				{
+					"name": "delete-profile",
+					"id": "34549363-63bf8556-5e1a-4f45-9b38-ea3273041e5f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile",
+								"delete"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "34549363-5058103a-3e5f-43a1-994b-54902d19234e"
+		},
+		{
+			"name": "blogs",
+			"item": [
+				{
+					"name": "all-blogs",
+					"id": "34549363-26506151-45eb-4023-8ea1-5464dba14f87",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blogs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-ba1f0564-599b-4ba6-8158-845e765eb11f",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/blogs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"blogs"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "610"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"262-I9eHFiGIfRbyoE+y1X+MNellYYc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Nov 2025 05:42:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blogs retrieved successfully\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"understanding-typescript-main\",\n            \"published_at\": \"2025-11-16T05:15:13.297Z\",\n            \"last_updated_at\": \"2025-11-16T05:19:59.465Z\",\n            \"title\": \"Understanding TypeScript main\",\n            \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n            \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n            \"banner_url\": \"https://example.com/banner.jpg\",\n            \"banner_type\": \"image\",\n            \"admin\": {\n                \"name\": \"Mr. Admin\",\n                \"avatar\": \"/images/placeholder.png\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "blog-details",
+					"id": "34549363-d9c7b42f-60ce-457b-a7a7-ed5159414ac9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blogs/:blogId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs",
+								":blogId"
+							],
+							"variable": [
+								{
+									"id": "b2603f50-0790-430c-9628-e1ad210ab841",
+									"key": "blogId",
+									"value": "understanding-typescript-main"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-7e8ca0fd-57db-428a-b4a3-4f4ada3a1f5b",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/blogs/:blogId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"blogs",
+										":blogId"
+									],
+									"variable": [
+										{
+											"key": "blogId",
+											"value": "understanding-typescript-main"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "538"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21a-bqm15BlFOLE93Kckb6/IJcGC0/8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Nov 2025 05:43:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blog retrieved successfully\",\n    \"data\": {\n        \"id\": \"understanding-typescript-main\",\n        \"published_at\": \"2025-11-16T05:15:13.297Z\",\n        \"last_updated_at\": \"2025-11-16T05:19:59.465Z\",\n        \"title\": \"Understanding TypeScript main\",\n        \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n        \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n        \"banner_url\": \"https://example.com/banner.jpg\",\n        \"banner_type\": \"image\",\n        \"admin\": {\n            \"name\": \"Mr. Admin\",\n            \"avatar\": \"/images/placeholder.png\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "34549363-4ae46127-11ac-4a54-bf5f-8ca538e4cd70"
 		},
 		{
 			"name": "USER",
@@ -2757,7 +2979,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/events?page=1&limit=10",
+							"raw": "{{base_url}}/events",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2767,15 +2989,17 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "limit",
-									"value": "10"
+									"value": "10",
+									"disabled": true
 								},
 								{
 									"key": "search",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							]
@@ -5172,6 +5396,119 @@
 					"response": [
 						{
 							"id": "34549363-9a1840f3-a7f7-410e-b4c4-d87a358e4ee0",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/agent/reject-artist",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agent",
+										"reject-artist"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-blDyeHpLvbIjOR/rb2dVOLfwyMw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Oct 2025 06:01:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Rejected successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-artist",
+					"id": "34549363-f3dec493-258d-444a-af50-1dc25c5fad65",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agent_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"artist_id\": \"ar-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/delete-artist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"delete-artist"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-94dc583c-0773-45f7-8364-dc8face617da",
 							"name": "success",
 							"originalRequest": {
 								"method": "POST",
@@ -7864,6 +8201,533 @@
 			"name": "ADMIN",
 			"item": [
 				{
+					"name": "blogs",
+					"item": [
+						{
+							"name": "create-blog",
+							"id": "34549363-e4a7aa15-bbce-4620-afa4-3c430976478e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Understanding TypeScript\",\r\n    \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\r\n    \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\r\n    \"banner_url\": \"https://example.com/banner.jpg\",\r\n    \"banner_type\": \"image\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/blogs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"blogs"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-30e45e9d-8c97-4f6d-8275-0314df5c97aa",
+									"name": "success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\": \"Understanding TypeScript\",\r\n    \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\r\n    \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\r\n    \"banner_url\": \"https://example.com/banner.jpg\",\r\n    \"banner_type\": \"image\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/blogs",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"blogs"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "480"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1e0-X3YwpC7R6Zf6ZzR6QqUD50o8E6c\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 04:50:06 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 201,\n    \"message\": \"Blog created successfully\",\n    \"data\": {\n        \"id\": \"understanding-typescript\",\n        \"published_at\": \"2025-11-16T04:50:06.596Z\",\n        \"last_updated_at\": \"2025-11-16T04:50:06.596Z\",\n        \"admin_id\": \"su-1\",\n        \"title\": \"Understanding TypeScript\",\n        \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n        \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n        \"banner_url\": \"https://example.com/banner.jpg\",\n        \"banner_type\": \"image\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "update-blog",
+							"id": "34549363-37a9f98f-ec66-458a-85a9-2c8a9e727881",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \r\n    \"blog_id\": \"understanding-typescript-2\",\r\n    \"title\": \"Understanding TypeScript main\",\r\n    \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\r\n    \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\r\n    \"banner_url\": \"https://example.com/banner.jpg\",\r\n    \"banner_type\": \"image\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/blogs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"blogs"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-a1734743-e017-4f53-971a-7550c59858f5",
+									"name": "success",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"blog_id\": \"understanding-typescript-2\",\r\n    \"title\": \"Understanding TypeScript main\",\r\n    \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\r\n    \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\r\n    \"banner_url\": \"https://example.com/banner.jpg\",\r\n    \"banner_type\": \"image\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/blogs",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"blogs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Content-Length",
+											"value": "490"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1ea-9JkV5BJ3nyoyxded/l9S1fmALcM\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 05:19:59 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blog updated successfully\",\n    \"data\": {\n        \"id\": \"understanding-typescript-main\",\n        \"published_at\": \"2025-11-16T05:15:13.297Z\",\n        \"last_updated_at\": \"2025-11-16T05:19:59.465Z\",\n        \"admin_id\": \"su-1\",\n        \"title\": \"Understanding TypeScript main\",\n        \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n        \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n        \"banner_url\": \"https://example.com/banner.jpg\",\n        \"banner_type\": \"image\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "delete-blog",
+							"id": "34549363-af8ca827-2c23-45b3-be5b-4af270efcf02",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \r\n    \"blog_id\": \"understanding-typescript-main\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/blogs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"blogs"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-73ecae1e-73b5-4eb8-87b3-acdcaf25296f",
+									"name": "success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"blog_id\": \"understanding-typescript-main\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/admin/blogs",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"blogs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "157"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9d-xfA88UH0bA2k09ls/skfBmPchFs\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 05:43:26 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blog deleted successfully\",\n    \"data\": {\n        \"id\": \"understanding-typescript-main\",\n        \"title\": \"Understanding TypeScript main\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "all-blogs",
+							"id": "34549363-ffdc77d1-1a2f-48f0-9528-2de75b473f1c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/blogs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"blogs"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-f9d30d3c-75da-40de-acc5-0d7d9ec3a1c6",
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/blogs",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"blogs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "610"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"262-I9eHFiGIfRbyoE+y1X+MNellYYc\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 05:42:25 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blogs retrieved successfully\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 1,\n            \"totalPages\": 1\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"understanding-typescript-main\",\n            \"published_at\": \"2025-11-16T05:15:13.297Z\",\n            \"last_updated_at\": \"2025-11-16T05:19:59.465Z\",\n            \"title\": \"Understanding TypeScript main\",\n            \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n            \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n            \"banner_url\": \"https://example.com/banner.jpg\",\n            \"banner_type\": \"image\",\n            \"admin\": {\n                \"name\": \"Mr. Admin\",\n                \"avatar\": \"/images/placeholder.png\"\n            }\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "blog-details",
+							"id": "34549363-9cea8bba-fc97-4284-a000-9f32abd8df62",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/blogs/:blogId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"blogs",
+										":blogId"
+									],
+									"variable": [
+										{
+											"key": "blogId",
+											"value": "understanding-typescript-main"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "34549363-b180889a-99d0-41c0-ac18-b7692d7847d0",
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/blogs/:blogId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"blogs",
+												":blogId"
+											],
+											"variable": [
+												{
+													"key": "blogId",
+													"value": "understanding-typescript-main"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "538"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"21a-bqm15BlFOLE93Kckb6/IJcGC0/8\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 16 Nov 2025 05:43:09 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Blog retrieved successfully\",\n    \"data\": {\n        \"id\": \"understanding-typescript-main\",\n        \"published_at\": \"2025-11-16T05:15:13.297Z\",\n        \"last_updated_at\": \"2025-11-16T05:19:59.465Z\",\n        \"title\": \"Understanding TypeScript main\",\n        \"description\": \"A comprehensive guide to learning TypeScript for modern web development.\",\n        \"content\": \"<p>This is a sanitized HTML content for the blog post.</p>\",\n        \"banner_url\": \"https://example.com/banner.jpg\",\n        \"banner_type\": \"image\",\n        \"admin\": {\n            \"name\": \"Mr. Admin\",\n            \"avatar\": \"/images/placeholder.png\"\n        }\n    }\n}"
+								}
+							]
+						}
+					],
+					"id": "34549363-dc2cd7bb-37f5-4d96-bcdc-bc2d2c78d5a6"
+				},
+				{
 					"name": "overview",
 					"id": "34549363-9bac90d6-e502-478a-8fab-44acf7972f4d",
 					"protocolProfileBehavior": {
@@ -7955,6 +8819,473 @@
 							"cookie": [],
 							"responseTime": null,
 							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Admin overview retrieved successfully!\",\n    \"data\": {\n        \"totalUsers\": 7,\n        \"totalActiveUsers\": 7,\n        \"totalCompletedEvents\": 0,\n        \"monthlyEventStatistics\": [\n            {\n                \"month\": \"Jan\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Feb\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Mar\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Apr\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"May\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jun\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Jul\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Aug\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Sep\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Oct\",\n                \"eventCount\": 0\n            },\n            {\n                \"month\": \"Nov\",\n                \"eventCount\": 3\n            },\n            {\n                \"month\": \"Dec\",\n                \"eventCount\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "users",
+					"id": "34549363-7904f21d-d04d-4f7f-b18c-9b6e56c26692",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/users?role=USER",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "USER",
+									"description": "USER\n  ORGANIZER\n  VENUE\n  ARTIST\n  AGENT"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-a8f4ee98-b59b-4ca0-b519-b47a251ded60",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/users?role=USER",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "USER",
+											"description": "USER\n  ORGANIZER\n  VENUE\n  ARTIST\n  AGENT"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "506"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1fa-3p+smeV6JUx7DwERdGcEUxbaG1I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Nov 2025 11:39:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Users retrieved successfully!\",\n    \"meta\": {\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"totalPages\": 1\n        },\n        \"users\": {\n            \"VENUE\": 1,\n            \"ARTIST\": 1,\n            \"USER\": 2,\n            \"ORGANIZER\": 1,\n            \"AGENT\": 5\n        }\n    },\n    \"data\": [\n        {\n            \"id\": \"su-1\",\n            \"role\": \"USER\",\n            \"email\": \"admin@getavails-server.com\",\n            \"avatar\": \"/images/placeholder.png\",\n            \"name\": \"Mr. Admin\",\n            \"gender\": \"OTHER\"\n        },\n        {\n            \"id\": \"us-1\",\n            \"role\": \"USER\",\n            \"email\": \"shaishab316@gmail.com\",\n            \"avatar\": \"/images/shaishab-1762583966549.png\",\n            \"name\": \"Shaishab Chandra Shil\",\n            \"gender\": \"MALE\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "user-profile-edit",
+					"id": "34549363-df61b7d0-09dc-4ee5-92d3-185c81fd446d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
+									"src": "/C:/Users/Incognito/Downloads/download2 (1).jpg"
+								},
+								{
+									"key": "name",
+									"value": "Shaishab Chandra Shil",
+									"type": "text",
+									"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Bangladesh",
+									"type": "text",
+									"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "MALE",
+									"type": "text",
+									"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506",
+									"disabled": true
+								},
+								{
+									"key": "role",
+									"value": "USER",
+									"type": "text",
+									"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/users/:userId/edit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								":userId",
+								"edit"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "us-1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-dc49a24a-ff7d-4c64-8b61-f09c3ffde3f8",
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"uuid": "dd3b77ca-a1c0-4518-8c4e-2f8f784dab0e",
+											"src": "postman-cloud:///1effda06-4890-4230-82e7-92b9895b3c24"
+										},
+										{
+											"key": "name",
+											"value": "Shaishab Chandra Shil",
+											"type": "text",
+											"uuid": "a06e0669-c22f-4c92-8518-0c8f98a04399"
+										},
+										{
+											"key": "location",
+											"value": "Bangladesh",
+											"type": "text",
+											"uuid": "6fc75145-6a23-47a0-a674-d64d9cd52384"
+										},
+										{
+											"key": "gender",
+											"value": "MALE",
+											"type": "text",
+											"uuid": "393f073b-bcaa-4eb1-a46c-75bc1a91b506"
+										},
+										{
+											"key": "role",
+											"value": "USER",
+											"type": "text",
+											"uuid": "df21f77d-b0bd-40ec-98d6-1474c936f663"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/profile/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"profile",
+										"edit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"198-1Ein+bKE0Cp1j/k99ZG4m+LnGKI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 06:39:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Profile updated successfully!\",\n    \"data\": {\n        \"id\": \"us-1\",\n        \"created_at\": \"2025-11-06T05:30:04.210Z\",\n        \"updated_at\": \"2025-11-08T06:39:26.554Z\",\n        \"role\": \"USER\",\n        \"email\": \"shaishab316@gmail.com\",\n        \"is_verified\": true,\n        \"is_active\": true,\n        \"is_admin\": false,\n        \"avatar\": \"/images/shaishab-1762583966549.png\",\n        \"name\": \"Shaishab Chandra Shil\",\n        \"gender\": \"MALE\",\n        \"balance\": 0,\n        \"is_stripe_connected\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-user",
+					"id": "34549363-c960d462-2fc4-4f49-b801-1768972ae615",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/users/:userId/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								":userId",
+								"delete"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "us-2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34549363-58f2e7a1-8740-4168-988c-c04700445076",
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:userId/delete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":userId",
+										"delete"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "us-2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "82"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"52-MJo3SLqyKj7DiqGncGRE+4M3U8I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Nov 2025 11:49:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"message\": \"Getavails User deleted successfully!\"\n}"
+						},
+						{
+							"id": "34549363-9a089945-8548-4cd9-bed3-088060aee4dc",
+							"name": "error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:userId/delete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":userId",
+										"delete"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "us-2"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "342"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"156-DTZbk6Kq7SJJHp2nCEbQ3c7THME\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Nov 2025 11:49:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"success\": false,\n    \"statusCode\": 400,\n    \"message\": \"Request validation error\",\n    \"errorMessages\": [\n        {\n            \"path\": \"userId\",\n            \"message\": \"User not found with id: us-2\"\n        }\n    ],\n    \"stack\": \"ZodError: [\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"params\\\",\\n      \\\"userId\\\",\\n      \\\"userId\\\"\\n    ],\\n    \\\"message\\\": \\\"User not found with id: us-2\\\"\\n  }\\n]\"\n}"
 						}
 					]
 				}
