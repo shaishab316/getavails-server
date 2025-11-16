@@ -1,0 +1,21 @@
+model Blog {
+  id              String   @id
+  published_at    DateTime @default(now())
+  last_updated_at DateTime @updatedAt
+  admin_id        String
+
+  title       String
+  description String
+  content     String
+  banner_url  String
+  banner_type EBannerType
+
+  admin User @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+
+  @@map("blogs")
+}
+
+enum EBannerType {
+  image
+  video
+}

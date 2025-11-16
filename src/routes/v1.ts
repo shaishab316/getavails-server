@@ -13,6 +13,7 @@ import { OrganizerRoutes } from '../app/modules/organizer/Organizer.route';
 import { PaymentRoutes } from '../app/modules/payment/Payment.route';
 import { TicketRoutes } from '../app/modules/ticket/Ticket.route';
 import { EventRoutes } from '../app/modules/event/Event.route';
+import { BlogRoutes } from '../app/modules/blog/Blog.route';
 
 export default injectRoutes(Router(), {
   // no auth required
@@ -20,6 +21,7 @@ export default injectRoutes(Router(), {
   '/artists': [ArtistRoutes.free],
   '/agents': [AgentRoutes.free],
   '/payments': [PaymentRoutes.free],
+  '/blogs': [BlogRoutes.free],
 
   // all user can access
   '/profile': [auth.default, UserRoutes.all],
