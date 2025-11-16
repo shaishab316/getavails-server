@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/shaishab316/getavails-server/compare/v1.11.0...v1.12.0) (2025-11-16)
+
+
+### Features
+
+* Handle Stripe subscription lifecycle events via webhooks ([514fa79](https://github.com/shaishab316/getavails-server/commit/514fa7936c6652c49e02f939a08f8f4f585dba05))
+* Implement subscription feature with Stripe integration ([7eb4dd6](https://github.com/shaishab316/getavails-server/commit/7eb4dd6e724d6ff2e4623e3363b5e5a1ec8ca01e))
+
 # [1.11.0](https://github.com/shaishab316/getavails-server/compare/v1.10.0...v1.11.0) (2025-11-16)
 
 
