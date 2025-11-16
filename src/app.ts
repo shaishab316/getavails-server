@@ -4,6 +4,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import RoutesV1 from './routes/v1';
 import { Morgan } from './utils/logger/morgen';
 import cookieParser from 'cookie-parser';
+import lusca from 'lusca';
 import config from './config';
 import { notFoundError } from './errors';
 import serveResponse from './utils/server/serveResponse';
@@ -41,6 +42,9 @@ app.use(
   express.urlencoded({ extended: true }),
   cookieParser(),
 );
+
+// CSRF protection middleware
+app.use(lusca.csrf());
 
 app.get('/', (_, res) => {
   res.redirect('/health');
