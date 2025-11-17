@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { stripe } from '../payment/Payment.utils';
+import { stripe, stripWebhookEventMap } from '../payment/Payment.utils';
 import config from '../../../config';
 import chalk from 'chalk';
 import {
@@ -10,13 +10,10 @@ import {
   TSubscriptionEdit,
   TUserSubscriptionMetadata,
 } from './Subscription.interface';
-import {
-  stripWebhookEventMap,
-  subscriptionIntervalMap,
-} from './Subscription.utils';
 import { Prisma, User as TUser } from '../../../../prisma';
 import {
   subscriptionSearchableFields as searchableFields,
+  subscriptionIntervalMap,
   subscriptionOmit,
 } from './Subscription.constant';
 import { prisma } from '../../../utils/db';

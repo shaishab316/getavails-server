@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import config from '../../../config';
 import { prisma } from '../../../utils/db';
 import { PaymentServices } from './Payment.service';
-import { subscriptionIntervalMap } from '../subscription/Subscription.utils';
+import { subscriptionIntervalMap } from '../subscription/Subscription.constant';
 import dayjs from 'dayjs';
 import { TUserSubscriptionMetadata } from '../subscription/Subscription.interface';
 
