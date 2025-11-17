@@ -1,6 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../../errors/ServerError';
-import { EVenueOfferStatus, Prisma, prisma } from '../../../utils/db';
+import {
+  EUserRole,
+  EVenueOfferStatus,
+  Prisma,
+  prisma,
+} from '../../../utils/db';
 import { userOmit, userSearchableFields } from '../user/User.constant';
 import type {
   TCancelVenueOfferArgs,
@@ -10,6 +15,7 @@ import type {
 } from './Venue.interface';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { months } from '../../../constants/month';
+import { TList } from '../query/Query.interface';
 
 /**
  * All venue related services
@@ -227,6 +233,49 @@ export const VenueServices = {
       totalBookings,
       monthlyBookingStatistics,
       monthlyRevenueStatistics,
+    };
+  },
+
+  /**
+   * Get all venues with pagination and search
+   */
+  async getAllVenues({ limit, page, search }: TList) {
+    const where: Prisma.UserWhereInput = {
+      role: EUserRole.VENUE,
+    };
+
+    //? Search venue using searchable fields
+    if (search) {
+      where.OR = userSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const venues = await prisma.user.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      omit: userOmit.VENUE,
+    });
+
+    const total = await prisma.user.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+      },
+      venues,
     };
   },
 };

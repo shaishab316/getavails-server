@@ -50,6 +50,7 @@ export default injectRoutes(appRouter, {
   '/auth': [AuthRoutes.free],
   '/artists': [ArtistRoutes.free],
   '/agents': [AgentRoutes.free],
+  '/venues': [VenueRoutes.free],
   '/payments': [PaymentRoutes.free],
   '/blogs': [BlogRoutes.free],
 

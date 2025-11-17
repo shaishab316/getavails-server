@@ -48,6 +48,18 @@ const venue = Router();
   );
 }
 
+const all = Router();
+{
+  /**
+   * Get all venues with pagination and search
+   */
+  all.get(
+    '/',
+    purifyRequest(QueryValidations.list),
+    VenueControllers.getAllVenues,
+  );
+}
+
 export const VenueRoutes = {
   /**
    * Only venue can access
@@ -55,4 +67,11 @@ export const VenueRoutes = {
    * @url : (base_url)/venue/
    */
   venue,
+
+  /**
+   * No auth required
+   *
+   * @url : (base_url)/venues/
+   */
+  free: all,
 };

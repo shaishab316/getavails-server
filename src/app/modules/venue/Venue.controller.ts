@@ -83,4 +83,17 @@ export const VenueControllers = {
       data: overview,
     };
   }),
+
+  /**
+   * Get all venues with pagination and search
+   */
+  getAllVenues: catchAsync(async ({ query }) => {
+    const { meta, venues } = await VenueServices.getAllVenues(query);
+
+    return {
+      message: 'Venues retrieved successfully!',
+      meta,
+      data: venues,
+    };
+  }),
 };
