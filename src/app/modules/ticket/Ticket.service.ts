@@ -1,10 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
-import { Prisma, prisma } from '../../../utils/db';
-import { TPurchaseTicket, TTicketMetadata } from './Ticket.interface';
+import { EEventStatus, ETicketStatus, Prisma, prisma } from '../../../utils/db';
+import {
+  TGetSoldTickets,
+  TPurchaseTicket,
+  TTicketMetadata,
+} from './Ticket.interface';
 import ServerError from '../../../errors/ServerError';
 import { stripe } from '../payment/Payment.utils';
 import config from '../../../config';
 import ms from 'ms';
+import { ticketSearchableFields } from './Ticket.constant';
+import { TPagination } from '../../../utils/server/serveResponse';
 
 /**
  * Ticket services
@@ -111,6 +117,82 @@ export const TicketServices = {
       tickets: ticketsData.map(({ id }) => id),
       ticket_price: event.ticket_price,
       quantity,
+    };
+  },
+
+  /**
+   * Get sold tickets with pagination and search
+   */
+  async getSoldTickets({ limit, page, search, status }: TGetSoldTickets) {
+    const where: Prisma.TicketWhereInput = {
+      status: ETicketStatus.PAID,
+    };
+
+    if (status === 'running') {
+      where.event!.status = {
+        in: [EEventStatus.UPCOMING, EEventStatus.PUBLISHED],
+      };
+    } else if (status === 'completed') {
+      where.event!.status = {
+        in: [EEventStatus.COMPLETED, EEventStatus.TIMEOUT],
+      };
+    }
+
+    if (search) {
+      where.OR = ticketSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }));
+    }
+
+    const tickets = await prisma.ticket.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: [{ created_at: 'desc' }, { event_id: 'asc' }],
+      omit: { sl: true },
+      include: {
+        event: {
+          select: {
+            title: true,
+            artist_names: true,
+            start_date: true,
+            end_date: true,
+            available_capacity: true,
+            capacity: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    const totalEarning = await prisma.ticket.aggregate({
+      _sum: {
+        price: true,
+      },
+      _count: { id: true },
+      where: {
+        status: ETicketStatus.PAID,
+      },
+    });
+
+    const total = await prisma.ticket.count({ where });
+
+    return {
+      meta: {
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        } satisfies TPagination,
+        totalEarning: totalEarning._sum.price || 0,
+        totalTicketSold: totalEarning._count.id || 0,
+      },
+
+      tickets: tickets,
     };
   },
 };

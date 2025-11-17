@@ -30,4 +30,13 @@ export const TicketValidations = {
         .default(1),
     }),
   }),
+
+  /**
+   * Validation schema for get sold tickets
+   */
+  getSoldTickets: z.object({
+    query: z.object({
+      status: z.enum(['running', 'completed']).default('running'),
+    }),
+  }),
 };
