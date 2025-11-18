@@ -75,9 +75,9 @@ export const EventControllers = {
     };
   }),
 
-  completeEvent: catchAsync(async ({ query }) => {
+  completeEvent: catchAsync(async ({ body }) => {
     await prisma.event.update({
-      where: { id: query.event_id },
+      where: { id: body.event_id },
       data: { status: EEventStatus.COMPLETED },
       select: { id: true },
     });

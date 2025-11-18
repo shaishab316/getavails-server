@@ -41,19 +41,22 @@ export const EventServices = {
   /**
    * Update event
    */
-  async updateEvent({ event_id, ...payload }: TUpdateEvent) {
+  async updateEvent({ event_id, images, ...payload }: TUpdateEvent) {
     const event = (await prisma.event.findUnique({
       where: { id: event_id },
       select: { images: true },
     }))!;
 
-    if (payload.images && event.images.length) {
+    if (images && event.images.length) {
       await deleteFilesQueue.add(event.images);
     }
 
     return prisma.event.update({
       where: { id: event_id },
-      data: payload,
+      data: {
+        ...payload,
+        ...(images ? { images } : {}),
+      },
     });
   },
 
@@ -140,7 +143,7 @@ export const EventServices = {
     const where: Prisma.EventWhereInput = {
       organizer_id,
       status:
-        status === 'RUNNING'
+        status === 'running'
           ? { notIn: [EEventStatus.COMPLETED, EEventStatus.TIMEOUT] }
           : { in: [EEventStatus.COMPLETED, EEventStatus.TIMEOUT] },
     };
