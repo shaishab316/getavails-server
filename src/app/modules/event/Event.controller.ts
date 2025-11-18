@@ -1,3 +1,4 @@
+import { EEventStatus, prisma } from '../../../utils/db';
 import catchAsync from '../../middlewares/catchAsync';
 import { EventServices } from './Event.service';
 
@@ -71,6 +72,18 @@ export const EventControllers = {
       message: 'Events retrieved successfully!',
       meta,
       data: events,
+    };
+  }),
+
+  completeEvent: catchAsync(async ({ query }) => {
+    await prisma.event.update({
+      where: { id: query.event_id },
+      data: { status: EEventStatus.COMPLETED },
+      select: { id: true },
+    });
+
+    return {
+      message: 'Event completed successfully!',
     };
   }),
 };

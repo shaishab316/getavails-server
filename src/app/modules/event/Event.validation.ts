@@ -65,4 +65,12 @@ export const EventValidations = {
       status: z.enum(['RUNNING', 'ENDED']).default('RUNNING'),
     }),
   }),
+
+  completeEvent: z.object({
+    query: z.object({
+      event_id: z.string().refine(exists('event'), {
+        error: ({ input }) => `Event not found with id: ${input}`,
+      }),
+    }),
+  }),
 };

@@ -47,6 +47,15 @@ const organizer = Router();
     purifyRequest(EventValidations.updateEvent),
     EventControllers.updateEvent,
   );
+
+  /**
+   * Complete event
+   */
+  organizer.post(
+    '/complete-event',
+    purifyRequest(EventValidations.completeEvent),
+    EventControllers.completeEvent,
+  );
 }
 
 const all = Router();
