@@ -194,7 +194,33 @@ export const UserServices = {
 
     if (user?.avatar) await deleteFilesQueue.add([user.avatar]);
 
-    return prisma.user.delete({ where: { id: userId } });
+    try {
+      const deleted = await prisma.$transaction(async tx => {
+        // Remove dependent records that block deletion
+        await tx.ticket.deleteMany({ where: { user_id: userId } });
+        await tx.transaction.deleteMany({ where: { user_id: userId } });
+
+        // Finally delete the user
+        return tx.user.delete({ where: { id: userId } });
+      });
+
+      return deleted;
+    } catch (error) {
+      // Translate FK violations into a user-friendly error
+      if (
+        error &&
+        typeof error === 'object' &&
+        'code' in error &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (error as any).code === 'P2003'
+      ) {
+        throw new ServerError(
+          StatusCodes.CONFLICT,
+          'Account cannot be deleted due to existing linked records. Please remove related data first or contact support.',
+        );
+      }
+      throw error;
+    }
   },
 
   async updateAvailability({ availability, user_id }: TUpdateAvailability) {

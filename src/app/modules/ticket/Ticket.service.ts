@@ -163,6 +163,7 @@ export const TicketServices = {
             available_capacity: true,
             capacity: true,
             status: true,
+            location: true,
           },
         },
       },
