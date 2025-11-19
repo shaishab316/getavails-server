@@ -1,14 +1,13 @@
-node_modules
-.env.keys
+/node_modules
+*.keys
 
 /dist
 /prisma
 /tmp
 
-*.log
-uploads/*
-.vscode/settings.json
+/logs
+/uploads
+/.vscode/settings.json
 api*.json
-postman/*
 
 **/migrations

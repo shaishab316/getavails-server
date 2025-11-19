@@ -107,6 +107,7 @@
     "strip-ansi": "^7.1.2",
     "stripe": "^19.1.0",
     "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0",
     "zod": "^4.1.12"
   }
 }
