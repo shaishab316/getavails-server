@@ -18,6 +18,7 @@ import capture from '../app/middlewares/capture';
 import catchAsync from '../app/middlewares/catchAsync';
 import { SubscriptionRoutes } from '../app/modules/subscription/Subscription.route';
 import { TransactionRoutes } from '../app/modules/transaction/Transaction.route';
+import { MailRoutes } from '../app/modules/mail/Mail.route';
 
 const appRouter = Router();
 
@@ -54,6 +55,7 @@ export default injectRoutes(appRouter, {
   '/venues': [VenueRoutes.free],
   '/payments': [PaymentRoutes.free],
   '/blogs': [BlogRoutes.free],
+  '/mails': [MailRoutes.free],
 
   // all user can access
   '/profile': [auth.default, UserRoutes.all],

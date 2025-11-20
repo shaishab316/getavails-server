@@ -2,7 +2,7 @@ model Transaction {
   id                    String   @id @default(uuid())
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
-  stripe_transaction_id String   @unique
+  stripe_transaction_id String
   user_id               String
   amount                Float
   subscription_name     String

@@ -4,11 +4,13 @@ import { injectRoutes } from '../../../utils/router/injectRouter';
 import { AdminControllers } from './Admin.controller';
 import { BlogRoutes } from '../blog/Blog.route';
 import { SubscriptionRoutes } from '../subscription/Subscription.route';
+import { MailRoutes } from '../mail/Mail.route';
 
 const admin = injectRoutes(Router(), {
   '/users': [UserRoutes.admin],
   '/blogs': [BlogRoutes.admin],
   '/subscriptions': [SubscriptionRoutes.admin],
+  '/mails': [MailRoutes.admin],
 });
 
 admin.get('/overview', AdminControllers.getAdminOverview);
