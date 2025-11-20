@@ -48,6 +48,7 @@ appRouter.post(
 export default injectRoutes(appRouter, {
   // no auth required
   '/auth': [AuthRoutes.free],
+  '/events': [EventRoutes.free],
   '/artists': [ArtistRoutes.free],
   '/agents': [AgentRoutes.free],
   '/venues': [VenueRoutes.free],
@@ -56,7 +57,6 @@ export default injectRoutes(appRouter, {
 
   // all user can access
   '/profile': [auth.default, UserRoutes.all],
-  '/events': [auth.all, EventRoutes.all],
   '/tickets': [auth.all, TicketRoutes.all],
   '/subscriptions': [auth.all, SubscriptionRoutes.all],
   '/transactions': [auth.all, TransactionRoutes.all],
