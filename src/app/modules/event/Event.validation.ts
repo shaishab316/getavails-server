@@ -1,6 +1,6 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
-import { EEventStatus, Event as TEvent } from '../../../../prisma';
+import { EEventStatus, Event as TEvent } from '../../../utils/db';
 import { exists } from '../../../utils/db/exists';
 
 /**
@@ -45,7 +45,7 @@ export const EventValidations = {
       }),
       status: z.enum(EEventStatus).optional(),
       title: z.string().optional(),
-      images: z.array(z.string()).optional(),
+      images: z.array(z.string()).optional().nullable(),
       description: z.string().optional(),
       start_date: z.iso.datetime().optional(),
       end_date: z.iso.datetime().optional(),
@@ -62,7 +62,15 @@ export const EventValidations = {
    */
   getOrganizerEvent: z.object({
     query: z.object({
-      status: z.enum(['RUNNING', 'ENDED']).default('RUNNING'),
+      status: z.enum(['running', 'completed']).default('running'),
+    }),
+  }),
+
+  completeEvent: z.object({
+    body: z.object({
+      event_id: z.string().refine(exists('event'), {
+        error: ({ input }) => `Event not found with id: ${input}`,
+      }),
     }),
   }),
 };

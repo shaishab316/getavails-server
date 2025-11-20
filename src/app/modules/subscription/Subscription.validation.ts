@@ -2,7 +2,7 @@ import { z } from 'zod';
 import {
   ESubscriptionInterval,
   Subscription as TSubscription,
-} from '../../../../prisma';
+} from '../../../utils/db';
 import { enum_encode } from '../../../utils/transform/enum';
 import { TModelZod } from '../../../types/zod';
 import { exists } from '../../../utils/db/exists';

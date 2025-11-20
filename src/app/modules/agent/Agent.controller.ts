@@ -3,7 +3,7 @@ import ServerError from '../../../errors/ServerError';
 import catchAsync from '../../middlewares/catchAsync';
 import { AgentServices } from './Agent.service';
 import { TCancelAgentOfferArgs } from './Agent.interface';
-import { EUserRole } from '../../../../prisma';
+import { EUserRole } from '../../../utils/db';
 
 /**
  * All agent related controllers

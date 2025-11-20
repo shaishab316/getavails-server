@@ -19,4 +19,14 @@ export const TicketControllers = {
       data: tickets,
     };
   }),
+
+  getSoldTickets: catchAsync(async ({ query }) => {
+    const { meta, tickets } = await TicketServices.getSoldTickets(query);
+
+    return {
+      message: 'Sold tickets retrieved successfully!',
+      meta,
+      data: tickets,
+    };
+  }),
 };

@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import type { ArtistValidations } from './Artist.validation';
-import type { User as TUser } from '../../../../prisma';
+import type { User as TUser } from '../../../utils/db';
 import { TList } from '../query/Query.interface';
 
 /**

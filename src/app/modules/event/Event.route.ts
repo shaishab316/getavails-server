@@ -4,6 +4,7 @@ import purifyRequest from '../../middlewares/purifyRequest';
 import { EventValidations } from './Event.validation';
 import capture from '../../middlewares/capture';
 import { QueryValidations } from '../query/Query.validation';
+import auth from '../../middlewares/auth';
 
 const organizer = Router();
 {
@@ -47,14 +48,23 @@ const organizer = Router();
     purifyRequest(EventValidations.updateEvent),
     EventControllers.updateEvent,
   );
+
+  /**
+   * Complete event
+   */
+  organizer.post(
+    '/complete-event',
+    purifyRequest(EventValidations.completeEvent),
+    EventControllers.completeEvent,
+  );
 }
 
-const all = Router();
+const free = Router();
 {
   /**
    * get all available events for users
    */
-  all.get(
+  free.get(
     '/',
     purifyRequest(QueryValidations.list),
     EventControllers.getAllEvents,
@@ -63,8 +73,9 @@ const all = Router();
   /**
    * Get all upcoming events
    */
-  all.get(
+  free.get(
     '/upcoming-events',
+    auth.all,
     purifyRequest(QueryValidations.list),
     EventControllers.getUserUpcomingEvents,
   );
@@ -83,5 +94,5 @@ export const EventRoutes = {
    *
    * @url : (base_url)/events/
    */
-  all,
+  free,
 };

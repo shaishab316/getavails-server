@@ -1,0 +1,15 @@
+model Mail {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+
+  remarks EUserRole
+  name    String
+  email   String
+  message String
+
+  unread Boolean @default(true)
+
+  @@index([remarks], name: "idx_remarks")
+  @@index([email], name: "idx_email")
+  @@map("mails")
+}

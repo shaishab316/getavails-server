@@ -1,4 +1,4 @@
-import { Blog as TBlog } from '../../../../prisma';
+import { Blog as TBlog } from '../../../utils/db';
 
 /**
  * Blog searchable fields for search functionality.

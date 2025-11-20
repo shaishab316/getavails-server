@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import type { TicketValidations } from './Ticket.validation';
+import { TList } from '../query/Query.interface';
 
 /**
  * @type : Validation for purchase ticket
@@ -21,3 +22,11 @@ export type TTicketMetadata = {
   user_id: string;
   ticket_ids: string;
 };
+
+/**
+ * @type : Validation for get sold tickets
+ */
+export type TGetSoldTickets = z.infer<
+  typeof TicketValidations.getSoldTickets
+>['query'] &
+  TList;

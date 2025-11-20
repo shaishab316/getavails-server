@@ -10,20 +10,11 @@ await build({
   bundle: true,
   platform: 'node',
   target: ['node24'],
+  format: 'esm',
   outfile: 'dist/server.js',
   sourcemap: false,
   minify: true,
   plugins: [nodeExternalsPlugin()],
-  external: [
-    'stripe',
-    'winston',
-    'nodemailer',
-    '@prisma/client',
-    './prisma/client',
-    'bull',
-    'redis',
-    'ioredis',
-  ],
 });
 
 const endTime = performance.now();

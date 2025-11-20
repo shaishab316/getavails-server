@@ -59,6 +59,26 @@ export const OrganizerServices = {
       orderBy: {
         created_at: 'desc',
       },
+      include: {
+        artist: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true,
+            email: true,
+            availability: true,
+          },
+        },
+        agent: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+            availability: true,
+          },
+        },
+      },
     });
 
     const total = await prisma.agentOffer.count({ where });
@@ -392,7 +412,15 @@ export const OrganizerServices = {
             end_date: true,
             location: true,
             artist: { omit: userOmit.ARTIST },
-            agent: { omit: userOmit.AGENT },
+            agent: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar: true,
+                availability: true,
+              },
+            },
           },
         },
       },

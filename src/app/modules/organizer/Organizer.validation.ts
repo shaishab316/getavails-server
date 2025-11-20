@@ -1,5 +1,5 @@
 import z from 'zod';
-import { EAgentOfferStatus, EVenueOfferStatus } from '../../../../prisma';
+import { EAgentOfferStatus, EVenueOfferStatus } from '../../../utils/db';
 import { exists } from '../../../utils/db/exists';
 
 /**

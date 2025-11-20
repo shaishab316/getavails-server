@@ -5,7 +5,7 @@ import {
   EAgentOfferStatus,
   EUserRole,
   AgentOffer as TAgentOffer,
-} from '../../../../prisma';
+} from '../../../utils/db';
 
 /**
  * Validation for agent

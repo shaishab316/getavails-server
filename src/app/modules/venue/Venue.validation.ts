@@ -5,7 +5,7 @@ import {
   EVenueOfferStatus,
   type User as TUser,
   type VenueOffer as TVenueOffer,
-} from '../../../../prisma';
+} from '../../../utils/db';
 import { exists } from '../../../utils/db/exists';
 
 /**

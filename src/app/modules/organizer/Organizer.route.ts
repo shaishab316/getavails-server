@@ -9,9 +9,11 @@ import { VenueValidations } from '../venue/Venue.validation';
 import { VenueControllers } from '../venue/Venue.controller';
 import { injectRoutes } from '../../../utils/router/injectRouter';
 import { EventRoutes } from '../event/Event.route';
+import { TicketRoutes } from '../ticket/Ticket.route';
 
 const organizer = injectRoutes(Router(), {
   '/events': [EventRoutes.organizer],
+  '/tickets': [TicketRoutes.organizer],
 });
 //? agent offers routes
 {
