@@ -4,7 +4,7 @@
     "repository": "https://github.com/shaishab316/express-it.git"
   },
   "name": "getavails",
-  "version": "1.9.0",
+  "version": "1.13.0",
   "description": "A comprehensive event management system with multi-role support including artists, agents, venues, and organizers. Features real-time chat, Stripe payments, booking management, and detailed analytics dashboards.",
   "type": "module",
   "main": "dist/server.js",

@@ -6,13 +6,16 @@ import { ticketExpirationJob } from './app/modules/ticket/Ticket.job';
 import { subscriptionExpireJob } from './app/modules/subscription/Subscription.job';
 
 /**
- * Start server with plugins
+ * server initialization
  */
-startServer().then(server => {
-  server.addPlugins(
-    SocketServices.init(server),
-    eventPublishingJob(),
-    ticketExpirationJob(),
-    subscriptionExpireJob(),
-  );
-});
+const server = await startServer();
+
+/**
+ * Add plugins to the server
+ */
+server.addPlugins(
+  SocketServices.init(server),
+  eventPublishingJob(),
+  ticketExpirationJob(),
+  subscriptionExpireJob(),
+);
