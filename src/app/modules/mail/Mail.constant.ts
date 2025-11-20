@@ -1,4 +1,4 @@
-import { Mail as TMail } from '../../../../prisma';
+import { Mail as TMail } from '../../../utils/db';
 
 /**
  * Mail Searchable Fields

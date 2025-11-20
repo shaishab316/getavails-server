@@ -1,4 +1,4 @@
-import { Ticket as TTicket } from '../../../../prisma';
+import { Ticket as TTicket } from '../../../utils/db';
 
 export const ticketSearchableFields = [
   'id',

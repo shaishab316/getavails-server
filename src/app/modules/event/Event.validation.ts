@@ -1,6 +1,6 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
-import { EEventStatus, Event as TEvent } from '../../../../prisma';
+import { EEventStatus, Event as TEvent } from '../../../utils/db';
 import { exists } from '../../../utils/db/exists';
 
 /**

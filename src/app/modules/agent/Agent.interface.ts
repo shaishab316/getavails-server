@@ -1,6 +1,6 @@
 import type z from 'zod';
 import type { AgentValidations } from './Agent.validation';
-import type { User as TUser } from '../../../../prisma';
+import { User as TUser } from '../../../utils/db';
 import { TList } from '../query/Query.interface';
 import { OrganizerValidations } from '../organizer/Organizer.validation';
 

@@ -1,4 +1,4 @@
-import { EUserRole } from '../../../../prisma';
+import { EUserRole } from '../../../utils/db';
 import catchAsync from '../../middlewares/catchAsync';
 import { TCancelVenueOfferArgs } from './Venue.interface';
 import { VenueServices } from './Venue.service';

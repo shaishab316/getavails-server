@@ -1,6 +1,6 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
-import { EUserRole, Mail as TMail } from '../../../../prisma';
+import { EUserRole, Mail as TMail } from '../../../utils/db';
 
 /**
  * Mail Validations

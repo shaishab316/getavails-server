@@ -1,6 +1,6 @@
 import z from 'zod';
 import { TModelZod } from '../../../types/zod';
-import { EBannerType, Blog as TBlog } from '../../../../prisma';
+import { EBannerType, Blog as TBlog } from '../../../utils/db';
 import sanitizeHtml from 'sanitize-html';
 import { exists } from '../../../utils/db/exists';
 

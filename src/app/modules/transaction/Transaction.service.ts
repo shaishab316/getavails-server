@@ -1,4 +1,4 @@
-import { Prisma, Transaction as TTransaction } from '../../../../prisma';
+import { Prisma, Transaction as TTransaction } from '../../../utils/db';
 import { prisma } from '../../../utils/db';
 import { TPagination } from '../../../utils/server/serveResponse';
 import { TList } from '../query/Query.interface';

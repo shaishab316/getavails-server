@@ -10,7 +10,7 @@ import {
   TSubscriptionEdit,
   TUserSubscriptionMetadata,
 } from './Subscription.interface';
-import { Prisma, User as TUser } from '../../../../prisma';
+import { Prisma, User as TUser } from '../../../utils/db';
 import {
   subscriptionSearchableFields as searchableFields,
   subscriptionIntervalMap,

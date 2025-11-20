@@ -3,7 +3,7 @@ import z from 'zod';
 import { SubscriptionValidations } from './Subscription.validation';
 import { TList } from '../query/Query.interface';
 import { stripWebhookEventMap } from '../payment/Payment.utils';
-import { ESubscriptionInterval } from '../../../../prisma';
+import { ESubscriptionInterval } from '../../../utils/db';
 
 export type TSubscriptionCreate = z.infer<
   typeof SubscriptionValidations.createSubscription

@@ -1,5 +1,5 @@
 import type { Prisma, Subscription as TSubscription } from '../../../utils/db';
-import { ESubscriptionInterval } from '../../../../prisma';
+import { ESubscriptionInterval } from '../../../utils/db';
 import { EStripeSubscriptionInterval } from './Subscription.interface';
 
 /**

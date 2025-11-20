@@ -1,4 +1,4 @@
-import { Event as TEvent } from '../../../../prisma';
+import { Event as TEvent } from '../../../utils/db';
 
 export const eventSearchableField = [
   'id',
