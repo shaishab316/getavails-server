@@ -1,3 +1,18 @@
+# [1.13.0](https://github.com/shaishab316/getavails-server/compare/v1.12.0...v1.13.0) (2025-11-20)
+
+
+### Features
+
+* Add venue endpoints and related entities to agent offers ([d8d5623](https://github.com/shaishab316/getavails-server/commit/d8d5623e78eeaea9fea8a81666a2c09a484e6b7d))
+* Allow organizers to mark events as completed ([d7bf349](https://github.com/shaishab316/getavails-server/commit/d7bf349382cb0705a76cd2a02be3c771f5cdb773))
+* Implement daily log rotation and update .gitignore ([b1f0b31](https://github.com/shaishab316/getavails-server/commit/b1f0b317060e8c609170905046c09513f83503fa))
+* Implement mail module and integrate with admin routes ([3d45529](https://github.com/shaishab316/getavails-server/commit/3d45529fb30bd70ccaa453f6abb29ebeeb0d46e3))
+* Implement organizer get sold tickets functionality ([eef346b](https://github.com/shaishab316/getavails-server/commit/eef346b7a35f73fdd9d5b69fb502f87b04a4675e))
+* Include location in ticket fetch and improve user deletion ([36d2834](https://github.com/shaishab316/getavails-server/commit/36d2834d8bf9f9687adb963ed46d47ef8b8b6148))
+* Rename `all` router to `free` and protect upcoming events route ([ee5a3c9](https://github.com/shaishab316/getavails-server/commit/ee5a3c927724c7042fd7b49dc5365a6b0bdbf173))
+* Update completeEvent endpoint to use request body for event ID ([71e0260](https://github.com/shaishab316/getavails-server/commit/71e02609c06701b047b9bf5fd6f60614fbe0ec23))
+* Upgrade Prisma to v7, enable ESM, and update schema ([8d3ee64](https://github.com/shaishab316/getavails-server/commit/8d3ee644c5b90946c42c4268e2c887f3babe7328))
+
 # [1.12.0](https://github.com/shaishab316/getavails-server/compare/v1.11.0...v1.12.0) (2025-11-16)
 
 
